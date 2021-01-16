@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.smarteist.autoimageslider.SliderView;
 import com.veggiegram.R;
 import com.veggiegram.responses.banner.BannerResponse;
 import com.veggiegram.responses.category.CategoryResponse;
+import com.veggiegram.responses.recommended.RecommededProductResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
 import com.veggiegram.util.SliderAdapterExample;
@@ -35,7 +37,7 @@ import retrofit2.Retrofit;
 public class HomeFragment extends Fragment {
 
     Retrofit retrofit;
-    RecyclerView recyclerCategoryHome;
+    RecyclerView recyclerCategoryHome,recyclerRecommended;
 
     public HomeFragment() {
     }
@@ -46,6 +48,7 @@ public class HomeFragment extends Fragment {
 
         SliderView sliderView = view.findViewById(R.id.imageSlider);
         recyclerCategoryHome = view.findViewById(R.id.recyclerCategoryHome);
+        recyclerRecommended = view.findViewById(R.id.recyclerRecommended);
 
         retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
@@ -53,6 +56,10 @@ public class HomeFragment extends Fragment {
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
         recyclerCategoryHome.setLayoutManager(gridLayoutManager);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        recyclerRecommended.setLayoutManager(linearLayoutManager);
 
 
         SliderAdapterExample sliderAdapterExamples =  new SliderAdapterExample(getContext());
@@ -106,6 +113,24 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        retrofitIInterface.getrecommendedproductslist().enqueue(new Callback<RecommededProductResponse>() {
+            @Override
+            public void onResponse(Call<RecommededProductResponse> call, Response<RecommededProductResponse> response) {
+                if(response.body().getSuccess()){
+                    RecommededProductResponse recommededProductResponse = response.body();
+                    RecommendedAdapter recommendedAdapter = new RecommendedAdapter(response.body());
+                    recyclerRecommended.setAdapter(recommendedAdapter);
+                }
+                else{
+                    Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RecommededProductResponse> call, Throwable t) {
+
+            }
+        });
         return view;
     }
 }
