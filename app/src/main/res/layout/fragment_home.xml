@@ -20,10 +20,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="20dp"
-                android:backgroundTint="#FFFFFF"
+                android:background="@drawable/search_background"
+                android:backgroundTint="#D6D1D1"
                 android:clickable="false"
                 android:iconifiedByDefault="false"
-                android:queryHint="Search Products" />
+                android:queryHint="Search Products"
+                android:searchIcon="@drawable/ic_baseline_search_24" />
 
 
             <androidx.cardview.widget.CardView

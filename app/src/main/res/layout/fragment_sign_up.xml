@@ -21,8 +21,8 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/logo"
-            tools:src="@mipmap/logo" />
+            app:srcCompat="@mipmap/logo_foreground"
+            tools:src="@mipmap/logo_foreground" />
 
         <TextView
             android:id="@+id/textView3"
