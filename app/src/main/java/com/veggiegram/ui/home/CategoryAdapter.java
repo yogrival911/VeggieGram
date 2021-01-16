@@ -1,5 +1,6 @@
 package com.veggiegram.ui.home;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
@@ -18,8 +22,10 @@ import com.veggiegram.util.LoadWithGlide;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
     CategoryResponse categoryResponse;
 
+
     public CategoryAdapter(CategoryResponse categoryResponse) {
         this.categoryResponse = categoryResponse;
+
     }
 
     public void setResponse(CategoryResponse categoryResponse){
@@ -43,6 +49,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         Log.i("yogesh", imgUrl);
         holder.categoryName.setText(categoryResponse.getData().get(position).getName());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavController navController = Navigation.findNavController(holder.itemView);
+                navController.navigate(HomeFragmentDirections.actionHomeFragmentToProductListFragment(position));
+            }
+        });
+
+
+//        holder.itemView.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_productListFragment));
     }
 
     @Override

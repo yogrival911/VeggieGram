@@ -7,6 +7,7 @@ import com.veggiegram.responses.category.CategoryResponse;
 import com.veggiegram.responses.login.LoginResponse;
 import com.veggiegram.responses.otp.OTPResponse;
 import com.veggiegram.responses.otp.SendOTPObject;
+import com.veggiegram.responses.productlistcat.ProductListByCatResponse;
 import com.veggiegram.responses.recommended.RecommededProductResponse;
 import com.veggiegram.responses.signup.SignupResponse;
 
@@ -16,6 +17,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface RetrofitIInterface {
     @GET("getbannerlist")
@@ -35,4 +37,9 @@ public interface RetrofitIInterface {
 
     @GET("getrecommendedproductslist")
     Call<RecommededProductResponse> getrecommendedproductslist();
+
+    @GET("getproductslistbycatid/{position}")
+    Call<ProductListByCatResponse> getProductslistByCatID(@Path("position") String position);
+
+
 }
