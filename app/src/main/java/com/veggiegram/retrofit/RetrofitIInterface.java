@@ -2,6 +2,7 @@ package com.veggiegram.retrofit;
 
 import com.veggiegram.responses.SigninObject;
 import com.veggiegram.responses.SignupObject;
+import com.veggiegram.responses.WishListObject;
 import com.veggiegram.responses.banner.BannerResponse;
 import com.veggiegram.responses.category.CategoryResponse;
 import com.veggiegram.responses.login.LoginResponse;
@@ -11,12 +12,15 @@ import com.veggiegram.responses.productdetail.ProductDetailResponse;
 import com.veggiegram.responses.productlistcat.ProductListByCatResponse;
 import com.veggiegram.responses.recommended.RecommededProductResponse;
 import com.veggiegram.responses.signup.SignupResponse;
+import com.veggiegram.responses.wishlist.GetWishListResponse;
+import com.veggiegram.responses.wishlist.WishListResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -44,6 +48,14 @@ public interface RetrofitIInterface {
 
     @GET("getproductpetailsbyid/{product_id}")
     Call<ProductDetailResponse> getproductpetailsbyid(@Path("product_id") String product_id);
+
+    @POST("addtowishlist")
+    Call<WishListResponse> addToWishList(
+            @Body WishListObject wishListObject,
+            @Header("token") String token);
+
+    @GET("getuserwishlistproducts")
+    Call<GetWishListResponse> getWishList(@Header("token") String token);
 
 
 }

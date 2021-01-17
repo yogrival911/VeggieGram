@@ -97,5 +97,8 @@
         <argument
             android:name="product_id"
             app:argType="string" />
+        <action
+            android:id="@+id/action_productDetailFragment_to_signinFragment"
+            app:destination="@id/signinFragment" />
     </fragment>
 </navigation>
