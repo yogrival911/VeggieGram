@@ -21,9 +21,10 @@
                 android:layout_height="match_parent"
                 android:layout_margin="20dp"
                 android:background="@drawable/search_background"
-                android:backgroundTint="#D6D1D1"
+                android:backgroundTint="#F6F1F1"
                 android:clickable="false"
                 android:iconifiedByDefault="false"
+                android:queryBackground="@drawable/search_background"
                 android:queryHint="Search Products"
                 android:searchIcon="@drawable/ic_baseline_search_24" />
 
