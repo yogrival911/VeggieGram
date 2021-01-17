@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
@@ -39,6 +41,15 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
         holder.tvProductPrice.setPaintFlags(holder.tvProductPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tvProductPrice.setText(recommededProductResponse.getData().get(position).getPrice().toString());
         holder.tvProductSellPrice.setText(recommededProductResponse.getData().get(position).getSellprice().toString());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String product_id = recommededProductResponse.getData().get(position).getProductid().toString();
+                NavController navController = Navigation.findNavController(holder.itemView);
+                navController.navigate(HomeFragmentDirections.actionHomeFragmentToProductDetailFragment(product_id));
+            }
+        });
     }
 
     @Override

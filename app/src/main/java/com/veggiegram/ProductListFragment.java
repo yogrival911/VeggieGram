@@ -1,11 +1,13 @@
 package com.veggiegram;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,10 +50,11 @@ public class ProductListFragment extends Fragment {
         int categoryPosition = ProductListFragmentArgs.fromBundle(getArguments()).getCategoryNo();
         Log.i("yog", "categoryPosition"+categoryPosition);
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String user_id = sharedPreferences.getString("user_id", "");
+        Log.i("yog", user_id);
 
-
-
-        retrofitIInterface.getProductslistByCatID(String.valueOf(categoryPosition)).enqueue(new Callback<ProductListByCatResponse>() {
+        retrofitIInterface.getProductslistByCatID(String.valueOf(categoryPosition),user_id).enqueue(new Callback<ProductListByCatResponse>() {
             @Override
             public void onResponse(Call<ProductListByCatResponse> call, Response<ProductListByCatResponse> response) {
                 ProductListAdapter productListAdapter = new ProductListAdapter(response.body());

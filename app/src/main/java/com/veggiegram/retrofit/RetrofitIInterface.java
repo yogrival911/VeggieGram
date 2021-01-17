@@ -1,5 +1,6 @@
 package com.veggiegram.retrofit;
 
+import com.veggiegram.responses.RemoveWishListResponse;
 import com.veggiegram.responses.SigninObject;
 import com.veggiegram.responses.SignupObject;
 import com.veggiegram.responses.WishListObject;
@@ -44,7 +45,8 @@ public interface RetrofitIInterface {
     Call<RecommededProductResponse> getrecommendedproductslist();
 
     @GET("getproductslistbycatid/{position}")
-    Call<ProductListByCatResponse> getProductslistByCatID(@Path("position") String position);
+    Call<ProductListByCatResponse> getProductslistByCatID(@Path("position") String position,
+                                                          @Header("token") String token);
 
     @GET("getproductpetailsbyid/{product_id}")
     Call<ProductDetailResponse> getproductpetailsbyid(@Path("product_id") String product_id);
@@ -56,6 +58,10 @@ public interface RetrofitIInterface {
 
     @GET("getuserwishlistproducts")
     Call<GetWishListResponse> getWishList(@Header("token") String token);
+
+    @POST("removewishlist")
+    Call<RemoveWishListResponse> removeWishList(@Body WishListObject wishListObject,
+                                                @Header("token") String token);
 
 
 }
