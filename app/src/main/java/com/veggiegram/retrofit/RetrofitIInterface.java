@@ -7,6 +7,7 @@ import com.veggiegram.responses.category.CategoryResponse;
 import com.veggiegram.responses.login.LoginResponse;
 import com.veggiegram.responses.otp.OTPResponse;
 import com.veggiegram.responses.otp.SendOTPObject;
+import com.veggiegram.responses.productdetail.ProductDetailResponse;
 import com.veggiegram.responses.productlistcat.ProductListByCatResponse;
 import com.veggiegram.responses.recommended.RecommededProductResponse;
 import com.veggiegram.responses.signup.SignupResponse;
@@ -40,6 +41,9 @@ public interface RetrofitIInterface {
 
     @GET("getproductslistbycatid/{position}")
     Call<ProductListByCatResponse> getProductslistByCatID(@Path("position") String position);
+
+    @GET("getproductpetailsbyid/{product_id}")
+    Call<ProductDetailResponse> getproductpetailsbyid(@Path("product_id") String product_id);
 
 
 }

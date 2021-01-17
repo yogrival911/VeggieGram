@@ -7,10 +7,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.veggiegram.responses.productlistcat.ProductListByCatResponse;
+import com.veggiegram.ui.home.HomeFragmentDirections;
 import com.veggiegram.util.LoadWithGlide;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.PLViewHolder> {
@@ -36,9 +39,17 @@ ProductListByCatResponse productListByCatResponse;
         holder.price.setText(" " +productListByCatResponse.getData().get(position).getPrice());
 
         String img = productListByCatResponse.getData().get(position).getImage();
-        String url = "http://admin.veggiegram.in/adminuploads/products/" + img;
+        String url = "https://admin.veggiegram.in/adminuploads/products/" + img;
 
         LoadWithGlide.loadImage(holder.ivProductImage,url,new CircularProgressDrawable(holder.itemView.getContext()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavController navController = Navigation.findNavController(holder.itemView);
+                navController.navigate(ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(productListByCatResponse.getData().get(position).getProductid().toString()));
+            }
+        });
 
     }
 
