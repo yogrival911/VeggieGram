@@ -16,7 +16,6 @@ public class LoadWithGlide {
                 .placeholder(progressDrawable);
         Glide.with(imageView.getContext())
                 .asBitmap()
-
                 .load(url)
                 .into(imageView);
     }

@@ -49,7 +49,8 @@ public interface RetrofitIInterface {
                                                           @Header("token") String token);
 
     @GET("getproductpetailsbyid/{product_id}")
-    Call<ProductDetailResponse> getproductpetailsbyid(@Path("product_id") String product_id);
+    Call<ProductDetailResponse> getproductpetailsbyid(@Path("product_id") String product_id,
+                                                      @Header("token") String token);
 
     @POST("addtowishlist")
     Call<WishListResponse> addToWishList(

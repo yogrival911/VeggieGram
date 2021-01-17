@@ -15,6 +15,7 @@ import com.veggiegram.responses.category.CategoryResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
 import com.veggiegram.ui.home.CategoryAdapter;
+import com.veggiegram.util.CircleProgressBarCustom;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,12 +24,15 @@ import retrofit2.Retrofit;
 
 public class CategoryFragment extends Fragment {
 RecyclerView categoryRecyclerView;
+CircleProgressBarCustom circlePro;
     public CategoryFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_category, container, false);
+
+        circlePro = view.findViewById(R.id.circlePro);
         categoryRecyclerView = view.findViewById(R.id.categoryRecyclerview);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
         categoryRecyclerView.setLayoutManager(gridLayoutManager);
@@ -37,6 +41,8 @@ RecyclerView categoryRecyclerView;
         retrofitIInterface.getCategoryList().enqueue(new Callback<CategoryResponse>() {
             @Override
             public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
+                circlePro.clearAnimation();
+                circlePro.setVisibility(View.INVISIBLE);
                 CategoryAdapter categoryAdapter = new CategoryAdapter(response.body());
                 categoryRecyclerView.setAdapter(categoryAdapter);
             }

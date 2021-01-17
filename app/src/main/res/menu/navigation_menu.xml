@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/address"
+        android:icon="@drawable/people"
+        android:title="My Addresses" />
+    <item
+        android:id="@+id/order"
+        android:icon="@drawable/ic_baseline_reorder_24"
+        android:title="My Orders" />
+    <item
+        android:id="@+id/whatsapp"
+        android:icon="@drawable/ic_baseline_local_mall_24"
+        android:title="Order On Whatsapp" />
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/ic_baseline_share_24"
+        android:title="Share App" />
+    <item
+        android:id="@+id/review"
+        android:icon="@drawable/ic_baseline_star_border_24"
+        android:title="Review App" />
+    <item
+        android:id="@+id/contact"
+        android:icon="@drawable/ic_baseline_local_phone_24"
+        android:title="Contact Us" />
+    <item
+        android:id="@+id/signin"
+        android:icon="@drawable/ic_baseline_login_24"
+        android:title="Sign Out" />
+</menu>

@@ -23,6 +23,7 @@ import com.veggiegram.responses.category.CategoryResponse;
 import com.veggiegram.responses.recommended.RecommededProductResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
+import com.veggiegram.util.CircleProgressBarCustom;
 import com.veggiegram.util.SliderAdapterExample;
 import com.veggiegram.util.SliderItem;
 
@@ -38,6 +39,7 @@ public class HomeFragment extends Fragment {
 
     Retrofit retrofit;
     RecyclerView recyclerCategoryHome,recyclerRecommended;
+    CircleProgressBarCustom circularProgressBar;
 
     public HomeFragment() {
     }
@@ -49,6 +51,7 @@ public class HomeFragment extends Fragment {
         SliderView sliderView = view.findViewById(R.id.imageSlider);
         recyclerCategoryHome = view.findViewById(R.id.recyclerCategoryHome);
         recyclerRecommended = view.findViewById(R.id.recyclerRecommended);
+        circularProgressBar = view.findViewById(R.id.circularProgressBar);
 
         retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
@@ -81,6 +84,7 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<BannerResponse> call, Response<BannerResponse> response) {
                 Log.i("yog", response.body().toString());
                 if(response.isSuccessful()){
+
                     for(int i = 0; i<response.body().getData().size(); i++){
                         String imgUrl = response.body().getData().get(i).getImage();
                         String actualUrl = "https://admin.veggiegram.in/adminuploads/banner/" + imgUrl;
@@ -103,6 +107,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
                 Log.i("yog", response.body().toString());
+                circularProgressBar.clearAnimation();
+                circularProgressBar.setVisibility(View.INVISIBLE);
                 CategoryAdapter categoryAdapter = new CategoryAdapter(response.body());
                 recyclerCategoryHome.setAdapter(categoryAdapter);
             }
