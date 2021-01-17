@@ -44,8 +44,9 @@
                 <TextView
                     android:id="@+id/textView6"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center_vertical"
                     android:text="Share"
                     android:textColor="@color/white" />
             </LinearLayout>
@@ -67,7 +68,9 @@
                 <TextView
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center_vertical"
                     android:text="Favourite"
                     android:textColor="@color/white" />
 
@@ -89,7 +92,9 @@
                 <TextView
                     android:id="@+id/textView9"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center_vertical"
                     android:text="Add to Cart"
                     android:textColor="@color/white" />
 
