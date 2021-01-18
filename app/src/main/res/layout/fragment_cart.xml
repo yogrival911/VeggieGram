@@ -9,7 +9,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp">
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp">
 
         <ImageView
             android:id="@+id/imageView2"
@@ -38,6 +40,8 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/veggySec"
             android:inputType="textCapWords"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:text="Checkout>"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,15 +53,17 @@
             android:layout_height="wrap_content"
             android:text="Cart Total"
             android:textColor="@color/black"
+            android:textSize="16dp"
             app:layout_constraintBottom_toTopOf="@+id/button2"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/cartTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="300.0"
             android:textColor="@color/black"
+            android:textSize="16dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/button2"
             app:layout_constraintEnd_toEndOf="parent" />

@@ -11,18 +11,20 @@
         android:roundIcon="@mipmap/logo_icon_foreground"
         android:supportsRtl="true"
         android:theme="@style/Theme.VeggieGram">
+        <activity android:name=".CartActivity"
+            android:theme="@style/cart_theme">
+
+        </activity>
         <activity
             android:name=".SplashActivity"
             android:theme="@style/splashTheme">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

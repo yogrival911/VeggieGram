@@ -5,6 +5,7 @@ import com.veggiegram.responses.SigninObject;
 import com.veggiegram.responses.SignupObject;
 import com.veggiegram.responses.WishListObject;
 import com.veggiegram.responses.banner.BannerResponse;
+import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.responses.category.CategoryResponse;
 import com.veggiegram.responses.login.LoginResponse;
 import com.veggiegram.responses.otp.OTPResponse;
@@ -64,5 +65,6 @@ public interface RetrofitIInterface {
     Call<RemoveWishListResponse> removeWishList(@Body WishListObject wishListObject,
                                                 @Header("token") String token);
 
-
+    @GET("getusercartlistproducts")
+    Call<GetCartListResponse> getusercartlistproducts(@Header("token") String token);
 }

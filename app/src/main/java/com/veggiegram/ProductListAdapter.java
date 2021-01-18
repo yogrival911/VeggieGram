@@ -1,7 +1,6 @@
 package com.veggiegram;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,7 +22,6 @@ import com.veggiegram.responses.productlistcat.ProductListByCatResponse;
 import com.veggiegram.responses.wishlist.WishListResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
-import com.veggiegram.ui.home.HomeFragmentDirections;
 import com.veggiegram.util.LoadWithGlide;
 
 import retrofit2.Call;
@@ -146,10 +144,10 @@ int wishlisted=0;
         TextView productName, quantity, price;
         public PLViewHolder(@NonNull View itemView) {
             super(itemView);
-            ivProductImage = itemView.findViewById(R.id.ivProductImage);
-            productName = itemView.findViewById(R.id.productName);
+            ivProductImage = itemView.findViewById(R.id.cartImage);
+            productName = itemView.findViewById(R.id.cartItemName);
             quantity = itemView.findViewById(R.id.quantity);
-            price = itemView.findViewById(R.id.price);
+            price = itemView.findViewById(R.id.sellPrice);
             fav = itemView.findViewById(R.id.fav);
         }
     }
