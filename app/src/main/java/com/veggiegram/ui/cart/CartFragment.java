@@ -26,6 +26,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static java.lang.Integer.parseInt;
+
 
 public class CartFragment extends Fragment {
 RecyclerView recyclerViewCart;
@@ -58,8 +60,21 @@ TextView cartTotal;
             public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {
                 Log.i("yog", response.body().toString());
                 if(response.body().getSuccess()){
-                    String productTotal = response.body().getData().get(response.body().getData().size()-1).getProducttotal().toString();
-                    cartTotal.setText(productTotal);
+                    int totalPrice=0;
+                    int totalQuantity = 0;
+                    int grandTotal=0;
+                    for(int i=0; i<response.body().getData().size();i++){
+                        String quant = response.body().getData().get(i).getCartquantity().toString();
+                        String price = response.body().getData().get(i).getSellprice().toString();
+                        int quantity = parseInt(quant);
+                        int sellPrice = Integer.parseInt(price);
+//
+//                        totalQuantity = totalQuantity+quantity;
+//                        totalPrice = totalPrice+sellPrice;
+
+                        grandTotal = grandTotal + quantity * sellPrice;
+                    }
+                    cartTotal.setText(String.valueOf(grandTotal));
                     CartAdapter cartAdapter = new CartAdapter(response.body());
                     recyclerViewCart.setAdapter(cartAdapter);
                 }

@@ -14,11 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.veggiegram.responses.AddToCartObject;
 import com.veggiegram.responses.RemoveWishListResponse;
 import com.veggiegram.responses.WishListObject;
 import com.veggiegram.responses.productdetail.ProductDetailResponse;
+import com.veggiegram.responses.wishlist.GetWishListResponse;
 import com.veggiegram.responses.wishlist.WishListResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
@@ -36,6 +39,7 @@ LinearLayout addToWishList;
 SharedPreferences sharedPreferences;
 LinearLayout addToCart;
 int wishlisted_in;
+TextView tvAddToCart;
     public ProductDetailFragment() {
     }
 
@@ -53,6 +57,7 @@ int wishlisted_in;
         addToWishList = view.findViewById(R.id.addToWishList);
         fav_icon = view.findViewById(R.id.fav_icon);
         addToCart = view.findViewById(R.id.addToCart);
+        tvAddToCart = view.findViewById(R.id.tvAddToCart);
 
         Retrofit retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
@@ -133,8 +138,25 @@ int wishlisted_in;
         addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment navHostFragment =(NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host);
-                navHostFragment.getNavController().navigate(ProductDetailFragmentDirections.actionProductDetailFragmentToCartFragment());
+                Log.i("add", "click");
+                tvAddToCart.setText("Added");
+                Toast.makeText(getActivity(), "Added", Toast.LENGTH_SHORT).show();
+                retrofitIInterface.addToCart(new AddToCartObject(product_id,"1"),user_id).enqueue(new Callback<GetWishListResponse>() {
+                    @Override
+                    public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
+                        GetWishListResponse getWishListResponse = response.body();
+
+                        if(response.body().getSuccess()){
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetWishListResponse> call, Throwable t) {
+
+                    }
+                });
+
             }
         });
 

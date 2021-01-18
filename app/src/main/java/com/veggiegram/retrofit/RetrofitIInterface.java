@@ -1,5 +1,6 @@
 package com.veggiegram.retrofit;
 
+import com.veggiegram.responses.AddToCartObject;
 import com.veggiegram.responses.RemoveWishListResponse;
 import com.veggiegram.responses.SigninObject;
 import com.veggiegram.responses.SignupObject;
@@ -67,4 +68,8 @@ public interface RetrofitIInterface {
 
     @GET("getusercartlistproducts")
     Call<GetCartListResponse> getusercartlistproducts(@Header("token") String token);
+
+    @POST("addtocart")
+    Call<GetWishListResponse> addToCart(@Body AddToCartObject addToCartObject,
+                                        @Header("token") String token);
 }
