@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -71,6 +72,8 @@ SharedPreferences sharedPreferences;
                     //save userid
                     sharedPreferences.edit().putString("user_id",user_id).apply();
                     Toast.makeText(getContext(), "Correct OTP", Toast.LENGTH_SHORT).show();
+                    NavHostFragment navHostFragment =(NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host);
+                    navHostFragment.getNavController().navigate(OTPFragmentDirections.actionOTPFragmentToFavoriteFragment());
                 }
                 else{
                     Toast.makeText(getContext(), "Wrong OTP", Toast.LENGTH_SHORT).show();

@@ -21,7 +21,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="20dp"
                 android:background="@drawable/search_background"
-                android:backgroundTint="#F6F1F1"
+
                 android:clickable="false"
                 android:iconifiedByDefault="false"
                 android:queryBackground="@drawable/search_background"
