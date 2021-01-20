@@ -144,8 +144,8 @@ int wishlisted=0;
         TextView productName, quantity, price;
         public PLViewHolder(@NonNull View itemView) {
             super(itemView);
-            ivProductImage = itemView.findViewById(R.id.cartImage);
-            productName = itemView.findViewById(R.id.cartItemName);
+            ivProductImage = itemView.findViewById(R.id.proImage);
+            productName = itemView.findViewById(R.id.proName);
             quantity = itemView.findViewById(R.id.quantity);
             price = itemView.findViewById(R.id.sellPrice);
             fav = itemView.findViewById(R.id.fav);

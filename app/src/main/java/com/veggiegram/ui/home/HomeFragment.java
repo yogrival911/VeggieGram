@@ -61,8 +61,10 @@ public class HomeFragment extends Fragment {
         recyclerCategoryHome.setLayoutManager(gridLayoutManager);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        recyclerRecommended.setNestedScrollingEnabled(false);
         recyclerRecommended.setLayoutManager(linearLayoutManager);
+
 
 
         SliderAdapterExample sliderAdapterExamples =  new SliderAdapterExample(getContext());

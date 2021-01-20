@@ -15,7 +15,7 @@
         android:layout_gravity="center_horizontal">
 
         <ImageView
-            android:id="@+id/ivWishListItem"
+            android:id="@+id/ivRec"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
@@ -34,7 +34,7 @@
             cardView:layout_constraintEnd_toEndOf="parent"
             cardView:layout_constraintHorizontal_bias="0.5"
             cardView:layout_constraintStart_toStartOf="parent"
-            cardView:layout_constraintTop_toBottomOf="@+id/ivWishListItem" />
+            cardView:layout_constraintTop_toBottomOf="@+id/ivRec" />
 
 
         <LinearLayout

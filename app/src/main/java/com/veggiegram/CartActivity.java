@@ -12,11 +12,14 @@ Toolbar toolbarCart;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-
+//
         toolbarCart = findViewById(R.id.toolbarCart);
         setSupportActionBar(toolbarCart);
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.custom_toolbar);
+        getSupportActionBar().setTitle("Cart");
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+
     }
 }

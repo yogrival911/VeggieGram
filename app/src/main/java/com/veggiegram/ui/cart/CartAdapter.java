@@ -51,8 +51,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         EditText etQuantity;
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
-            cartImage = itemView.findViewById(R.id.cartImage);
-            cartItemName = itemView.findViewById(R.id.cartItemName);
+            cartImage = itemView.findViewById(R.id.proImage);
+            cartItemName = itemView.findViewById(R.id.proName);
             sellPrice = itemView.findViewById(R.id.sellPrice);
             etQuantity = itemView.findViewById(R.id.etQuantity);
         }

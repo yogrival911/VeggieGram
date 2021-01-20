@@ -3,7 +3,9 @@ package com.veggiegram.ui.cart;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,14 +14,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.veggiegram.CartActivity;
 import com.veggiegram.R;
 import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
+import com.veggiegram.ui.home.HomeFragmentDirections;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +38,7 @@ public class CartFragment extends Fragment {
 RecyclerView recyclerViewCart;
 SharedPreferences sharedPreferences;
 TextView cartTotal;
+Button checkOut;
     public CartFragment() {
         // Required empty public constructor
     }
@@ -41,11 +47,14 @@ TextView cartTotal;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view =  inflater.inflate(R.layout.fragment_cart, container, false);
+        checkOut = view.findViewById(R.id.checkOut);
 
         cartTotal = view.findViewById(R.id.cartTotal);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String user_id = sharedPreferences.getString("user_id","");
+
+        NavHostFragment navHostFragment =(NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host);
 
         Retrofit retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
@@ -83,6 +92,14 @@ TextView cartTotal;
             @Override
             public void onFailure(Call<GetCartListResponse> call, Throwable t) {
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        checkOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment navHostFragment1 = (NavHostFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.cart_navigation_host);
+                navHostFragment1.getNavController().navigate(CartFragmentDirections.actionCartFragmentToAddressFragment());
             }
         });
         return view;

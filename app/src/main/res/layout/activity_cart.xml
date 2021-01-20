@@ -9,18 +9,25 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarCart"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <fragment
-        android:id="@+id/fragment"
-        android:name="com.veggiegram.ui.cart.CartFragment"
+        android:id="@+id/cart_navigation_host"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarCart" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarCart"
+        app:navGraph="@navigation/cart_navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

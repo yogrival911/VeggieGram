@@ -1,7 +1,6 @@
 package com.veggiegram.ui.home;
 
 import android.graphics.Paint;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,7 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
     @NonNull
     @Override
     public RecommendedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recommended_layout, parent, false);
         return new RecommendedAdapter.RecommendedViewHolder(view);
     }
 
@@ -36,11 +35,21 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
     public void onBindViewHolder(@NonNull RecommendedViewHolder holder, int position) {
         String img = recommededProductResponse.getData().get(position).getImage();
         String url = "https://admin.veggiegram.in/adminuploads/products/" + img;
-        LoadWithGlide.loadImage(holder.ivProductItem,url,new CircularProgressDrawable(holder.ivProductItem.getContext()));
+        LoadWithGlide.loadImage(holder.ivRec,url,new CircularProgressDrawable(holder.itemView.getContext()));
 
-        holder.tvProductPrice.setPaintFlags(holder.tvProductPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        holder.tvProductPrice.setText(recommededProductResponse.getData().get(position).getPrice().toString());
-        holder.tvProductSellPrice.setText(recommededProductResponse.getData().get(position).getSellprice().toString());
+        holder.tvName.setText(recommededProductResponse.getData().get(position).getName());
+        int price = recommededProductResponse.getData().get(position).getPrice();
+        int sellPrice = recommededProductResponse.getData().get(position).getSellprice();
+        int saving = price - sellPrice;
+
+        if(saving>0){
+            holder.tvSave.setText("You Save " + "\u20B9"+ saving);
+        }
+
+        holder.tvPrice.setText("\u20B9" + price);
+        holder.tvSellPrice.setText("\u20B9" + sellPrice);
+        holder.tvQuantity.setText(recommededProductResponse.getData().get(position).getUnit()+recommededProductResponse.getData().get(position).getUnitname());
+        holder.tvPrice.setPaintFlags(holder.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,14 +67,16 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
     }
 
     public class RecommendedViewHolder extends RecyclerView.ViewHolder {
-        ImageView ivProductItem;
-        TextView tvProductName, tvProductPrice, tvProductSellPrice;
+        ImageView ivRec;
+        TextView tvName, tvSave, tvQuantity,tvSellPrice, tvPrice;
         public RecommendedViewHolder(@NonNull View itemView) {
             super(itemView);
-            ivProductItem = itemView.findViewById(R.id.ivWishListItem);
-            tvProductName = itemView.findViewById(R.id.tvWishListItemName);
-            tvProductPrice = itemView.findViewById(R.id.tvProductPrice);
-            tvProductSellPrice = itemView.findViewById(R.id.tvWishListItemPrice);
+            ivRec = itemView.findViewById(R.id.ivRec);
+            tvName = itemView.findViewById(R.id.tvName);
+            tvSave = itemView.findViewById(R.id.tvSave);
+            tvQuantity = itemView.findViewById(R.id.tvQuantity);
+            tvSellPrice = itemView.findViewById(R.id.tvSellPrice);
+            tvPrice = itemView.findViewById(R.id.tvPrice);
 
         }
     }

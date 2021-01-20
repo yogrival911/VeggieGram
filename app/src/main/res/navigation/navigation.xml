@@ -97,9 +97,6 @@
         <action
             android:id="@+id/action_productListFragment_to_signinFragment"
             app:destination="@id/signinFragment" />
-        <action
-            android:id="@+id/action_productListFragment_to_cartFragment"
-            app:destination="@id/cartFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
@@ -112,13 +109,5 @@
         <action
             android:id="@+id/action_productDetailFragment_to_signinFragment"
             app:destination="@id/signinFragment" />
-        <action
-            android:id="@+id/action_productDetailFragment_to_cartFragment"
-            app:destination="@id/cartFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/cartFragment"
-        android:name="com.veggiegram.ui.cart.CartFragment"
-        android:label="fragment_cart"
-        tools:layout="@layout/fragment_cart" />
 </navigation>

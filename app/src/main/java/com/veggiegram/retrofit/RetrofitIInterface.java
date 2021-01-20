@@ -1,10 +1,13 @@
 package com.veggiegram.retrofit;
 
+import androidx.annotation.CallSuper;
+
 import com.veggiegram.responses.AddToCartObject;
 import com.veggiegram.responses.RemoveWishListResponse;
 import com.veggiegram.responses.SigninObject;
 import com.veggiegram.responses.SignupObject;
 import com.veggiegram.responses.WishListObject;
+import com.veggiegram.responses.address.AddressResponse;
 import com.veggiegram.responses.banner.BannerResponse;
 import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.responses.category.CategoryResponse;
@@ -72,4 +75,7 @@ public interface RetrofitIInterface {
     @POST("addtocart")
     Call<GetWishListResponse> addToCart(@Body AddToCartObject addToCartObject,
                                         @Header("token") String token);
+
+    @GET("getuseraddresslist")
+    Call<AddressResponse> getUserAddressList(@Header("token") String token);
 }
