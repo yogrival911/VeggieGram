@@ -131,7 +131,6 @@ int wishlisted=0;
 
             }
         });
-
     }
 
     @Override
