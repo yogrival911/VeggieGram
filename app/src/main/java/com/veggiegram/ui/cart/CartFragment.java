@@ -93,6 +93,11 @@ CartAdapter cartAdapter;
                 });
 
             }
+
+            @Override
+            public void clickRemoveAddress(int addressid) {
+
+            }
         };
 
         retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {

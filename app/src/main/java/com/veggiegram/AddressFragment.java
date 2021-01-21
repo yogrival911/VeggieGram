@@ -28,6 +28,7 @@ import retrofit2.Retrofit;
 public class AddressFragment extends Fragment {
 RecyclerView recyclerAddress;
 Button addNewAddress;
+ClickInterface clickInterface;
     public AddressFragment() {
         // Required empty public constructor
     }
@@ -50,11 +51,28 @@ Button addNewAddress;
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String user_id = sharedPreferences.getString("user_id", "");
 
+       clickInterface = new ClickInterface() {
+           @Override
+           public void click(int index) {
+
+           }
+
+           @Override
+           public void clickRemoveCart(int index, String productid) {
+
+           }
+
+           @Override
+           public void clickRemoveAddress(int addressid) {
+
+           }
+       };
+
         retrofitIInterface.getUserAddressList(user_id).enqueue(new Callback<AddressResponse>() {
             @Override
             public void onResponse(Call<AddressResponse> call, Response<AddressResponse> response) {
                 AddressResponse addressResponse = response.body();
-                AddressAdapter addressAdapter = new AddressAdapter(response.body());
+                AddressAdapter addressAdapter = new AddressAdapter(response.body(), clickInterface);
                 recyclerAddress.setAdapter(addressAdapter);
             }
 

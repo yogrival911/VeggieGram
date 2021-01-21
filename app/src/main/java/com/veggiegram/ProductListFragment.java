@@ -86,6 +86,11 @@ public class ProductListFragment extends Fragment {
             public void clickRemoveCart(int index, String productid) {
 
             }
+
+            @Override
+            public void clickRemoveAddress(int addressid) {
+
+            }
         };
 
         retrofitIInterface.getSubCatByCatID(String.valueOf(categoryPosition)).enqueue(new Callback<SubCategoryResponse>() {

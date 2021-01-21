@@ -5,15 +5,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.veggiegram.responses.address.AddressResponse;
 
 public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressViewHolder> {
     AddressResponse addressResponse;
+    ClickInterface clickInterface;
 
-    public AddressAdapter(AddressResponse addressResponse) {
+    public AddressAdapter(AddressResponse addressResponse, ClickInterface clickInterface) {
         this.addressResponse = addressResponse;
+        this.clickInterface = clickInterface;
     }
 
     @NonNull
@@ -27,6 +30,12 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
     @Override
     public void onBindViewHolder(@NonNull AddressAdapter.AddressViewHolder holder, int position) {
 
+        holder.removeAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickInterface.clickRemoveAddress(addressResponse.getData().get(position).getId());
+            }
+        });
     }
 
     @Override
@@ -35,8 +44,10 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
     }
 
     public class AddressViewHolder extends RecyclerView.ViewHolder {
+        ConstraintLayout removeAddress;
         public AddressViewHolder(@NonNull View itemView) {
             super(itemView);
+            removeAddress = itemView.findViewById(R.id.removeAddress);
         }
     }
 }

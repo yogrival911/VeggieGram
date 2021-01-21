@@ -4,6 +4,7 @@ import androidx.annotation.CallSuper;
 
 import com.veggiegram.responses.AddAddressObject;
 import com.veggiegram.responses.AddToCartObject;
+import com.veggiegram.responses.RemoveAddressObject;
 import com.veggiegram.responses.RemoveCartObject;
 import com.veggiegram.responses.RemoveWishListResponse;
 import com.veggiegram.responses.SigninObject;
@@ -20,6 +21,7 @@ import com.veggiegram.responses.otp.SendOTPObject;
 import com.veggiegram.responses.productdetail.ProductDetailResponse;
 import com.veggiegram.responses.productlistcat.ProductListByCatResponse;
 import com.veggiegram.responses.recommended.RecommededProductResponse;
+import com.veggiegram.responses.removeaddress.RemoveAddressResponse;
 import com.veggiegram.responses.removecart.RemoveCartResponse;
 import com.veggiegram.responses.signup.SignupResponse;
 import com.veggiegram.responses.subcat.SubCategoryResponse;
@@ -98,6 +100,10 @@ public interface RetrofitIInterface {
     @POST("addaddress")
     Call<AddAddressResponse> addNewAddress(@Body AddAddressObject addAddressObject,
                                            @Header("token") String token);
+
+    @POST("removeaddress")
+    Call<RemoveAddressResponse> removeAddress(@Body RemoveAddressObject removeAddressObject,
+                                              @Header("token") String token);
 
 
 }

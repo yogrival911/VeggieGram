@@ -13,8 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.veggiegram.responses.RemoveAddressObject;
+import com.veggiegram.responses.addaddress.AddAddressResponse;
 import com.veggiegram.responses.address.AddressResponse;
+import com.veggiegram.responses.removeaddress.RemoveAddressResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
 import com.veggiegram.ui.cart.CartFragment;
@@ -30,6 +34,7 @@ public class MyAddressFragment extends Fragment {
 RecyclerView recyclerAddress;
 SharedPreferences sharedPreferences;
 Button addAddress;
+ClickInterface clickInterface;
     public MyAddressFragment() {
     }
 
@@ -50,11 +55,38 @@ Button addAddress;
         Retrofit retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
 
+        clickInterface = new ClickInterface() {
+            @Override
+            public void click(int index) {
+
+            }
+
+            @Override
+            public void clickRemoveCart(int index, String productid) {
+
+            }
+
+            @Override
+            public void clickRemoveAddress(int addressid) {
+                retrofitIInterface.removeAddress(new RemoveAddressObject(String.valueOf(addressid)),user_id).enqueue(new Callback<RemoveAddressResponse>() {
+                    @Override
+                    public void onResponse(Call<RemoveAddressResponse> call, Response<RemoveAddressResponse> response) {
+                        Toast.makeText(getContext(), "Address Removed", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<RemoveAddressResponse> call, Throwable t) {
+
+                    }
+                });
+            }
+        };
+
         retrofitIInterface.getUserAddressList(user_id).enqueue(new Callback<AddressResponse>() {
             @Override
             public void onResponse(Call<AddressResponse> call, Response<AddressResponse> response) {
                 AddressResponse addressResponse = response.body();
-                AddressAdapter addressAdapter = new AddressAdapter(response.body());
+                AddressAdapter addressAdapter = new AddressAdapter(response.body(), clickInterface);
                 recyclerAddress.setAdapter(addressAdapter);
             }
 
