@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.veggiegram.responses.productlistcat.ProductListByCatResponse;
+import com.veggiegram.responses.subcat.SubCategoryResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
 import com.veggiegram.util.LoadWithGlide;
@@ -50,6 +51,8 @@ public class ProductListFragment extends Fragment {
         linearLayoutManager1.setOrientation(RecyclerView.HORIZONTAL);
         recyclerSubCategory.setLayoutManager(linearLayoutManager1);
 
+
+
         int categoryPosition = ProductListFragmentArgs.fromBundle(getArguments()).getCategoryNo();
         Log.i("yog", "categoryPosition"+categoryPosition);
 
@@ -57,12 +60,52 @@ public class ProductListFragment extends Fragment {
         String user_id = sharedPreferences.getString("user_id", "");
         Log.i("yog", user_id);
 
+        clickInterface = new ClickInterface() {
+            @Override
+            public void click(int index) {
+                Toast.makeText(getContext(), "position"+index, Toast.LENGTH_SHORT).show();
+                retrofitIInterface.getProductbySubCatID(String.valueOf(index),user_id).enqueue(new Callback<ProductListByCatResponse>() {
+                    @Override
+                    public void onResponse(Call<ProductListByCatResponse> call, Response<ProductListByCatResponse> response) {
+                        ProductListByCatResponse productListByCatResponse = response.body();
 
 
-        retrofitIInterface.getProductslistByCatID(String.valueOf(categoryPosition),user_id).enqueue(new Callback<ProductListByCatResponse>() {
+                        ProductListAdapter productListAdapter = new ProductListAdapter(response.body(),clickInterface);
+                        productListAdapter.setProductListByCatResponse(response.body());
+                        productListAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ProductListByCatResponse> call, Throwable t) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void clickRemoveCart(int index, String productid) {
+
+            }
+        };
+
+        retrofitIInterface.getSubCatByCatID(String.valueOf(categoryPosition)).enqueue(new Callback<SubCategoryResponse>() {
+            @Override
+            public void onResponse(Call<SubCategoryResponse> call, Response<SubCategoryResponse> response) {
+                SubCategoryAdapter subCategoryAdapter = new SubCategoryAdapter(response.body(), clickInterface);
+                recyclerSubCategory.setAdapter(subCategoryAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<SubCategoryResponse> call, Throwable t) {
+
+            }
+        });
+
+        retrofitIInterface.getProductslistByCatID(String.valueOf(categoryPosition), user_id).enqueue(new Callback<ProductListByCatResponse>() {
             @Override
             public void onResponse(Call<ProductListByCatResponse> call, Response<ProductListByCatResponse> response) {
-                ProductListAdapter productListAdapter = new ProductListAdapter(response.body(), clickInterface);
+                ProductListByCatResponse productListByCatResponse = response.body();
+                ProductListAdapter productListAdapter = new ProductListAdapter(response.body(),clickInterface);
                 recyclerViewProducts.setAdapter(productListAdapter);
             }
 

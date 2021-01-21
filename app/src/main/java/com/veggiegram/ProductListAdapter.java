@@ -1,6 +1,7 @@
 package com.veggiegram;
 
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +40,11 @@ int wishlisted=0;
         this.clickInterface = clickInterface;
     }
 
+    public void setProductListByCatResponse(ProductListByCatResponse productListByCatResponse) {
+        this.productListByCatResponse = productListByCatResponse;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ProductListAdapter.PLViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -52,7 +58,18 @@ int wishlisted=0;
 
         holder.productName.setText(productListByCatResponse.getData().get(position).getName());
         holder.quantity.setText(productListByCatResponse.getData().get(position).getUnit()+" "+ productListByCatResponse.getData().get(position).getUnitname());
-        holder.price.setText(" " +productListByCatResponse.getData().get(position).getPrice());
+
+        int price = productListByCatResponse.getData().get(position).getPrice();
+        int sellPrice = productListByCatResponse.getData().get(position).getSellprice();
+
+        int saving = price-sellPrice;
+        if(saving>0){
+            holder.pSave.setText("You Save " + "\u20B9"+ saving);
+        }
+
+        holder.price.setText("\u20B9" + sellPrice);
+        holder.pActualPrice.setText("\u20B9"+ price);
+        holder.pActualPrice.setPaintFlags(holder.pActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         wishlisted = productListByCatResponse.getData().get(position).getWhishlisted();
         if(wishlisted>0){
@@ -149,14 +166,17 @@ int wishlisted=0;
 
     public class PLViewHolder extends RecyclerView.ViewHolder {
         ImageView ivProductImage,fav;
-        TextView productName, quantity, price;
+        TextView productName, quantity, price, pActualPrice,pSave;
         public PLViewHolder(@NonNull View itemView) {
             super(itemView);
             ivProductImage = itemView.findViewById(R.id.pImage);
             productName = itemView.findViewById(R.id.pName);
             quantity = itemView.findViewById(R.id.pQuantity);
             price = itemView.findViewById(R.id.pSellPrice);
+            pActualPrice = itemView.findViewById(R.id.pPrice);
             fav = itemView.findViewById(R.id.fav);
+            pSave = itemView.findViewById(R.id.pSave);
+
         }
     }
 }

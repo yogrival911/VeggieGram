@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/etFirstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -21,7 +21,7 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/etLastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -29,7 +29,7 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName3"
+            android:id="@+id/etHouse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -37,7 +37,7 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName5"
+            android:id="@+id/etStreet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/editTextNumber"
+            android:id="@+id/etPin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -63,7 +63,7 @@
             android:inputType="number" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName9"
+            android:id="@+id/etLandmark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -71,7 +71,7 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/editTextPhone"
+            android:id="@+id/etMob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -81,7 +81,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/saveAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"

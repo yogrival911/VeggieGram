@@ -2,12 +2,14 @@ package com.veggiegram.retrofit;
 
 import androidx.annotation.CallSuper;
 
+import com.veggiegram.responses.AddAddressObject;
 import com.veggiegram.responses.AddToCartObject;
 import com.veggiegram.responses.RemoveCartObject;
 import com.veggiegram.responses.RemoveWishListResponse;
 import com.veggiegram.responses.SigninObject;
 import com.veggiegram.responses.SignupObject;
 import com.veggiegram.responses.WishListObject;
+import com.veggiegram.responses.addaddress.AddAddressResponse;
 import com.veggiegram.responses.address.AddressResponse;
 import com.veggiegram.responses.banner.BannerResponse;
 import com.veggiegram.responses.cartlist.GetCartListResponse;
@@ -20,6 +22,7 @@ import com.veggiegram.responses.productlistcat.ProductListByCatResponse;
 import com.veggiegram.responses.recommended.RecommededProductResponse;
 import com.veggiegram.responses.removecart.RemoveCartResponse;
 import com.veggiegram.responses.signup.SignupResponse;
+import com.veggiegram.responses.subcat.SubCategoryResponse;
 import com.veggiegram.responses.wishlist.GetWishListResponse;
 import com.veggiegram.responses.wishlist.WishListResponse;
 
@@ -84,4 +87,17 @@ public interface RetrofitIInterface {
     @POST("removecart")
     Call<RemoveCartResponse> removeCartProduct(@Body RemoveCartObject removeCartObject,
                                                @Header("token") String token);
+
+    @GET("Getsubcategorylistbycatid/{position}")
+    Call<SubCategoryResponse> getSubCatByCatID(@Path("position") String position);
+
+    @GET("getproductslistbysubcatid/{position}")
+    Call<ProductListByCatResponse> getProductbySubCatID(@Path("position") String position,
+                                                        @Header("token") String token);
+
+    @POST("addaddress")
+    Call<AddAddressResponse> addNewAddress(@Body AddAddressObject addAddressObject,
+                                           @Header("token") String token);
+
+
 }

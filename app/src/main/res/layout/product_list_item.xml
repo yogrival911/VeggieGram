@@ -74,7 +74,7 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/tvSave"
+                android:id="@+id/pSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -107,7 +107,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvPrice"
+                    android:id="@+id/pPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"

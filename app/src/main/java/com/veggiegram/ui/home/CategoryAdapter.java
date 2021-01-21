@@ -54,7 +54,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             @Override
             public void onClick(View view) {
                 NavController navController = Navigation.findNavController(holder.itemView);
-                navController.navigate(HomeFragmentDirections.actionHomeFragmentToProductListFragment(position));
+                navController.navigate(HomeFragmentDirections.actionHomeFragmentToProductListFragment(position+1));
             }
         });
 
