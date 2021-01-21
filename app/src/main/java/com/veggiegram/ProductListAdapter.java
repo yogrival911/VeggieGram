@@ -31,10 +31,12 @@ import retrofit2.Retrofit;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.PLViewHolder> {
 ProductListByCatResponse productListByCatResponse;
+ClickInterface clickInterface;
 int wishlisted=0;
 
-    public ProductListAdapter(ProductListByCatResponse productListByCatResponse) {
+    public ProductListAdapter(ProductListByCatResponse productListByCatResponse, ClickInterface clickInterface) {
         this.productListByCatResponse = productListByCatResponse;
+        this.clickInterface = clickInterface;
     }
 
     @NonNull
@@ -61,6 +63,13 @@ int wishlisted=0;
         String url = "https://admin.veggiegram.in/adminuploads/products/" + img;
 
         LoadWithGlide.loadImage(holder.ivProductImage,url,new CircularProgressDrawable(holder.itemView.getContext()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickInterface.click(position);
+            }
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,10 +152,10 @@ int wishlisted=0;
         TextView productName, quantity, price;
         public PLViewHolder(@NonNull View itemView) {
             super(itemView);
-            ivProductImage = itemView.findViewById(R.id.proImage);
-            productName = itemView.findViewById(R.id.proName);
-            quantity = itemView.findViewById(R.id.quantity);
-            price = itemView.findViewById(R.id.sellPrice);
+            ivProductImage = itemView.findViewById(R.id.pImage);
+            productName = itemView.findViewById(R.id.pName);
+            quantity = itemView.findViewById(R.id.pQuantity);
+            price = itemView.findViewById(R.id.pSellPrice);
             fav = itemView.findViewById(R.id.fav);
         }
     }

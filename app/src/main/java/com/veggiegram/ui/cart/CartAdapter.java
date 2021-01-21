@@ -11,15 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
+import com.veggiegram.ClickInterface;
 import com.veggiegram.R;
 import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.util.LoadWithGlide;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
     GetCartListResponse cartListResponse;
+    ClickInterface clickInterface;
 
-    public CartAdapter(GetCartListResponse cartListResponse) {
+    public CartAdapter(GetCartListResponse cartListResponse, ClickInterface clickInterface) {
         this.cartListResponse = cartListResponse;
+        this.clickInterface = clickInterface;
     }
 
     @NonNull
@@ -38,6 +41,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.sellPrice.setText(cartListResponse.getData().get(position).getSellprice().toString());
         holder.etQuantity.setText(cartListResponse.getData().get(position).getCartquantity().toString());
 
+        holder.removePro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickInterface.clickRemoveCart(position, cartListResponse.getData().get(position).getProductid().toString());
+            }
+        });
+
+
     }
 
     @Override
@@ -46,7 +57,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
     public class CartViewHolder extends RecyclerView.ViewHolder {
-        ImageView cartImage;
+        ImageView cartImage,removePro;
         TextView cartItemName,sellPrice;
         EditText etQuantity;
         public CartViewHolder(@NonNull View itemView) {
@@ -55,6 +66,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             cartItemName = itemView.findViewById(R.id.proName);
             sellPrice = itemView.findViewById(R.id.sellPrice);
             etQuantity = itemView.findViewById(R.id.etQuantity);
+            removePro = itemView.findViewById(R.id.removePro);
         }
     }
 }

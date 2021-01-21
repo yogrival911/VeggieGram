@@ -15,93 +15,108 @@
         android:layout_gravity="center_horizontal">
 
         <ImageView
-            android:id="@+id/proImage"
+            android:id="@+id/pImage"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:scaleType="centerCrop"
             cardView:layout_constraintStart_toStartOf="parent"
             cardView:layout_constraintTop_toTopOf="parent"
-
             tools:background="@tools:sample/backgrounds/scenic" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            cardView:layout_constraintBottom_toBottomOf="@+id/proImage"
+
+        <ImageView
+            android:id="@+id/fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
             cardView:layout_constraintEnd_toEndOf="parent"
-            cardView:layout_constraintStart_toEndOf="@+id/proImage"
-            cardView:layout_constraintTop_toTopOf="@+id/proImage">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/proName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="Vegetables"
-                    android:textColor="@color/black" />
-
-                <ImageView
-                    android:id="@+id/fav"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    cardView:srcCompat="@drawable/add_to_fav" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/save"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Save"
-                android:textColor="@color/purple_500" />
-
-            <TextView
-                android:id="@+id/quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="500 gams"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/sellPrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Rs. 45/-"
-                android:textColor="@color/black" />
-
-        </LinearLayout>
+            cardView:layout_constraintTop_toTopOf="@+id/linearLayout3"
+            cardView:srcCompat="@drawable/grey_fav" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:backgroundTint="#FFFFFF"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/white"
             android:text="Add"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            cardView:cornerRadius="10dp"
-            cardView:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="12sp"
+            cardView:cornerRadius="8dp"
+            cardView:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
             cardView:layout_constraintEnd_toEndOf="parent"
             cardView:strokeColor="@color/black"
-            cardView:strokeWidth="1dp" />
+            cardView:strokeWidth="0.7dp" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="\u20B9"
-            android:textColor="@color/black"
-            cardView:layout_constraintStart_toStartOf="@+id/quantity"
-            cardView:layout_constraintTop_toBottomOf="@+id/quantity" />
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            cardView:layout_constraintBottom_toBottomOf="@+id/pImage"
+            cardView:layout_constraintEnd_toStartOf="@+id/button"
+            cardView:layout_constraintStart_toEndOf="@+id/pImage"
+            cardView:layout_constraintTop_toTopOf="@+id/pImage">
+
+            <TextView
+                android:id="@+id/pName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Name"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="You Save"
+                android:textColor="@color/purple_500"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/pQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="! kg"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/pSellPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="35"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:text="45"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -12,7 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.veggiegram.responses.productlistcat.ProductListByCatResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
@@ -27,6 +29,7 @@ import retrofit2.Retrofit;
 public class ProductListFragment extends Fragment {
     RecyclerView recyclerViewProducts, recyclerSubCategory;
     Retrofit retrofit;
+    ClickInterface clickInterface;
     public ProductListFragment() {
 
     }
@@ -54,10 +57,12 @@ public class ProductListFragment extends Fragment {
         String user_id = sharedPreferences.getString("user_id", "");
         Log.i("yog", user_id);
 
+
+
         retrofitIInterface.getProductslistByCatID(String.valueOf(categoryPosition),user_id).enqueue(new Callback<ProductListByCatResponse>() {
             @Override
             public void onResponse(Call<ProductListByCatResponse> call, Response<ProductListByCatResponse> response) {
-                ProductListAdapter productListAdapter = new ProductListAdapter(response.body());
+                ProductListAdapter productListAdapter = new ProductListAdapter(response.body(), clickInterface);
                 recyclerViewProducts.setAdapter(productListAdapter);
             }
 

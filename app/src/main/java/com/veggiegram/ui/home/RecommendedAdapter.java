@@ -71,11 +71,11 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
         TextView tvName, tvSave, tvQuantity,tvSellPrice, tvPrice;
         public RecommendedViewHolder(@NonNull View itemView) {
             super(itemView);
-            ivRec = itemView.findViewById(R.id.ivRec);
-            tvName = itemView.findViewById(R.id.tvName);
+            ivRec = itemView.findViewById(R.id.pImage);
+            tvName = itemView.findViewById(R.id.pName);
             tvSave = itemView.findViewById(R.id.tvSave);
-            tvQuantity = itemView.findViewById(R.id.tvQuantity);
-            tvSellPrice = itemView.findViewById(R.id.tvSellPrice);
+            tvQuantity = itemView.findViewById(R.id.pQuantity);
+            tvSellPrice = itemView.findViewById(R.id.pSellPrice);
             tvPrice = itemView.findViewById(R.id.tvPrice);
 
         }

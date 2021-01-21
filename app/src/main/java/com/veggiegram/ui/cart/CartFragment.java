@@ -20,8 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.veggiegram.CartActivity;
+import com.veggiegram.ClickInterface;
 import com.veggiegram.R;
+import com.veggiegram.responses.RemoveCartObject;
 import com.veggiegram.responses.cartlist.GetCartListResponse;
+import com.veggiegram.responses.removecart.RemoveCartResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
 import com.veggiegram.ui.home.HomeFragmentDirections;
@@ -39,6 +42,8 @@ RecyclerView recyclerViewCart;
 SharedPreferences sharedPreferences;
 TextView cartTotal;
 Button checkOut;
+ClickInterface clickInterface;
+CartAdapter cartAdapter;
     public CartFragment() {
         // Required empty public constructor
     }
@@ -64,6 +69,32 @@ Button checkOut;
         recyclerViewCart.setLayoutManager(linearLayoutManager);
         Log.i("yogid",user_id);
 
+        clickInterface = new ClickInterface() {
+            @Override
+            public void click(int index) {
+
+            }
+
+            @Override
+            public void clickRemoveCart(int index, String productid) {
+                retrofitIInterface.removeCartProduct(new RemoveCartObject(productid),user_id).enqueue(new Callback<RemoveCartResponse>() {
+                    @Override
+                    public void onResponse(Call<RemoveCartResponse> call, Response<RemoveCartResponse> response) {
+                        RemoveCartResponse removeCartResponse = response.body();
+                        cartAdapter.cartListResponse.getData().remove(index);
+                        cartAdapter.notifyDataSetChanged();
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<RemoveCartResponse> call, Throwable t) {
+
+                    }
+                });
+
+            }
+        };
+
         retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
             @Override
             public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {
@@ -84,7 +115,7 @@ Button checkOut;
                         grandTotal = grandTotal + quantity * sellPrice;
                     }
                     cartTotal.setText(String.valueOf(grandTotal));
-                    CartAdapter cartAdapter = new CartAdapter(response.body());
+                    cartAdapter = new CartAdapter(response.body(), clickInterface);
                     recyclerViewCart.setAdapter(cartAdapter);
                 }
             }
