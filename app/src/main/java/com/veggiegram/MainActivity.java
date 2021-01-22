@@ -95,8 +95,21 @@ public class MainActivity extends AppCompatActivity {
                         drawerLayout.closeDrawers();
                         Intent intent = new Intent(getApplicationContext(), AddressActivity.class);
                         startActivity(intent);
-
                         break;
+
+                    case R.id.share:
+                        drawerLayout.closeDrawers();
+                        Intent sharingIntent = new Intent();
+                        sharingIntent.setAction(Intent.ACTION_SEND);
+                        sharingIntent.setType("text/plain");
+                        String shareBody = "Download VeggieGram";
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "VeggieGram");
+                        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                        startActivity(Intent.createChooser(sharingIntent, "Share via"));
+
+                    case R.id.contact:
+                        Intent intent1 = new Intent(getApplicationContext(), ContactActivity.class);
+                        startActivity(intent1);
                 }
                 return true;
             }
