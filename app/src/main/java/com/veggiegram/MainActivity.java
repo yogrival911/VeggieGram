@@ -35,7 +35,7 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     TextView textCartItemCount;
-    public  int mCartItemCount = 10;
+    int mCartItemCount = 10;
     NavHostFragment navHostFragment;
     NavigationView navigationView;
 

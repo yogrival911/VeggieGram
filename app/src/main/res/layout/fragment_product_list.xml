@@ -14,6 +14,17 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <SearchView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/search_background"
+                android:layout_margin="10dp"
+                android:clickable="false"
+                android:iconifiedByDefault="false"
+                android:queryBackground="@drawable/search_background"
+                android:queryHint="Search Products"
+                android:searchIcon="@drawable/ic_baseline_search_24"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerSubCategory"
                 android:layout_width="match_parent"
