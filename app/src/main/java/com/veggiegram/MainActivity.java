@@ -10,9 +10,11 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,14 +22,26 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.veggiegram.responses.cartlist.GetCartListResponse;
+import com.veggiegram.retrofit.RetrofitClientInstance;
+import com.veggiegram.retrofit.RetrofitIInterface;
 import com.veggiegram.ui.home.HomeFragmentDirections;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     TextView textCartItemCount;
-    int mCartItemCount = 10;
+    public  int mCartItemCount = 10;
     NavHostFragment navHostFragment;
     NavigationView navigationView;
+
+    public void setmCartItemCount(int mCartItemCount) {
+        this.mCartItemCount = mCartItemCount;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         drawerLayout = findViewById(R.id.drawerLayout);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String user_id = sharedPreferences.getString("user_id","");
 
         navigationView = findViewById(R.id.navView);
 
@@ -54,6 +71,21 @@ public class MainActivity extends AppCompatActivity {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.open, R.string.close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
+
+        Retrofit retrofit = RetrofitClientInstance.getInstance();
+        RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
+        retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
+            @Override
+            public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {
+                mCartItemCount = response.body().getData().size();
+                setupBadge();
+            }
+
+            @Override
+            public void onFailure(Call<GetCartListResponse> call, Throwable t) {
+
+            }
+        });
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -92,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void setupBadge() {
+    public void setupBadge() {
 
         if (textCartItemCount != null) {
             if (mCartItemCount == 0) {

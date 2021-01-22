@@ -3,6 +3,7 @@ package com.veggiegram;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
@@ -10,6 +11,8 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -140,7 +143,11 @@ TextView tvAddToCart;
             public void onClick(View view) {
                 Log.i("add", "click");
                 tvAddToCart.setText("Added");
+                MainActivity mainActivity = new MainActivity();
+                mainActivity.setmCartItemCount(10);
+                mainActivity.setupBadge();
                 Toast.makeText(getActivity(), "Added", Toast.LENGTH_SHORT).show();
+
                 retrofitIInterface.addToCart(new AddToCartObject(product_id,"1"),user_id).enqueue(new Callback<GetWishListResponse>() {
                     @Override
                     public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
@@ -156,10 +163,10 @@ TextView tvAddToCart;
 
                     }
                 });
-
             }
         });
 
         return  view;
     }
+
 }

@@ -117,7 +117,6 @@ public class ProductListFragment extends Fragment {
                     public void onResponse(Call<ProductListByCatResponse> call, Response<ProductListByCatResponse> response) {
                         ProductListByCatResponse productListByCatResponse = response.body();
 
-
                         productListAdapter = new ProductListAdapter(response.body(),clickInterface, clickCartInterface);
                         productListAdapter.setProductListByCatResponse(response.body());
                         productListAdapter.notifyDataSetChanged();
