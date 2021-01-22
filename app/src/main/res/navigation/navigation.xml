@@ -21,7 +21,11 @@
         android:id="@+id/categoryFragment"
         android:name="com.veggiegram.ui.category.CategoryFragment"
         android:label="fragment_category"
-        tools:layout="@layout/fragment_category" />
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_productListFragment"
+            app:destination="@id/productListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.veggiegram.ui.favourite.FavouriteFragment"

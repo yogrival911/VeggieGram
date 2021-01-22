@@ -25,6 +25,7 @@ import retrofit2.Retrofit;
 public class CategoryFragment extends Fragment {
 RecyclerView categoryRecyclerView;
 CircleProgressBarCustom circlePro;
+Boolean fromHome = false;
     public CategoryFragment() {
     }
 
@@ -43,7 +44,7 @@ CircleProgressBarCustom circlePro;
             public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
                 circlePro.clearAnimation();
                 circlePro.setVisibility(View.INVISIBLE);
-                CategoryAdapter categoryAdapter = new CategoryAdapter(response.body());
+                CategoryAdapter categoryAdapter = new CategoryAdapter(response.body(),fromHome);
                 categoryRecyclerView.setAdapter(categoryAdapter);
             }
 

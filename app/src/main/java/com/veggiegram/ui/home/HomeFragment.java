@@ -40,6 +40,7 @@ public class HomeFragment extends Fragment {
     Retrofit retrofit;
     RecyclerView recyclerCategoryHome,recyclerRecommended;
     CircleProgressBarCustom circularProgressBar;
+    Boolean fromHome = true;
 
     public HomeFragment() {
     }
@@ -111,7 +112,7 @@ public class HomeFragment extends Fragment {
                 Log.i("yog", response.body().toString());
                 circularProgressBar.clearAnimation();
                 circularProgressBar.setVisibility(View.INVISIBLE);
-                CategoryAdapter categoryAdapter = new CategoryAdapter(response.body());
+                CategoryAdapter categoryAdapter = new CategoryAdapter(response.body(), fromHome);
                 recyclerCategoryHome.setAdapter(categoryAdapter);
             }
 

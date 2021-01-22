@@ -17,15 +17,16 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.veggiegram.R;
 import com.veggiegram.responses.category.CategoryResponse;
+import com.veggiegram.ui.category.CategoryFragmentDirections;
 import com.veggiegram.util.LoadWithGlide;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
     CategoryResponse categoryResponse;
+    Boolean fromHome;
 
-
-    public CategoryAdapter(CategoryResponse categoryResponse) {
+    public CategoryAdapter(CategoryResponse categoryResponse, Boolean fromHome) {
         this.categoryResponse = categoryResponse;
-
+        this.fromHome = fromHome;
     }
 
     public void setResponse(CategoryResponse categoryResponse){
@@ -54,7 +55,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             @Override
             public void onClick(View view) {
                 NavController navController = Navigation.findNavController(holder.itemView);
-                navController.navigate(HomeFragmentDirections.actionHomeFragmentToProductListFragment(position+1));
+                if(fromHome){
+                    navController.navigate(HomeFragmentDirections.actionHomeFragmentToProductListFragment(position+1));
+                }
+                else{
+                    navController.navigate(CategoryFragmentDirections.actionCategoryFragmentToProductListFragment(position+1));
+                }
             }
         });
 
