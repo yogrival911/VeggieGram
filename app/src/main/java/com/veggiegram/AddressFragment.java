@@ -63,9 +63,10 @@ ClickInterface clickInterface;
            }
 
            @Override
-           public void clickRemoveAddress(int addressid) {
+           public void clickRemoveAddress(int index, int addressid) {
 
            }
+
        };
 
         retrofitIInterface.getUserAddressList(user_id).enqueue(new Callback<AddressResponse>() {

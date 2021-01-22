@@ -33,7 +33,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
         holder.removeAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickInterface.clickRemoveAddress(addressResponse.getData().get(position).getId());
+                clickInterface.clickRemoveAddress(position,addressResponse.getData().get(position).getId());
             }
         });
     }

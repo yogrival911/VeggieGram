@@ -34,21 +34,69 @@
             cardView:layout_constraintTop_toTopOf="@+id/linearLayout3"
             cardView:srcCompat="@drawable/grey_fav" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:backgroundTint="@color/white"
-            android:text="Add"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            cardView:cornerRadius="8dp"
-            cardView:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
-            cardView:layout_constraintEnd_toEndOf="parent"
-            cardView:strokeColor="@color/black"
-            cardView:strokeWidth="0.7dp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout4"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            cardView:layout_constraintBottom_toBottomOf="parent"
+            cardView:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/quanity_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                cardView:layout_constraintBottom_toBottomOf="parent"
+                cardView:layout_constraintEnd_toEndOf="parent"
+                cardView:layout_constraintStart_toStartOf="parent"
+                cardView:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/increment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    cardView:layout_constraintBottom_toBottomOf="parent"
+                    cardView:layout_constraintEnd_toEndOf="parent"
+                    cardView:layout_constraintTop_toTopOf="parent"
+                    cardView:srcCompat="@drawable/increment" />
+
+                <EditText
+                    android:id="@+id/cartQuant"
+                    android:layout_width="15dp"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:ems="10"
+                    android:inputType="number"
+                    cardView:layout_constraintBottom_toBottomOf="parent"
+                    cardView:layout_constraintEnd_toStartOf="@+id/increment"
+                    cardView:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/decrement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    cardView:layout_constraintBottom_toBottomOf="parent"
+                    cardView:layout_constraintEnd_toStartOf="@+id/cartQuant"
+                    cardView:layout_constraintTop_toTopOf="parent"
+                    cardView:srcCompat="@drawable/ic_baseline_remove_circle_24" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/cartButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#FFFFFF"
+                android:inputType="textCapWords"
+                android:text="Add"
+                android:textColor="@color/black"
+                cardView:cornerRadius="10dp"
+                cardView:layout_constraintBottom_toBottomOf="parent"
+                cardView:layout_constraintEnd_toEndOf="parent"
+                cardView:layout_constraintHorizontal_bias="0.5"
+                cardView:layout_constraintStart_toStartOf="parent"
+                cardView:layout_constraintTop_toTopOf="parent"
+                cardView:strokeColor="#000000"
+                cardView:strokeWidth="0.7dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout3"
@@ -60,7 +108,7 @@
             android:gravity="center_vertical"
             android:orientation="vertical"
             cardView:layout_constraintBottom_toBottomOf="@+id/pImage"
-            cardView:layout_constraintEnd_toStartOf="@+id/button"
+            cardView:layout_constraintEnd_toStartOf="@+id/constraintLayout4"
             cardView:layout_constraintStart_toEndOf="@+id/pImage"
             cardView:layout_constraintTop_toTopOf="@+id/pImage">
 
@@ -78,7 +126,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="You Save"
                 android:textColor="@color/purple_500"
                 android:textSize="14sp" />
 

@@ -35,6 +35,7 @@ RecyclerView recyclerAddress;
 SharedPreferences sharedPreferences;
 Button addAddress;
 ClickInterface clickInterface;
+AddressAdapter addressAdapter;
     public MyAddressFragment() {
     }
 
@@ -67,18 +68,10 @@ ClickInterface clickInterface;
             }
 
             @Override
-            public void clickRemoveAddress(int addressid) {
-                retrofitIInterface.removeAddress(new RemoveAddressObject(String.valueOf(addressid)),user_id).enqueue(new Callback<RemoveAddressResponse>() {
-                    @Override
-                    public void onResponse(Call<RemoveAddressResponse> call, Response<RemoveAddressResponse> response) {
-                        Toast.makeText(getContext(), "Address Removed", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFailure(Call<RemoveAddressResponse> call, Throwable t) {
-
-                    }
-                });
+            public void clickRemoveAddress(int index, int addressid) {
+                Toast.makeText(getContext(), "Address Removed", Toast.LENGTH_SHORT).show();
+                addressAdapter.addressResponse.getData().remove(index);
+                addressAdapter.notifyDataSetChanged();
             }
         };
 
@@ -86,7 +79,7 @@ ClickInterface clickInterface;
             @Override
             public void onResponse(Call<AddressResponse> call, Response<AddressResponse> response) {
                 AddressResponse addressResponse = response.body();
-                AddressAdapter addressAdapter = new AddressAdapter(response.body(), clickInterface);
+                addressAdapter = new AddressAdapter(response.body(), clickInterface);
                 recyclerAddress.setAdapter(addressAdapter);
             }
 
