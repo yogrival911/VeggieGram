@@ -1,9 +1,9 @@
 package com.veggiegram.ui.cart;
 
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,15 +38,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         LoadWithGlide.loadImage(holder.cartImage,imgUrl, new CircularProgressDrawable(holder.cartImage.getContext()));
 
         holder.cartItemName.setText(cartListResponse.getData().get(position).getName());
-        holder.sellPrice.setText(cartListResponse.getData().get(position).getSellprice().toString());
+        holder.sellPrice.setText("\u20B9"+cartListResponse.getData().get(position).getSellprice().toString());
         holder.etQuantity.setText(cartListResponse.getData().get(position).getCartquantity().toString());
+        holder.quantity.setText(cartListResponse.getData().get(position).getUnit()+ " " + cartListResponse.getData().get(position).getUnitname());
+        holder.tvPrice.setText("\u20B9"+cartListResponse.getData().get(position).getPrice());
+        holder.tvPrice.setPaintFlags(holder.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-        holder.removePro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickInterface.clickRemoveCart(position, cartListResponse.getData().get(position).getProductid().toString());
-            }
-        });
+//        holder.removePro.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                clickInterface.clickRemoveCart(position, cartListResponse.getData().get(position).getProductid().toString());
+//            }
+//        });
 
 
     }
@@ -59,14 +62,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public class CartViewHolder extends RecyclerView.ViewHolder {
         ImageView cartImage,removePro;
         TextView cartItemName,sellPrice;
-        EditText etQuantity;
+        TextView etQuantity,tvPrice,quantity;
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
             cartImage = itemView.findViewById(R.id.proImage);
             cartItemName = itemView.findViewById(R.id.proName);
             sellPrice = itemView.findViewById(R.id.sellPrice);
-            etQuantity = itemView.findViewById(R.id.etQuantity);
-            removePro = itemView.findViewById(R.id.removePro);
+            etQuantity = itemView.findViewById(R.id.tvQuanity);
+            tvPrice = itemView.findViewById(R.id.tvPrice);
+            quantity = itemView.findViewById(R.id.tvQuanityUnit);
+//            removePro = itemView.findViewById(R.id.removePro);
         }
     }
 }
