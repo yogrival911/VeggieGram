@@ -1,17 +1,24 @@
 package com.veggiegram.ui.home;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
@@ -19,6 +26,7 @@ import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import com.veggiegram.R;
 import com.veggiegram.responses.banner.BannerResponse;
+import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.responses.category.CategoryResponse;
 import com.veggiegram.responses.recommended.RecommededProductResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
@@ -41,13 +49,19 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerCategoryHome,recyclerRecommended;
     CircleProgressBarCustom circularProgressBar;
     Boolean fromHome = true;
-
+    TextView textCartItemCount;
+    int mCartItemCount;
     public HomeFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        setHasOptionsMenu(true);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String user_id = sharedPreferences.getString("user_id","");
 
         SliderView sliderView = view.findViewById(R.id.imageSlider);
         recyclerCategoryHome = view.findViewById(R.id.recyclerCategoryHome);
@@ -106,6 +120,19 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
+            @Override
+            public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {
+                mCartItemCount = response.body().getData().size();
+                setupBadge();
+            }
+
+            @Override
+            public void onFailure(Call<GetCartListResponse> call, Throwable t) {
+
+            }
+        });
+
         retrofitIInterface.getCategoryList().enqueue(new Callback<CategoryResponse>() {
             @Override
             public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
@@ -141,5 +168,30 @@ public class HomeFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        MenuItem menuItem = menu.getItem(0);
+        View actionView = menuItem.getActionView();
+        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+        textCartItemCount.setText(String.valueOf(mCartItemCount));
+    }
+
+    public void setupBadge() {
+
+        if (textCartItemCount != null) {
+            if (mCartItemCount == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            } else {
+                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)));
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 }

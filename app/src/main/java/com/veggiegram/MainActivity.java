@@ -35,9 +35,14 @@ import retrofit2.Retrofit;
 public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     TextView textCartItemCount;
-    int mCartItemCount = 10;
+    int mCartItemCount;
     NavHostFragment navHostFragment;
     NavigationView navigationView;
+
+    public int getmCartItemCount() {
+        return mCartItemCount;
+    }
+
 
     public void setmCartItemCount(int mCartItemCount) {
         this.mCartItemCount = mCartItemCount;

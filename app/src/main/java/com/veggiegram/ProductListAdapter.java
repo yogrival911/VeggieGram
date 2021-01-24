@@ -168,74 +168,8 @@ int updatedCart=0;
                         clickCartInterface.clickRemoveWishList(position,productId);
                     }
                 }
-
             }
         });
-
-//        holder.fav.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                int wishlisted_in = productListByCatResponse.getData().get(position).getWhishlisted();
-//                Log.i("yog", String.valueOf(wishlisted));
-//
-//
-//               if(wishlisted_in>0){
-//                   holder.fav.setImageResource(R.drawable.add_to_fav);
-//                   String product_id = productListByCatResponse.getData().get(position).getProductid().toString();
-//                   SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(holder.itemView.getContext());
-//                   String user_id = sharedPreferences.getString("user_id","");
-//
-//                   Retrofit retrofit = RetrofitClientInstance.getInstance();
-//                   RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
-//
-//                   retrofitIInterface.removeWishList(new WishListObject(product_id),user_id).enqueue(new Callback<RemoveWishListResponse>() {
-//                       @Override
-//                       public void onResponse(Call<RemoveWishListResponse> call, Response<RemoveWishListResponse> response) {
-//                           if(response.body().getSuccess()){
-//
-//                               Toast.makeText(holder.itemView.getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-//                           }
-//                       }
-//
-//                       @Override
-//                       public void onFailure(Call<RemoveWishListResponse> call, Throwable t) {
-//
-//                       }
-//                   });
-//               }
-//               else{
-//                   holder.fav.setImageResource(R.drawable.red_heart);
-//
-//                   String product_id = productListByCatResponse.getData().get(position).getProductid().toString();
-//                   SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(holder.itemView.getContext());
-//                   String user_id = sharedPreferences.getString("user_id","");
-//
-//                   if(user_id.isEmpty()){
-//                       NavController navController = Navigation.findNavController(holder.itemView);
-//                       navController.navigate(ProductListFragmentDirections.actionProductListFragmentToSigninFragment());
-//
-//                   }
-//                   else{
-//                       Retrofit retrofit = RetrofitClientInstance.getInstance();
-//                       RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
-//                       retrofitIInterface.addToWishList(new WishListObject(product_id),user_id).enqueue(new Callback<WishListResponse>() {
-//                           @Override
-//                           public void onResponse(Call<WishListResponse> call, Response<WishListResponse> response) {
-//                               WishListResponse wishListResponse = response.body();
-//                               Toast.makeText(holder.itemView.getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-//
-//                           }
-//
-//                           @Override
-//                           public void onFailure(Call<WishListResponse> call, Throwable t) {
-//
-//                           }
-//                       });
-//                   }
-//               }
-//
-//            }
-//        });
     }
 
     @Override

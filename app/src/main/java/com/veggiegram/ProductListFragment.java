@@ -3,6 +3,7 @@ package com.veggiegram;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,8 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
@@ -19,6 +24,7 @@ import com.veggiegram.responses.AddToCartObject;
 import com.veggiegram.responses.RemoveCartObject;
 import com.veggiegram.responses.RemoveWishListResponse;
 import com.veggiegram.responses.WishListObject;
+import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.responses.productlistcat.ProductListByCatResponse;
 import com.veggiegram.responses.removecart.RemoveCartResponse;
 import com.veggiegram.responses.subcat.SubCategoryResponse;
@@ -41,6 +47,9 @@ public class ProductListFragment extends Fragment {
     ClickCartInterface clickCartInterface;
     ProductListAdapter productListAdapter;
     ClickSubCatInterface clickSubCatInterface;
+    TextView textCartItemCount;
+    int mCartItemCount = 0;
+    int cartCount;
     public ProductListFragment() {
 
     }
@@ -48,6 +57,8 @@ public class ProductListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
+
+        setHasOptionsMenu(true);
 
         retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
@@ -68,9 +79,23 @@ public class ProductListFragment extends Fragment {
         String user_id = sharedPreferences.getString("user_id", "");
         Log.i("yog", "user_id "+user_id);
 
+        retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
+            @Override
+            public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {
+                mCartItemCount = response.body().getData().size();
+                setupBadge();
+            }
+
+            @Override
+            public void onFailure(Call<GetCartListResponse> call, Throwable t) {
+
+            }
+        });
+
         clickCartInterface = new ClickCartInterface() {
             @Override
             public void increment(int index, int cartQuantity, String productid) {
+
                 productListAdapter.productListByCatResponse.getData().get(index).setCartquantity(cartQuantity+1);
                 productListAdapter.notifyItemChanged(index);
                 retrofitIInterface.addToCart(new AddToCartObject(productid,String.valueOf(cartQuantity+1)),user_id).enqueue(new Callback<GetWishListResponse>() {
@@ -84,8 +109,6 @@ public class ProductListFragment extends Fragment {
                         else {
                             Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
                         }
-
-
                     }
 
                     @Override
@@ -97,9 +120,13 @@ public class ProductListFragment extends Fragment {
 
             @Override
             public void decrement(int index, int cartQuanity, String productid) {
+
                 if(cartQuanity==1){
                     productListAdapter.productListByCatResponse.getData().get(index).setCartquantity(cartQuanity-1);
                     productListAdapter.notifyItemChanged(index);
+
+                    mCartItemCount--;
+                    setupBadge();
                     retrofitIInterface.removeCartProduct(new RemoveCartObject(productid),user_id).enqueue(new Callback<RemoveCartResponse>() {
                         @Override
                         public void onResponse(Call<RemoveCartResponse> call, Response<RemoveCartResponse> response) {
@@ -140,6 +167,11 @@ public class ProductListFragment extends Fragment {
 
             @Override
             public void clickAdd(int index, int cartQuantity, String productid) {
+                mCartItemCount = mCartItemCount+1;
+                setupBadge();
+                MainActivity mainActivity = new MainActivity();
+                mainActivity.setmCartItemCount(mCartItemCount);
+                mainActivity.setupBadge();
                 productListAdapter.productListByCatResponse.getData().get(index).setCartquantity(cartQuantity+1);
                 productListAdapter.notifyItemChanged(index);
 
@@ -269,5 +301,30 @@ public class ProductListFragment extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        MenuItem menuItem = menu.getItem(0);
+        View actionView = menuItem.getActionView();
+        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+        textCartItemCount.setText(String.valueOf(mCartItemCount));
+    }
+
+    public void setupBadge() {
+
+        if (textCartItemCount != null) {
+            if (mCartItemCount == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            } else {
+                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)));
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 }

@@ -44,7 +44,7 @@ SharedPreferences sharedPreferences;
 LinearLayout addToCart;
 int wishlisted_in;
 TextView tvAddToCart, textCartItemCount;
-    int mCartItemCount = 10;
+    int mCartItemCount = 0;
     public ProductDetailFragment() {
     }
 
