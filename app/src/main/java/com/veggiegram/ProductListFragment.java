@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.veggiegram.responses.AddToCartObject;
 import com.veggiegram.responses.RemoveCartObject;
+import com.veggiegram.responses.RemoveWishListResponse;
+import com.veggiegram.responses.WishListObject;
 import com.veggiegram.responses.productlistcat.ProductListByCatResponse;
 import com.veggiegram.responses.removecart.RemoveCartResponse;
 import com.veggiegram.responses.subcat.SubCategoryResponse;
@@ -38,6 +40,7 @@ public class ProductListFragment extends Fragment {
     ClickInterface clickInterface;
     ClickCartInterface clickCartInterface;
     ProductListAdapter productListAdapter;
+    ClickSubCatInterface clickSubCatInterface;
     public ProductListFragment() {
 
     }
@@ -58,53 +61,149 @@ public class ProductListFragment extends Fragment {
         linearLayoutManager1.setOrientation(RecyclerView.HORIZONTAL);
         recyclerSubCategory.setLayoutManager(linearLayoutManager1);
 
-
-
         int categoryPosition = ProductListFragmentArgs.fromBundle(getArguments()).getCategoryNo();
         Log.i("yog", "categoryPosition"+categoryPosition);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String user_id = sharedPreferences.getString("user_id", "");
-        Log.i("yog", user_id);
+        Log.i("yog", "user_id "+user_id);
 
         clickCartInterface = new ClickCartInterface() {
             @Override
             public void increment(int index, int cartQuantity, String productid) {
+                productListAdapter.productListByCatResponse.getData().get(index).setCartquantity(cartQuantity+1);
+                productListAdapter.notifyItemChanged(index);
                 retrofitIInterface.addToCart(new AddToCartObject(productid,String.valueOf(cartQuantity+1)),user_id).enqueue(new Callback<GetWishListResponse>() {
                     @Override
                     public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
                         GetWishListResponse wishListResponse = response.body();
-//                        productListAdapter.productListByCatResponse.getData().get(index).setCartquantity(cartQuantity+1);
-//                        productListAdapter.notifyItemChanged(index);
+                        if (response.body().getSuccess()){
+
+                            Toast.makeText(getContext(), "Cart Updated", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                        }
+
+
                     }
 
                     @Override
                     public void onFailure(Call<GetWishListResponse> call, Throwable t) {
-
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
 
             @Override
             public void decrement(int index, int cartQuanity, String productid) {
-                AddToCartObject addToCartObject = new AddToCartObject(productid,String.valueOf(cartQuanity-1));
+                if(cartQuanity==1){
+                    productListAdapter.productListByCatResponse.getData().get(index).setCartquantity(cartQuanity-1);
+                    productListAdapter.notifyItemChanged(index);
+                    retrofitIInterface.removeCartProduct(new RemoveCartObject(productid),user_id).enqueue(new Callback<RemoveCartResponse>() {
+                        @Override
+                        public void onResponse(Call<RemoveCartResponse> call, Response<RemoveCartResponse> response) {
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<RemoveCartResponse> call, Throwable t) {
+                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                }
+                else{
+                    productListAdapter.productListByCatResponse.getData().get(index).setCartquantity(cartQuanity-1);
+                    productListAdapter.notifyItemChanged(index);
+
+                    AddToCartObject addToCartObject = new AddToCartObject(productid,String.valueOf(cartQuanity-1));
+                    retrofitIInterface.addToCart(addToCartObject,user_id).enqueue(new Callback<GetWishListResponse>() {
+                        @Override
+                        public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
+                            if (response.body().getSuccess()){
+                                Toast.makeText(getContext(), "Cart Updated", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<GetWishListResponse> call, Throwable t) {
+                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+
+            }
+
+            @Override
+            public void clickAdd(int index, int cartQuantity, String productid) {
+                productListAdapter.productListByCatResponse.getData().get(index).setCartquantity(cartQuantity+1);
+                productListAdapter.notifyItemChanged(index);
+
+                AddToCartObject addToCartObject = new AddToCartObject(productid,String.valueOf(cartQuantity+1));
                 retrofitIInterface.addToCart(addToCartObject,user_id).enqueue(new Callback<GetWishListResponse>() {
                     @Override
                     public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
-
+                        if (response.body().getSuccess()){
+                            Toast.makeText(getContext(), "Added to cart", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                        }
                     }
-
                     @Override
                     public void onFailure(Call<GetWishListResponse> call, Throwable t) {
-
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
 
             @Override
-            public void clickAdd(int index, int cartQuantity) {
+            public void clickWishList(int index, String productid) {
+                productListAdapter.productListByCatResponse.getData().get(index).setWhishlisted(1);
+                productListAdapter.notifyItemChanged(index);
+                retrofitIInterface.addToWishList(new WishListObject(productid),user_id).enqueue(new Callback<WishListResponse>() {
+                    @Override
+                    public void onResponse(Call<WishListResponse> call, Response<WishListResponse> response) {
+                        if(response.body().getSuccess()){
+                            Toast.makeText(getContext(), response.body().getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(getContext(), response.errorBody().toString(),Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
-                Toast.makeText(getContext(), "Clicked Add", Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onFailure(Call<WishListResponse> call, Throwable t) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void clickRemoveWishList(int index, String productid) {
+                productListAdapter.productListByCatResponse.getData().get(index).setWhishlisted(0);
+                productListAdapter.notifyItemChanged(index);
+                retrofitIInterface.removeWishList(new WishListObject(productid),user_id).enqueue(new Callback<RemoveWishListResponse>() {
+                    @Override
+                    public void onResponse(Call<RemoveWishListResponse> call, Response<RemoveWishListResponse> response) {
+                        if(response.body().getSuccess()){
+                            Toast.makeText(getContext(), response.body().getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(getContext(), response.errorBody().toString(),Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RemoveWishListResponse> call, Throwable t) {
+
+                    }
+                });
             }
         };
 
@@ -112,12 +211,11 @@ public class ProductListFragment extends Fragment {
             @Override
             public void click(int index) {
                 Toast.makeText(getContext(), "position"+index, Toast.LENGTH_SHORT).show();
-                retrofitIInterface.getProductbySubCatID(String.valueOf(index),user_id).enqueue(new Callback<ProductListByCatResponse>() {
+                retrofitIInterface.getProductbySubCatID(String.valueOf(index+1),user_id).enqueue(new Callback<ProductListByCatResponse>() {
                     @Override
                     public void onResponse(Call<ProductListByCatResponse> call, Response<ProductListByCatResponse> response) {
                         ProductListByCatResponse productListByCatResponse = response.body();
 
-                        productListAdapter = new ProductListAdapter(response.body(),clickInterface, clickCartInterface);
                         productListAdapter.setProductListByCatResponse(response.body());
                         productListAdapter.notifyDataSetChanged();
                     }
@@ -159,7 +257,7 @@ public class ProductListFragment extends Fragment {
             @Override
             public void onResponse(Call<ProductListByCatResponse> call, Response<ProductListByCatResponse> response) {
                 ProductListByCatResponse productListByCatResponse = response.body();
-                ProductListAdapter productListAdapter = new ProductListAdapter(response.body(),clickInterface,clickCartInterface);
+                productListAdapter = new ProductListAdapter(response.body(),clickInterface,clickCartInterface);
                 recyclerViewProducts.setAdapter(productListAdapter);
             }
 

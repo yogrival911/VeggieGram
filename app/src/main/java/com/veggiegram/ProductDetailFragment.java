@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -42,7 +43,8 @@ LinearLayout addToWishList;
 SharedPreferences sharedPreferences;
 LinearLayout addToCart;
 int wishlisted_in;
-TextView tvAddToCart;
+TextView tvAddToCart, textCartItemCount;
+    int mCartItemCount = 10;
     public ProductDetailFragment() {
     }
 
@@ -61,6 +63,10 @@ TextView tvAddToCart;
         fav_icon = view.findViewById(R.id.fav_icon);
         addToCart = view.findViewById(R.id.addToCart);
         tvAddToCart = view.findViewById(R.id.tvAddToCart);
+
+        setHasOptionsMenu(true);
+
+        mCartItemCount = 3;
 
         Retrofit retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
@@ -139,8 +145,11 @@ TextView tvAddToCart;
         });
 
         addToCart.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
+                mCartItemCount++;
+                setupBadge();
                 Log.i("add", "click");
                 tvAddToCart.setText("Added");
                 MainActivity mainActivity = new MainActivity();
@@ -152,6 +161,7 @@ TextView tvAddToCart;
                     @Override
                     public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
                         GetWishListResponse getWishListResponse = response.body();
+
 
                         if(response.body().getSuccess()){
 
@@ -169,4 +179,30 @@ TextView tvAddToCart;
         return  view;
     }
 
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        MenuItem menuItem = menu.getItem(0);
+        View actionView = menuItem.getActionView();
+        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+        textCartItemCount.setText(String.valueOf(mCartItemCount));
+
+    }
+
+    public void setupBadge() {
+
+        if (textCartItemCount != null) {
+            if (mCartItemCount == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            } else {
+                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)));
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    }
 }

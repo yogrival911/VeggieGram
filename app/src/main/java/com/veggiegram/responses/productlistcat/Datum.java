@@ -20,7 +20,7 @@ public class Datum {
     private Integer price;
     @SerializedName("sellprice")
     @Expose
-    private Integer sellprice;
+    private float sellprice;
     @SerializedName("image")
     @Expose
     private String image;
@@ -75,7 +75,7 @@ public class Datum {
         this.price = price;
     }
 
-    public Integer getSellprice() {
+    public float getSellprice() {
         return sellprice;
     }
 

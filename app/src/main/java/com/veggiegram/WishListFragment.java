@@ -11,7 +11,10 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.veggiegram.responses.RemoveWishListResponse;
+import com.veggiegram.responses.WishListObject;
 import com.veggiegram.responses.wishlist.GetWishListResponse;
 import com.veggiegram.responses.wishlist.WishListAdapter;
 import com.veggiegram.retrofit.RetrofitClientInstance;
@@ -26,6 +29,8 @@ import retrofit2.Retrofit;
 public class WishListFragment extends Fragment {
 RecyclerView recyclerViewWishList;
 SharedPreferences sharedPreferences;
+ClickCartInterface clickCartInterface;
+WishListAdapter wishListAdapter;
     public WishListFragment() {
     }
 
@@ -44,12 +49,55 @@ SharedPreferences sharedPreferences;
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerViewWishList.setLayoutManager(gridLayoutManager);
 
+        clickCartInterface = new ClickCartInterface() {
+            @Override
+            public void increment(int index, int cartQuantity, String productid) {
+
+            }
+
+            @Override
+            public void decrement(int index, int cartQuanity, String productid) {
+
+            }
+
+            @Override
+            public void clickAdd(int index, int cartQuantity, String productid) {
+
+            }
+
+            @Override
+            public void clickWishList(int index, String productid) {
+
+            }
+
+            @Override
+            public void clickRemoveWishList(int index, String productid) {
+                wishListAdapter.getWishListResponse.getData().remove(index);
+                wishListAdapter.notifyItemRemoved(index);
+                retrofitIInterface.removeWishList(new WishListObject(productid),user_id).enqueue(new Callback<RemoveWishListResponse>() {
+                    @Override
+                    public void onResponse(Call<RemoveWishListResponse> call, Response<RemoveWishListResponse> response) {
+                        if (response.body().getSuccess()){
+                            Toast.makeText(getContext(), response.body().getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(getContext(), response.errorBody().toString(),Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RemoveWishListResponse> call, Throwable t) {
+
+                    }
+                });
+            }
+        };
 
         retrofitIInterface.getWishList(user_id).enqueue(new Callback<GetWishListResponse>() {
             @Override
             public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
                 if(response.body().getSuccess()){
-                    WishListAdapter wishListAdapter = new WishListAdapter(response.body());
+                    wishListAdapter = new WishListAdapter(response.body(), clickCartInterface);
                     recyclerViewWishList.setAdapter(wishListAdapter);
                 }
             }

@@ -65,21 +65,25 @@ int updatedCart=0;
         holder.productName.setText(productListByCatResponse.getData().get(position).getName());
         holder.quantity.setText(productListByCatResponse.getData().get(position).getUnit()+" "+ productListByCatResponse.getData().get(position).getUnitname());
 
-        int price = productListByCatResponse.getData().get(position).getPrice();
-        int sellPrice = productListByCatResponse.getData().get(position).getSellprice();
+        float price = productListByCatResponse.getData().get(position).getPrice();
+        float sellPrice = productListByCatResponse.getData().get(position).getSellprice();
 
-        int saving = price-sellPrice;
+
+        float saving = price-sellPrice;
         if(saving>0){
-            holder.pSave.setText("You Save " + "\u20B9"+ saving);
+            holder.pSave.setText("You Save " + "\u20B9"+ Math.round(saving));
         }
 
-        holder.price.setText("\u20B9" + sellPrice);
-        holder.pActualPrice.setText("\u20B9"+ price);
+        holder.price.setText("\u20B9" + Math.round(sellPrice));
+        holder.pActualPrice.setText("\u20B9"+ Math.round(price));
         holder.pActualPrice.setPaintFlags(holder.pActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         wishlisted = productListByCatResponse.getData().get(position).getWhishlisted();
         if(wishlisted>0){
-            holder.fav.setImageResource(R.drawable.red_heart);
+            holder.fav.setImageResource(R.drawable.ic_baseline_favorite_24);
+        }
+        else{
+            holder.fav.setImageResource(R.drawable.grey_fav);
         }
 
         String img = productListByCatResponse.getData().get(position).getImage();
@@ -88,54 +92,29 @@ int updatedCart=0;
         LoadWithGlide.loadImage(holder.ivProductImage,url,new CircularProgressDrawable(holder.itemView.getContext()));
 
         int cartQuantity = productListByCatResponse.getData().get(position).getCartquantity();
+        String productId = productListByCatResponse.getData().get(position).getProductid().toString();
+
         if(cartQuantity>0){
             holder.addCartButton.setVisibility(View.GONE);
             holder.quantityLayout.setVisibility(View.VISIBLE);
             holder.cartQuantity.setText(String.valueOf(productListByCatResponse.getData().get(position).getCartquantity()));
         }
+        else{
+            holder.addCartButton.setVisibility(View.VISIBLE);
+            holder.quantityLayout.setVisibility(View.GONE);
+        }
 
-
-        final int[] clickcount = {0};
         holder.incrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int cartQuantity = productListByCatResponse.getData().get(position).getCartquantity();
-                String productId = productListByCatResponse.getData().get(position).getProductid().toString();
-
-//                updatedCart = cartQuantity+1;
-//                holder.cartQuantity.setText(String.valueOf(updatedCart));
-//                productListByCatResponse.getData().get(position).setCartquantity(updatedCart);
 
                 clickCartInterface.increment(position,cartQuantity, productId);
-
-                clickcount[0] = clickcount[0] +1;
-                if(clickcount[0] ==1)
-                {
-                    //first time clicked to do this
-                    Toast.makeText(holder.itemView.getContext(),"Button clicked first time!", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    //check how many times clicked and so on
-                    Toast.makeText(holder.itemView.getContext(),"Button clicked count is"+ clickcount[0], Toast.LENGTH_LONG).show();
-
-                }
-
             }
         });
 
         holder.decrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int cartQuantity = productListByCatResponse.getData().get(position).getCartquantity();
-                String productId = productListByCatResponse.getData().get(position).getProductid().toString();
-//                updatedCart = cartQuantity-1;
-//                if(updatedCart<1){
-//                    holder.quantityLayout.setVisibility(View.GONE);
-//                    holder.addCartButton.setVisibility(View.VISIBLE);
-//                }
-//                holder.cartQuantity.setText(String.valueOf(updatedCart));
-//                productListByCatResponse.getData().get(position).setCartquantity(updatedCart);
                 clickCartInterface.decrement(position, cartQuantity,productId);
             }
         });
@@ -143,14 +122,18 @@ int updatedCart=0;
         holder.addCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.addCartButton.setVisibility(View.GONE);
-                holder.quantityLayout.setVisibility(View.VISIBLE);
-                updatedCart = updatedCart+1;
-                holder.cartQuantity.setText(String.valueOf(updatedCart));
-                clickCartInterface.clickAdd(position,productListByCatResponse.getData().get(position).getCartquantity());
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(holder.itemView.getContext());
+                String user_id = sharedPreferences.getString("user_id","");
+                if(user_id.equals("")){
+                    //user mot signed in
+                    NavController navController = Navigation.findNavController(holder.itemView);
+                    navController.navigate(ProductListFragmentDirections.actionProductListFragmentToSigninFragment());
+                }
+                else{
+                    clickCartInterface.clickAdd(position,cartQuantity,productId);
+                }
             }
         });
-
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,70 +149,93 @@ int updatedCart=0;
                 navController.navigate(ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(productListByCatResponse.getData().get(position).getProductid().toString()));
             }
         });
+
         holder.fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int wishlisted_in = productListByCatResponse.getData().get(position).getWhishlisted();
-                Log.i("yog", String.valueOf(wishlisted));
-
-
-               if(wishlisted_in>0){
-                   holder.fav.setImageResource(R.drawable.add_to_fav);
-                   String product_id = productListByCatResponse.getData().get(position).getProductid().toString();
-                   SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(holder.itemView.getContext());
-                   String user_id = sharedPreferences.getString("user_id","");
-
-                   Retrofit retrofit = RetrofitClientInstance.getInstance();
-                   RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
-
-                   retrofitIInterface.removeWishList(new WishListObject(product_id),user_id).enqueue(new Callback<RemoveWishListResponse>() {
-                       @Override
-                       public void onResponse(Call<RemoveWishListResponse> call, Response<RemoveWishListResponse> response) {
-                           if(response.body().getSuccess()){
-
-                               Toast.makeText(holder.itemView.getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                           }
-                       }
-
-                       @Override
-                       public void onFailure(Call<RemoveWishListResponse> call, Throwable t) {
-
-                       }
-                   });
-               }
-               else{
-                   holder.fav.setImageResource(R.drawable.red_heart);
-
-                   String product_id = productListByCatResponse.getData().get(position).getProductid().toString();
-                   SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(holder.itemView.getContext());
-                   String user_id = sharedPreferences.getString("user_id","");
-
-                   if(user_id.isEmpty()){
-                       NavController navController = Navigation.findNavController(holder.itemView);
-                       navController.navigate(ProductListFragmentDirections.actionProductListFragmentToSigninFragment());
-
-                   }
-                   else{
-                       Retrofit retrofit = RetrofitClientInstance.getInstance();
-                       RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
-                       retrofitIInterface.addToWishList(new WishListObject(product_id),user_id).enqueue(new Callback<WishListResponse>() {
-                           @Override
-                           public void onResponse(Call<WishListResponse> call, Response<WishListResponse> response) {
-                               WishListResponse wishListResponse = response.body();
-                               Toast.makeText(holder.itemView.getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-
-                           }
-
-                           @Override
-                           public void onFailure(Call<WishListResponse> call, Throwable t) {
-
-                           }
-                       });
-                   }
-               }
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(holder.itemView.getContext());
+                String user_id = sharedPreferences.getString("user_id","");
+                if(user_id.equals("")){
+                    //user not signed in
+                    NavController navController = Navigation.findNavController(holder.itemView);
+                    navController.navigate(ProductListFragmentDirections.actionProductListFragmentToSigninFragment());
+                }
+                else{
+                    if(wishlisted==0){
+                        clickCartInterface.clickWishList(position,productId);
+                    }
+                    else{
+                        clickCartInterface.clickRemoveWishList(position,productId);
+                    }
+                }
 
             }
         });
+
+//        holder.fav.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                int wishlisted_in = productListByCatResponse.getData().get(position).getWhishlisted();
+//                Log.i("yog", String.valueOf(wishlisted));
+//
+//
+//               if(wishlisted_in>0){
+//                   holder.fav.setImageResource(R.drawable.add_to_fav);
+//                   String product_id = productListByCatResponse.getData().get(position).getProductid().toString();
+//                   SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(holder.itemView.getContext());
+//                   String user_id = sharedPreferences.getString("user_id","");
+//
+//                   Retrofit retrofit = RetrofitClientInstance.getInstance();
+//                   RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
+//
+//                   retrofitIInterface.removeWishList(new WishListObject(product_id),user_id).enqueue(new Callback<RemoveWishListResponse>() {
+//                       @Override
+//                       public void onResponse(Call<RemoveWishListResponse> call, Response<RemoveWishListResponse> response) {
+//                           if(response.body().getSuccess()){
+//
+//                               Toast.makeText(holder.itemView.getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+//                           }
+//                       }
+//
+//                       @Override
+//                       public void onFailure(Call<RemoveWishListResponse> call, Throwable t) {
+//
+//                       }
+//                   });
+//               }
+//               else{
+//                   holder.fav.setImageResource(R.drawable.red_heart);
+//
+//                   String product_id = productListByCatResponse.getData().get(position).getProductid().toString();
+//                   SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(holder.itemView.getContext());
+//                   String user_id = sharedPreferences.getString("user_id","");
+//
+//                   if(user_id.isEmpty()){
+//                       NavController navController = Navigation.findNavController(holder.itemView);
+//                       navController.navigate(ProductListFragmentDirections.actionProductListFragmentToSigninFragment());
+//
+//                   }
+//                   else{
+//                       Retrofit retrofit = RetrofitClientInstance.getInstance();
+//                       RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
+//                       retrofitIInterface.addToWishList(new WishListObject(product_id),user_id).enqueue(new Callback<WishListResponse>() {
+//                           @Override
+//                           public void onResponse(Call<WishListResponse> call, Response<WishListResponse> response) {
+//                               WishListResponse wishListResponse = response.body();
+//                               Toast.makeText(holder.itemView.getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+//
+//                           }
+//
+//                           @Override
+//                           public void onFailure(Call<WishListResponse> call, Throwable t) {
+//
+//                           }
+//                       });
+//                   }
+//               }
+//
+//            }
+//        });
     }
 
     @Override
@@ -243,7 +249,7 @@ int updatedCart=0;
         Button addCartButton;
         ImageView incrementButton, decrementButton;
         ConstraintLayout quantityLayout;
-        EditText cartQuantity;
+        TextView cartQuantity;
         public PLViewHolder(@NonNull View itemView) {
             super(itemView);
             ivProductImage = itemView.findViewById(R.id.pImage);
@@ -258,7 +264,7 @@ int updatedCart=0;
             quantityLayout = itemView.findViewById(R.id.quanity_layout);
             incrementButton = itemView.findViewById(R.id.increment);
             decrementButton = itemView.findViewById(R.id.decrement);
-            cartQuantity = itemView.findViewById(R.id.cartQuant);
+            cartQuantity = itemView.findViewById(R.id.cartQua);
 
         }
     }

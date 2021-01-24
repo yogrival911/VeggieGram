@@ -9,14 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
+import com.veggiegram.ClickCartInterface;
 import com.veggiegram.R;
 import com.veggiegram.util.LoadWithGlide;
 
 public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.WLViewHolder> {
-    GetWishListResponse getWishListResponse;
+    public GetWishListResponse getWishListResponse;
+    ClickCartInterface clickCartInterface;
 
-    public WishListAdapter(GetWishListResponse getWishListResponse) {
+    public WishListAdapter(GetWishListResponse getWishListResponse, ClickCartInterface clickCartInterface) {
         this.getWishListResponse = getWishListResponse;
+        this.clickCartInterface = clickCartInterface;
     }
 
     @NonNull
@@ -32,6 +35,12 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.WLView
         String imgUrl = "https://admin.veggiegram.in/adminuploads/products/" + getWishListResponse.getData().get(position).getImage();
         LoadWithGlide.loadImage(holder.wishListItem,imgUrl, new CircularProgressDrawable(holder.itemView.getContext()));
 
+        holder.removeWishList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickCartInterface.clickRemoveWishList(position, getWishListResponse.getData().get(position).getProductid().toString());
+            }
+        });
     }
 
     @Override
@@ -40,10 +49,11 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.WLView
     }
 
     public class WLViewHolder extends RecyclerView.ViewHolder {
-        ImageView wishListItem;
+        ImageView wishListItem,removeWishList;
         public WLViewHolder(@NonNull View itemView) {
             super(itemView);
             wishListItem = itemView.findViewById(R.id.wishListItem);
+            removeWishList = itemView.findViewById(R.id.removeWishList);
         }
     }
 }
