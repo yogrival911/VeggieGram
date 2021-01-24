@@ -11,18 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
-import com.veggiegram.ClickInterface;
+import com.veggiegram.ClickCartInterface;
 import com.veggiegram.R;
 import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.util.LoadWithGlide;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
     GetCartListResponse cartListResponse;
-    ClickInterface clickInterface;
+    ClickCartInterface clickCartInterface;
 
-    public CartAdapter(GetCartListResponse cartListResponse, ClickInterface clickInterface) {
+    public CartAdapter(GetCartListResponse cartListResponse, ClickCartInterface clickCartInterface) {
         this.cartListResponse = cartListResponse;
-        this.clickInterface = clickInterface;
+        this.clickCartInterface = clickCartInterface;
     }
 
     @NonNull
@@ -44,13 +44,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.tvPrice.setText("\u20B9"+cartListResponse.getData().get(position).getPrice());
         holder.tvPrice.setPaintFlags(holder.tvPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-//        holder.removePro.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                clickInterface.clickRemoveCart(position, cartListResponse.getData().get(position).getProductid().toString());
-//            }
-//        });
-
+        int cartQuantity = cartListResponse.getData().get(position).getCartquantity();
+        int productid = cartListResponse.getData().get(position).getProductid();
+        holder.cartIncrement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickCartInterface.increment(position,cartQuantity,String.valueOf(productid));
+            }
+        });
+        holder.cartDecrement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickCartInterface.decrement(position,cartQuantity,String.valueOf(productid));
+            }
+        });
 
     }
 
@@ -60,7 +67,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
     public class CartViewHolder extends RecyclerView.ViewHolder {
-        ImageView cartImage,removePro;
+        ImageView cartImage,removePro,cartIncrement,cartDecrement;
         TextView cartItemName,sellPrice;
         TextView etQuantity,tvPrice,quantity;
         public CartViewHolder(@NonNull View itemView) {
@@ -71,6 +78,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             etQuantity = itemView.findViewById(R.id.tvQuanity);
             tvPrice = itemView.findViewById(R.id.tvPrice);
             quantity = itemView.findViewById(R.id.tvQuanityUnit);
+            cartIncrement = itemView.findViewById(R.id.cartIncrement);
+            cartDecrement = itemView.findViewById(R.id.cartDecrement);
+
 //            removePro = itemView.findViewById(R.id.removePro);
         }
     }

@@ -20,11 +20,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.veggiegram.CartActivity;
+import com.veggiegram.ClickCartInterface;
 import com.veggiegram.ClickInterface;
 import com.veggiegram.R;
+import com.veggiegram.responses.AddToCartObject;
 import com.veggiegram.responses.RemoveCartObject;
 import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.responses.removecart.RemoveCartResponse;
+import com.veggiegram.responses.wishlist.GetWishListResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
 import com.veggiegram.ui.home.HomeFragmentDirections;
@@ -42,8 +45,9 @@ RecyclerView recyclerViewCart;
 SharedPreferences sharedPreferences;
 TextView cartTotal;
 Button checkOut;
-ClickInterface clickInterface;
+ClickCartInterface clickCartInterface;
 CartAdapter cartAdapter;
+int grandTotal;
     public CartFragment() {
         // Required empty public constructor
     }
@@ -69,37 +73,79 @@ CartAdapter cartAdapter;
         recyclerViewCart.setLayoutManager(linearLayoutManager);
         Log.i("yogid",user_id);
 
-        clickInterface = new ClickInterface() {
+        clickCartInterface = new ClickCartInterface() {
             @Override
-            public void click(int index) {
-
-            }
-
-            @Override
-            public void clickRemoveCart(int index, String productid) {
-                retrofitIInterface.removeCartProduct(new RemoveCartObject(productid),user_id).enqueue(new Callback<RemoveCartResponse>() {
+            public void increment(int index, int cartQuantity, String productid) {
+                cartAdapter.cartListResponse.getData().get(index).setCartquantity(cartQuantity+1);
+                cartAdapter.notifyItemChanged(index);
+                retrofitIInterface.addToCart(new AddToCartObject(productid,String.valueOf(cartQuantity+1)),user_id).enqueue(new Callback<GetWishListResponse>() {
                     @Override
-                    public void onResponse(Call<RemoveCartResponse> call, Response<RemoveCartResponse> response) {
-                        RemoveCartResponse removeCartResponse = response.body();
-                        cartAdapter.cartListResponse.getData().remove(index);
-                        cartAdapter.notifyDataSetChanged();
-
+                    public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
+                        GetWishListResponse wishListResponse = response.body();
+                        Toast.makeText(getContext(), "Cart Updated", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
-                    public void onFailure(Call<RemoveCartResponse> call, Throwable t) {
-
+                    public void onFailure(Call<GetWishListResponse> call, Throwable t) {
+//                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+
+            @Override
+            public void decrement(int index, int cartQuanity, String productid) {
+                if(cartQuanity==1){
+                    cartAdapter.cartListResponse.getData().remove(index);
+                    cartAdapter.notifyDataSetChanged();
+
+                    retrofitIInterface.removeCartProduct(new RemoveCartObject(productid),user_id).enqueue(new Callback<RemoveCartResponse>() {
+                        @Override
+                        public void onResponse(Call<RemoveCartResponse> call, Response<RemoveCartResponse> response) {
+//                            Toast.makeText(getContext(), "Cart Updated", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<RemoveCartResponse> call, Throwable t) {
+//                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                }
+                else{
+                    cartAdapter.cartListResponse.getData().get(index).setCartquantity(cartQuanity-1);
+                    cartAdapter.notifyItemChanged(index);
+
+                    AddToCartObject addToCartObject = new AddToCartObject(productid,String.valueOf(cartQuanity-1));
+                    retrofitIInterface.addToCart(addToCartObject,user_id).enqueue(new Callback<GetWishListResponse>() {
+                        @Override
+                        public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
+//                            Toast.makeText(getContext(), "Cart Updated", Toast.LENGTH_SHORT).show();
+                        }
+                        @Override
+                        public void onFailure(Call<GetWishListResponse> call, Throwable t) {
+//                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void clickAdd(int index, int cartQuantity, String productid) {
 
             }
 
             @Override
-            public void clickRemoveAddress(int index, int addressid) {
+            public void clickWishList(int index, String productid) {
 
             }
 
+            @Override
+            public void clickRemoveWishList(int index, String productid) {
+
+            }
         };
+
 
         retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
             @Override
@@ -108,20 +154,17 @@ CartAdapter cartAdapter;
                 if(response.body().getSuccess()){
                     int totalPrice=0;
                     int totalQuantity = 0;
-                    int grandTotal=0;
+
                     for(int i=0; i<response.body().getData().size();i++){
                         String quant = response.body().getData().get(i).getCartquantity().toString();
                         String price = response.body().getData().get(i).getSellprice().toString();
                         int quantity = parseInt(quant);
                         int sellPrice = Integer.parseInt(price);
-//
-//                        totalQuantity = totalQuantity+quantity;
-//                        totalPrice = totalPrice+sellPrice;
 
                         grandTotal = grandTotal + quantity * sellPrice;
                     }
                     cartTotal.setText("\u20B9 "+ grandTotal);
-                    cartAdapter = new CartAdapter(response.body(), clickInterface);
+                    cartAdapter = new CartAdapter(response.body(), clickCartInterface);
                     recyclerViewCart.setAdapter(cartAdapter);
                 }
             }

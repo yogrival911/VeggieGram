@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +33,8 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.WLView
 
     @Override
     public void onBindViewHolder(@NonNull WLViewHolder holder, int position) {
+
+        holder.wishListItemName.setText(getWishListResponse.getData().get(position).getName());
         String imgUrl = "https://admin.veggiegram.in/adminuploads/products/" + getWishListResponse.getData().get(position).getImage();
         LoadWithGlide.loadImage(holder.wishListItem,imgUrl, new CircularProgressDrawable(holder.itemView.getContext()));
 
@@ -50,10 +53,12 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.WLView
 
     public class WLViewHolder extends RecyclerView.ViewHolder {
         ImageView wishListItem,removeWishList;
+        TextView wishListItemName;
         public WLViewHolder(@NonNull View itemView) {
             super(itemView);
             wishListItem = itemView.findViewById(R.id.wishListItem);
             removeWishList = itemView.findViewById(R.id.removeWishList);
+            wishListItemName = itemView.findViewById(R.id.wishListItemName);
         }
     }
 }
