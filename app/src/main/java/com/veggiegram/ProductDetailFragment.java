@@ -26,9 +26,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.veggiegram.responses.AddToCartObject;
+import com.veggiegram.responses.RemoveCartObject;
 import com.veggiegram.responses.RemoveWishListResponse;
 import com.veggiegram.responses.WishListObject;
 import com.veggiegram.responses.productdetail.ProductDetailResponse;
+import com.veggiegram.responses.removecart.RemoveCartResponse;
 import com.veggiegram.responses.wishlist.GetWishListResponse;
 import com.veggiegram.responses.wishlist.WishListResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
@@ -44,10 +46,12 @@ import retrofit2.Retrofit;
 public class ProductDetailFragment extends Fragment {
 ImageView productImage,ivDec,ivIncrement;
 LinearLayout addToWishList;
+String productID;
 SharedPreferences sharedPreferences;
 LinearLayout addToCart;
 TextView tvDetailName,tvDetailQuantity,tvDetailSellPrice,tvDetailPrice,tvDetailSaving,tvCount;
 Button addButton,viewCart;
+int cartQuantity;
 int wishlisted_in;
 ConstraintLayout increDecreLayout;
 TextView tvAddToCart, textCartItemCount;
@@ -75,8 +79,6 @@ TextView tvAddToCart, textCartItemCount;
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String user_id = sharedPreferences.getString("user_id","");
 
-        NavHostFragment navHostFragment =(NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host);
-
         productImage = view.findViewById(R.id.productImage);
 
         setHasOptionsMenu(true);
@@ -97,13 +99,100 @@ TextView tvAddToCart, textCartItemCount;
             }
         });
 
+        ivDec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cartQuantity = cartQuantity-1;
+                tvCount.setText(String.valueOf(cartQuantity));
+                if(cartQuantity<1){
+                    increDecreLayout.setVisibility(View.GONE);
+                    addButton.setVisibility(View.VISIBLE);
+                    retrofitIInterface.removeCartProduct(new RemoveCartObject(product_id),user_id).enqueue(new Callback<RemoveCartResponse>() {
+                        @Override
+                        public void onResponse(Call<RemoveCartResponse> call, Response<RemoveCartResponse> response) {
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<RemoveCartResponse> call, Throwable t) {
+
+                        }
+                    });
+                }
+                else{
+                    tvCount.setText(String.valueOf(cartQuantity));
+                    retrofitIInterface.addToCart(new AddToCartObject(product_id,String.valueOf(cartQuantity)),user_id).enqueue(new Callback<GetWishListResponse>() {
+                        @Override
+                        public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<GetWishListResponse> call, Throwable t) {
+
+                        }
+                    });
+                }
+            }
+        });
+
+        ivIncrement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cartQuantity = cartQuantity+1;
+                tvCount.setText(String.valueOf(cartQuantity));
+                retrofitIInterface.addToCart(new AddToCartObject(product_id, String.valueOf(cartQuantity)),user_id).enqueue(new Callback<GetWishListResponse>() {
+                    @Override
+                    public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetWishListResponse> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                if(user_id.equals("")){
+                    //user not signed in
+                    NavHostFragment navHostFragment =(NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host);
+                    navHostFragment.getNavController().navigate(ProductDetailFragmentDirections.actionProductDetailFragmentToSigninFragment());
+
+                }
+                else{
+                    addButton.setVisibility(View.GONE);
+                    increDecreLayout.setVisibility(View.VISIBLE);
+                    tvCount.setText("1");
+                    cartQuantity = 1;
+                    retrofitIInterface.addToCart(new AddToCartObject(product_id,String.valueOf(cartQuantity)),user_id).enqueue(new Callback<GetWishListResponse>() {
+                        @Override
+                        public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
+                            Toast.makeText(getContext(), "Added to cart", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<GetWishListResponse> call, Throwable t) {
+
+                        }
+                    });
+                }
+            }
+        });
+
         retrofitIInterface.getproductpetailsbyid(product_id, user_id).enqueue(new Callback<ProductDetailResponse>() {
             @Override
             public void onResponse(Call<ProductDetailResponse> call, Response<ProductDetailResponse> response) {
 
                 int price = response.body().getData().get(0).getPrice();
                 int sellPrice = response.body().getData().get(0).getSellprice();
-                int cartQuantity = response.body().getData().get(0).getCartquantity();
+                cartQuantity = response.body().getData().get(0).getCartquantity();
                 tvDetailName.setText(response.body().getData().get(0).getName());
                 tvDetailQuantity.setText(response.body().getData().get(0).getUnit() + response.body().getData().get(0).getUnitname());
                 tvDetailSellPrice.setText("\u20B9"+sellPrice);
