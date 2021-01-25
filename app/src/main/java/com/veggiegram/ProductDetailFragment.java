@@ -76,6 +76,8 @@ TextView tvAddToCart, textCartItemCount;
         addButton = view.findViewById(R.id.addButton);
         viewCart = view.findViewById(R.id.viewCart);
 
+//        setHasOptionsMenu(true);
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String user_id = sharedPreferences.getString("user_id","");
 
@@ -224,16 +226,14 @@ TextView tvAddToCart, textCartItemCount;
         return  view;
     }
 
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        MenuItem menuItem = menu.getItem(0);
-        View actionView = menuItem.getActionView();
-        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
-        textCartItemCount.setText(String.valueOf(mCartItemCount));
-
-    }
+//    @Override
+//    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+//        super.onCreateOptionsMenu(menu, inflater);
+//        MenuItem menuItem = menu.getItem(0);
+//        View actionView = menuItem.getActionView();
+//        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+//        textCartItemCount.setText(String.valueOf(cartQuantity));
+//    }
 
     public void setupBadge() {
 

@@ -3,22 +3,32 @@ package com.veggiegram;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -115,6 +125,27 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.contact:
                         Intent intent1 = new Intent(getApplicationContext(), ContactActivity.class);
                         startActivity(intent1);
+
+                    case R.id.review:
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        View layout= null;
+                        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        layout = inflater.inflate(R.layout.rating_layout, null);
+                        final RatingBar ratingBar = (RatingBar)layout.findViewById(R.id.ratingBar);
+                        Button submitButton = (Button)layout.findViewById(R.id.button) ;
+                        builder.setCancelable(false);
+                        builder.setView(layout);
+                        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+                        stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.ratingStar), PorterDuff.Mode.SRC_ATOP);
+                        builder.show();
+                        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                            @Override
+                            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                                submitButton.setVisibility(View.VISIBLE);
+
+                            }
+                        });
+
                 }
                 return true;
             }

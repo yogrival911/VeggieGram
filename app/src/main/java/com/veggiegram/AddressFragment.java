@@ -15,7 +15,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.veggiegram.R;
+import com.veggiegram.responses.RemoveAddressObject;
 import com.veggiegram.responses.address.AddressResponse;
+import com.veggiegram.responses.removeaddress.RemoveAddressResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
 
@@ -29,6 +31,7 @@ public class AddressFragment extends Fragment {
 RecyclerView recyclerAddress;
 Button addNewAddress;
 ClickInterface clickInterface;
+SelectedAddressAdapter selectedAddressAdapter;
     public AddressFragment() {
         // Required empty public constructor
     }
@@ -59,7 +62,6 @@ ClickInterface clickInterface;
 
            @Override
            public void clickRemoveCart(int index, String productid) {
-
            }
 
            @Override
@@ -67,14 +69,18 @@ ClickInterface clickInterface;
 
            }
 
+           @Override
+           public void clickSelectAddress(int index, int addressid) {
+
+           }
        };
 
         retrofitIInterface.getUserAddressList(user_id).enqueue(new Callback<AddressResponse>() {
             @Override
             public void onResponse(Call<AddressResponse> call, Response<AddressResponse> response) {
                 AddressResponse addressResponse = response.body();
-                AddressAdapter addressAdapter = new AddressAdapter(response.body(), clickInterface);
-                recyclerAddress.setAdapter(addressAdapter);
+                selectedAddressAdapter = new SelectedAddressAdapter(response.body(), clickInterface);
+                recyclerAddress.setAdapter(selectedAddressAdapter);
             }
 
             @Override

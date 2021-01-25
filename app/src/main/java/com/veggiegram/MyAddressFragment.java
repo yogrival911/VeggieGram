@@ -58,6 +58,11 @@ AddressAdapter addressAdapter;
 
         clickInterface = new ClickInterface() {
             @Override
+            public void clickSelectAddress(int index, int addressid) {
+
+            }
+
+            @Override
             public void click(int index) {
 
             }

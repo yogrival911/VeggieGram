@@ -241,6 +241,11 @@ public class ProductListFragment extends Fragment {
 
         clickInterface = new ClickInterface() {
             @Override
+            public void clickSelectAddress(int index, int addressid) {
+
+            }
+
+            @Override
             public void click(int index) {
                 Toast.makeText(getContext(), "position"+index, Toast.LENGTH_SHORT).show();
                 retrofitIInterface.getProductbySubCatID(String.valueOf(index+1),user_id).enqueue(new Callback<ProductListByCatResponse>() {

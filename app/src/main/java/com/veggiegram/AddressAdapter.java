@@ -47,7 +47,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
         ConstraintLayout removeAddress;
         public AddressViewHolder(@NonNull View itemView) {
             super(itemView);
-            removeAddress = itemView.findViewById(R.id.removeAddress);
+            removeAddress = itemView.findViewById(R.id.deleteAddress);
         }
     }
 }
