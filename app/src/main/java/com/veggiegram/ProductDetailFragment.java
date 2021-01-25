@@ -1,9 +1,12 @@
 package com.veggiegram;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
@@ -16,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,11 +42,14 @@ import retrofit2.Retrofit;
 
 
 public class ProductDetailFragment extends Fragment {
-ImageView productImage,fav_icon;
+ImageView productImage,ivDec,ivIncrement;
 LinearLayout addToWishList;
 SharedPreferences sharedPreferences;
 LinearLayout addToCart;
+TextView tvDetailName,tvDetailQuantity,tvDetailSellPrice,tvDetailPrice,tvDetailSaving,tvCount;
+Button addButton,viewCart;
 int wishlisted_in;
+ConstraintLayout increDecreLayout;
 TextView tvAddToCart, textCartItemCount;
     int mCartItemCount = 0;
     public ProductDetailFragment() {
@@ -53,16 +60,24 @@ TextView tvAddToCart, textCartItemCount;
 
         View view = inflater.inflate(R.layout.fragment_product_detail, container, false);
 
+        tvDetailName = view.findViewById(R.id.tvDetailName);
+        tvDetailQuantity = view.findViewById(R.id.tvDetailQuantity);
+        tvDetailSellPrice = view.findViewById(R.id.tvDetailSellPrice);
+        tvDetailPrice = view.findViewById(R.id.tvDetailPrice);
+        tvDetailSaving = view.findViewById(R.id.tvDetailSaving);
+        tvCount = view.findViewById(R.id.tvCount);
+        ivDec = view.findViewById(R.id.ivDec);
+        ivIncrement = view.findViewById(R.id.ivIncrement);
+        increDecreLayout = view.findViewById(R.id.increDecreLayout);
+        addButton = view.findViewById(R.id.addButton);
+        viewCart = view.findViewById(R.id.viewCart);
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String user_id = sharedPreferences.getString("user_id","");
 
         NavHostFragment navHostFragment =(NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host);
 
         productImage = view.findViewById(R.id.productImage);
-        addToWishList = view.findViewById(R.id.addToWishList);
-        fav_icon = view.findViewById(R.id.fav_icon);
-        addToCart = view.findViewById(R.id.addToCart);
-        tvAddToCart = view.findViewById(R.id.tvAddToCart);
 
         setHasOptionsMenu(true);
 
@@ -74,15 +89,42 @@ TextView tvAddToCart, textCartItemCount;
         String product_id = ProductDetailFragmentArgs.fromBundle(getArguments()).getProductId();
         Log.i("yog", "user id "+user_id);
 
+        viewCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CartActivity.class);
+                startActivity(intent);
+            }
+        });
+
         retrofitIInterface.getproductpetailsbyid(product_id, user_id).enqueue(new Callback<ProductDetailResponse>() {
             @Override
             public void onResponse(Call<ProductDetailResponse> call, Response<ProductDetailResponse> response) {
+
+                int price = response.body().getData().get(0).getPrice();
+                int sellPrice = response.body().getData().get(0).getSellprice();
+                int cartQuantity = response.body().getData().get(0).getCartquantity();
+                tvDetailName.setText(response.body().getData().get(0).getName());
+                tvDetailQuantity.setText(response.body().getData().get(0).getUnit() + response.body().getData().get(0).getUnitname());
+                tvDetailSellPrice.setText("\u20B9"+sellPrice);
+                tvDetailPrice.setText("\u20B9"+price);
+                tvDetailPrice.setPaintFlags(tvDetailPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                int saving = price - sellPrice;
+
+                if(saving>0){
+                    tvDetailSaving.setText("You save "+"\u20B9" + saving);
+                }
+
+                if(cartQuantity>0){
+                    increDecreLayout.setVisibility(View.VISIBLE);
+                    addButton.setVisibility(View.GONE);
+                    tvCount.setText(cartQuantity+"");
+                }
+
                 String imgUrl = "https://admin.veggiegram.in/adminuploads/products/" + response.body().getData().get(0).getImage();
                 LoadWithGlide.loadImage(productImage,imgUrl, new CircularProgressDrawable(getContext()));
                 wishlisted_in = response.body().getData().get(0).getWhishlisted();
-                if(wishlisted_in>0){
-                    fav_icon.setImageResource(R.drawable.red_heart);
-                }
             }
 
             @Override
@@ -90,92 +132,6 @@ TextView tvAddToCart, textCartItemCount;
 
             }
         });
-
-        addToWishList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(user_id.isEmpty()){
-                    navHostFragment.getNavController().navigate(ProductDetailFragmentDirections.actionProductDetailFragmentToSigninFragment());
-                }
-                else{
-                   if(wishlisted_in>0){
-                       //proceed to remove wishlist
-                       fav_icon.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-
-                       Retrofit retrofit = RetrofitClientInstance.getInstance();
-                       RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
-
-                       retrofitIInterface.removeWishList(new WishListObject(product_id),user_id).enqueue(new Callback<RemoveWishListResponse>() {
-                           @Override
-                           public void onResponse(Call<RemoveWishListResponse> call, Response<RemoveWishListResponse> response) {
-                               if(response.body().getSuccess()){
-
-                                   Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                               }
-                           }
-
-                           @Override
-                           public void onFailure(Call<RemoveWishListResponse> call, Throwable t) {
-
-                           }
-                       });
-
-                   }
-                   else{
-                       //proceed to add to wishlist
-                       fav_icon.setImageResource(R.drawable.red_heart);
-                       Retrofit retrofit = RetrofitClientInstance.getInstance();
-                       RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
-                       retrofitIInterface.addToWishList(new WishListObject(product_id),user_id).enqueue(new Callback<WishListResponse>() {
-                           @Override
-                           public void onResponse(Call<WishListResponse> call, Response<WishListResponse> response) {
-                               WishListResponse wishListResponse = response.body();
-                               Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                           }
-
-                           @Override
-                           public void onFailure(Call<WishListResponse> call, Throwable t) {
-
-                           }
-                       });
-                   }
-
-                }
-            }
-        });
-
-        addToCart.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                mCartItemCount++;
-                setupBadge();
-                Log.i("add", "click");
-                tvAddToCart.setText("Added");
-                MainActivity mainActivity = new MainActivity();
-                mainActivity.setmCartItemCount(10);
-                mainActivity.setupBadge();
-                Toast.makeText(getActivity(), "Added", Toast.LENGTH_SHORT).show();
-
-                retrofitIInterface.addToCart(new AddToCartObject(product_id,"1"),user_id).enqueue(new Callback<GetWishListResponse>() {
-                    @Override
-                    public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
-                        GetWishListResponse getWishListResponse = response.body();
-
-
-                        if(response.body().getSuccess()){
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<GetWishListResponse> call, Throwable t) {
-
-                    }
-                });
-            }
-        });
-
         return  view;
     }
 

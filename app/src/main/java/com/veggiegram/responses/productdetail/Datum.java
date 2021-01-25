@@ -41,7 +41,7 @@ public class Datum {
     private Integer whishlisted;
     @SerializedName("cartquantity")
     @Expose
-    private Object cartquantity;
+    private int cartquantity;
 
     public Integer getProductid() {
         return productid;
@@ -131,11 +131,11 @@ public class Datum {
         this.whishlisted = whishlisted;
     }
 
-    public Object getCartquantity() {
+    public int getCartquantity() {
         return cartquantity;
     }
 
-    public void setCartquantity(Object cartquantity) {
+    public void setCartquantity(int cartquantity) {
         this.cartquantity = cartquantity;
     }
 

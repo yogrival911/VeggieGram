@@ -68,7 +68,6 @@ int updatedCart=0;
         float price = productListByCatResponse.getData().get(position).getPrice();
         float sellPrice = productListByCatResponse.getData().get(position).getSellprice();
 
-
         float saving = price-sellPrice;
         if(saving>0){
             holder.pSave.setText("You Save " + "\u20B9"+ Math.round(saving));
