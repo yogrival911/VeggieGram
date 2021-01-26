@@ -29,6 +29,7 @@ import com.veggiegram.responses.AddToCartObject;
 import com.veggiegram.responses.RemoveCartObject;
 import com.veggiegram.responses.RemoveWishListResponse;
 import com.veggiegram.responses.WishListObject;
+import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.responses.productdetail.ProductDetailResponse;
 import com.veggiegram.responses.removecart.RemoveCartResponse;
 import com.veggiegram.responses.wishlist.GetWishListResponse;
@@ -53,9 +54,10 @@ TextView tvDetailName,tvDetailQuantity,tvDetailSellPrice,tvDetailPrice,tvDetailS
 Button addButton,viewCart;
 int cartQuantity;
 int wishlisted_in;
+int mCartItemCount=0;
 ConstraintLayout increDecreLayout;
 TextView tvAddToCart, textCartItemCount;
-    int mCartItemCount = 0;
+
     public ProductDetailFragment() {
     }
 
@@ -85,13 +87,24 @@ TextView tvAddToCart, textCartItemCount;
 
         setHasOptionsMenu(true);
 
-        mCartItemCount = 3;
-
         Retrofit retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
 
         String product_id = ProductDetailFragmentArgs.fromBundle(getArguments()).getProductId();
         Log.i("yog", "user id "+user_id);
+
+        retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
+            @Override
+            public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {
+                mCartItemCount = response.body().getData().size();
+                setupBadge();
+            }
+
+            @Override
+            public void onFailure(Call<GetCartListResponse> call, Throwable t) {
+
+            }
+        });
 
         viewCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +122,8 @@ TextView tvAddToCart, textCartItemCount;
                 if(cartQuantity<1){
                     increDecreLayout.setVisibility(View.GONE);
                     addButton.setVisibility(View.VISIBLE);
+                    mCartItemCount--;
+                    setupBadge();
                     retrofitIInterface.removeCartProduct(new RemoveCartObject(product_id),user_id).enqueue(new Callback<RemoveCartResponse>() {
                         @Override
                         public void onResponse(Call<RemoveCartResponse> call, Response<RemoveCartResponse> response) {
@@ -169,6 +184,8 @@ TextView tvAddToCart, textCartItemCount;
 
                 }
                 else{
+                    mCartItemCount++;
+                    setupBadge();
                     addButton.setVisibility(View.GONE);
                     increDecreLayout.setVisibility(View.VISIBLE);
                     tvCount.setText("1");
@@ -226,14 +243,14 @@ TextView tvAddToCart, textCartItemCount;
         return  view;
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-//        super.onCreateOptionsMenu(menu, inflater);
-//        MenuItem menuItem = menu.getItem(0);
-//        View actionView = menuItem.getActionView();
-//        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
-//        textCartItemCount.setText(String.valueOf(cartQuantity));
-//    }
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        MenuItem menuItem = menu.getItem(0);
+        View actionView = menuItem.getActionView();
+        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+        textCartItemCount.setText(String.valueOf(mCartItemCount));
+    }
 
     public void setupBadge() {
 

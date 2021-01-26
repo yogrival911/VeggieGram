@@ -48,7 +48,7 @@ public class ProductListFragment extends Fragment {
     ProductListAdapter productListAdapter;
     ClickSubCatInterface clickSubCatInterface;
     TextView textCartItemCount;
-    int mCartItemCount = 0;
+    int mCartItemCount;
     int cartCount;
     public ProductListFragment() {
 
@@ -169,9 +169,9 @@ public class ProductListFragment extends Fragment {
             public void clickAdd(int index, int cartQuantity, String productid) {
                 mCartItemCount = mCartItemCount+1;
                 setupBadge();
-                MainActivity mainActivity = new MainActivity();
-                mainActivity.setmCartItemCount(mCartItemCount);
-                mainActivity.setupBadge();
+//                MainActivity mainActivity = new MainActivity();
+//                mainActivity.setmCartItemCount(mCartItemCount);
+//                mainActivity.setupBadge();
                 productListAdapter.productListByCatResponse.getData().get(index).setCartquantity(cartQuantity+1);
                 productListAdapter.notifyItemChanged(index);
 

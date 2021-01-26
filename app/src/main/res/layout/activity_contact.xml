@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ContactActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <fragment
         android:id="@+id/fragment"
         android:name="com.veggiegram.responses.ConatactFragment"
@@ -14,5 +23,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarContact" />
 </androidx.constraintlayout.widget.ConstraintLayout>

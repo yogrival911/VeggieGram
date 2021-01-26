@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/logo_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.VeggieGram">
-        <activity android:name=".ContactActivity"></activity>
+        <activity
+            android:name=".ContactActivity"
+            android:theme="@style/contact_theme">
+        </activity>
         <activity
             android:name=".AddressActivity"
             android:theme="@style/address_theme"></activity>

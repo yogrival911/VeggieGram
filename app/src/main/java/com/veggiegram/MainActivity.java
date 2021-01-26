@@ -18,6 +18,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.LayerDrawable;
+import android.net.Uri;
 import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -129,6 +130,17 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.review:
                        createRatingBox();
 
+                    case R.id.whatsapp:
+                        Uri uri = Uri.parse("smsto:" + "919646128471");
+                        Intent sendIntent = new Intent(Intent.ACTION_SENDTO, uri);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, "I want to order");
+                        sendIntent.setPackage("com.whatsapp");
+                        if (sendIntent.resolveActivity(getPackageManager()) == null) {
+                           Toast.makeText(getApplicationContext(),"Please install whatsapp", Toast.LENGTH_SHORT).show();
+                           break;
+                        }
+                        startActivity(sendIntent);
+                        break;
                 }
                 return true;
             }
@@ -190,7 +202,6 @@ public class MainActivity extends AppCompatActivity {
         layout = inflater.inflate(R.layout.rating_layout, null);
         final RatingBar ratingBar = (RatingBar)layout.findViewById(R.id.ratingBar);
         Button submitButton = (Button)layout.findViewById(R.id.button) ;
-        builder.setCancelable(false);
         builder.setView(layout);
         LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.ratingStar), PorterDuff.Mode.SRC_ATOP);
@@ -208,4 +219,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }
