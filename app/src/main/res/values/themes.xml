@@ -83,6 +83,10 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <!--  This will change ActionBar BackgroundColor to Black -->
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- Customize your theme here. -->
+
+        <!--  This will change ActionBar BackgroundColor to Black -->
         <item name="colorSurface">#FFFF</item>
     </style>
 

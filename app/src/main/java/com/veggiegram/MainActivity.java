@@ -122,15 +122,20 @@ public class MainActivity extends AppCompatActivity {
                         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "VeggieGram");
                         sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                         startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                        break;
 
                     case R.id.contact:
+                        drawerLayout.closeDrawers();
                         Intent intent1 = new Intent(getApplicationContext(), ContactActivity.class);
                         startActivity(intent1);
+                        break;
 
                     case R.id.review:
                        createRatingBox();
+                       break;
 
                     case R.id.whatsapp:
+                        drawerLayout.closeDrawers();
                         Uri uri = Uri.parse("smsto:" + "919646128471");
                         Intent sendIntent = new Intent(Intent.ACTION_SENDTO, uri);
                         sendIntent.putExtra(Intent.EXTRA_TEXT, "I want to order");
@@ -203,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
         final RatingBar ratingBar = (RatingBar)layout.findViewById(R.id.ratingBar);
         Button submitButton = (Button)layout.findViewById(R.id.button) ;
         builder.setView(layout);
+        builder.setCancelable(true);
         LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.ratingStar), PorterDuff.Mode.SRC_ATOP);
         builder.show();
@@ -213,7 +219,14 @@ public class MainActivity extends AppCompatActivity {
                 submitButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getApplicationContext(), "Clicked", Toast.LENGTH_SHORT).show();
+
+                        final String appPackageName = getPackageName();
+                        try {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                        }
+                        catch (android.content.ActivityNotFoundException anfe) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                        }
                     }
                 });
             }

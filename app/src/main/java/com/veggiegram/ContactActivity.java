@@ -14,7 +14,15 @@ Toolbar toolbarContact;
 
         toolbarContact = findViewById(R.id.toolbarContact);
         setSupportActionBar(toolbarContact);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbarContact.setTitle("Contact");
+        getSupportActionBar().setTitle("Contact");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

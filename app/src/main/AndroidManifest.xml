@@ -12,8 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VeggieGram">
         <activity
-            android:name=".ContactActivity"
-            android:theme="@style/contact_theme">
+            android:name=".ContactActivity">
         </activity>
         <activity
             android:name=".AddressActivity"
