@@ -15,7 +15,7 @@
         android:id="@+id/favoriteFragment"
         android:orderInCategory="3"
         android:icon="@drawable/ic_baseline_favorite_24"
-        android:title="Wish List" />
+        android:title="Favourite" />
     <item
         android:id="@+id/walletFragment"
         android:orderInCategory="4"

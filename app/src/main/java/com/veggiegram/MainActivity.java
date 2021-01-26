@@ -127,24 +127,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent1);
 
                     case R.id.review:
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        View layout= null;
-                        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        layout = inflater.inflate(R.layout.rating_layout, null);
-                        final RatingBar ratingBar = (RatingBar)layout.findViewById(R.id.ratingBar);
-                        Button submitButton = (Button)layout.findViewById(R.id.button) ;
-                        builder.setCancelable(false);
-                        builder.setView(layout);
-                        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
-                        stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.ratingStar), PorterDuff.Mode.SRC_ATOP);
-                        builder.show();
-                        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                            @Override
-                            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                                submitButton.setVisibility(View.VISIBLE);
-
-                            }
-                        });
+                       createRatingBox();
 
                 }
                 return true;
@@ -198,5 +181,31 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    public void createRatingBox(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        View layout= null;
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layout = inflater.inflate(R.layout.rating_layout, null);
+        final RatingBar ratingBar = (RatingBar)layout.findViewById(R.id.ratingBar);
+        Button submitButton = (Button)layout.findViewById(R.id.button) ;
+        builder.setCancelable(false);
+        builder.setView(layout);
+        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.ratingStar), PorterDuff.Mode.SRC_ATOP);
+        builder.show();
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                submitButton.setVisibility(View.VISIBLE);
+                submitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getApplicationContext(), "Clicked", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 }
