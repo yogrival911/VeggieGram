@@ -39,7 +39,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-
 public class ProductListFragment extends Fragment {
     RecyclerView recyclerViewProducts, recyclerSubCategory;
     Retrofit retrofit;
@@ -51,7 +50,6 @@ public class ProductListFragment extends Fragment {
     int mCartItemCount;
     int cartCount;
     public ProductListFragment() {
-
     }
 
     @Override
@@ -160,9 +158,7 @@ public class ProductListFragment extends Fragment {
                             Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-
                 }
-
             }
 
             @Override
@@ -213,7 +209,6 @@ public class ProductListFragment extends Fragment {
 
                     }
                 });
-
             }
 
             @Override
@@ -230,7 +225,6 @@ public class ProductListFragment extends Fragment {
                             Toast.makeText(getContext(), response.errorBody().toString(),Toast.LENGTH_SHORT).show();
                         }
                     }
-
                     @Override
                     public void onFailure(Call<RemoveWishListResponse> call, Throwable t) {
 
@@ -303,7 +297,6 @@ public class ProductListFragment extends Fragment {
 
             }
         });
-
 
         return view;
     }

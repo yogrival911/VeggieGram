@@ -198,7 +198,6 @@ int updatedCart=0;
             incrementButton = itemView.findViewById(R.id.increment);
             decrementButton = itemView.findViewById(R.id.decrement);
             cartQuantity = itemView.findViewById(R.id.cartQua);
-
         }
     }
 }
