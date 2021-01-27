@@ -106,7 +106,7 @@
             android:gravity="center_vertical"
             android:orientation="vertical"
             cardView:layout_constraintBottom_toBottomOf="@+id/pImage"
-            cardView:layout_constraintEnd_toEndOf="parent"
+            cardView:layout_constraintEnd_toStartOf="@+id/fav"
             cardView:layout_constraintStart_toEndOf="@+id/pImage"
             cardView:layout_constraintTop_toTopOf="@+id/pImage">
 

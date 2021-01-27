@@ -75,7 +75,9 @@ int grandTotal;
 
         clickCartInterface = new ClickCartInterface() {
             @Override
-            public void increment(int index, int cartQuantity, String productid) {
+            public void increment(int index, int cartQuantity, String productid, int sellPrice) {
+                grandTotal = grandTotal+sellPrice;
+                cartTotal.setText(grandTotal+"");
                 cartAdapter.cartListResponse.getData().get(index).setCartquantity(cartQuantity+1);
                 cartAdapter.notifyItemChanged(index);
                 retrofitIInterface.addToCart(new AddToCartObject(productid,String.valueOf(cartQuantity+1)),user_id).enqueue(new Callback<GetWishListResponse>() {
@@ -93,7 +95,9 @@ int grandTotal;
             }
 
             @Override
-            public void decrement(int index, int cartQuanity, String productid) {
+            public void decrement(int index, int cartQuanity, String productid, int sellPrice) {
+                grandTotal = grandTotal-sellPrice;
+                cartTotal.setText(grandTotal+"");
                 if(cartQuanity==1){
                     cartAdapter.cartListResponse.getData().remove(index);
                     cartAdapter.notifyDataSetChanged();

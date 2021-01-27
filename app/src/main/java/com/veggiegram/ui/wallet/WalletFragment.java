@@ -15,7 +15,7 @@ import com.veggiegram.R;
 
 
 public class WalletFragment extends Fragment {
-Button signOut;
+
 SharedPreferences sharedPreferences;
     public WalletFragment() {
 
@@ -29,13 +29,7 @@ SharedPreferences sharedPreferences;
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
-        signOut = view.findViewById(R.id.signOut);
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sharedPreferences.edit().putString("user_id","").apply();
-            }
-        });
+
         return view;
     }
 }

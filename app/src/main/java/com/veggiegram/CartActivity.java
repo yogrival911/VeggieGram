@@ -15,11 +15,13 @@ Toolbar toolbarCart;
 //
         toolbarCart = findViewById(R.id.toolbarCart);
         setSupportActionBar(toolbarCart);
-
         getSupportActionBar().setTitle("Cart");
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

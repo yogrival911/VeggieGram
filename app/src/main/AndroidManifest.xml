@@ -18,8 +18,7 @@
             android:name=".AddressActivity"
             android:theme="@style/address_theme"></activity>
         <activity
-            android:name=".CartActivity"
-            android:theme="@style/cart_theme" />
+            android:name=".CartActivity" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/splashTheme">

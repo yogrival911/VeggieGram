@@ -18,6 +18,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +53,8 @@ public class HomeFragment extends Fragment {
     Boolean fromHome = true;
     TextView textCartItemCount;
     int mCartItemCount;
+    FrameLayout frameLayout;
+    LinearLayout linearLayout;
     public HomeFragment() {
     }
 
@@ -67,7 +71,10 @@ public class HomeFragment extends Fragment {
         recyclerCategoryHome = view.findViewById(R.id.recyclerCategoryHome);
         recyclerRecommended = view.findViewById(R.id.recyclerRecommended);
         circularProgressBar = view.findViewById(R.id.circularProgressBar);
+        frameLayout = view.findViewById(R.id.frameLayout);
+        linearLayout = view.findViewById(R.id.linearLayout);
 
+        linearLayout.setVisibility(View.INVISIBLE);
         retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
 
@@ -107,7 +114,6 @@ public class HomeFragment extends Fragment {
                         String actualUrl = "https://admin.veggiegram.in/adminuploads/banner/" + imgUrl;
 //                        String v = "https://image.freepik.com/free-vector/online-shopping-banner-template-business-concept-sale-e-commerce_72460-168.jpg";
                         sliderItems.add(new SliderItem(actualUrl));
-                        sliderItems.add(new SliderItem(actualUrl));
                     }
                     sliderAdapterExamples.renewItems(sliderItems);
                     sliderView.startAutoCycle();
@@ -139,6 +145,7 @@ public class HomeFragment extends Fragment {
                 Log.i("yog", response.body().toString());
                 circularProgressBar.clearAnimation();
                 circularProgressBar.setVisibility(View.INVISIBLE);
+                linearLayout.setVisibility(View.VISIBLE);
                 CategoryAdapter categoryAdapter = new CategoryAdapter(response.body(), fromHome);
                 recyclerCategoryHome.setAdapter(categoryAdapter);
             }

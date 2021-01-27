@@ -46,16 +46,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
         int cartQuantity = cartListResponse.getData().get(position).getCartquantity();
         int productid = cartListResponse.getData().get(position).getProductid();
+        int sellPrice = cartListResponse.getData().get(position).getSellprice();
         holder.cartIncrement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickCartInterface.increment(position,cartQuantity,String.valueOf(productid));
+                clickCartInterface.increment(position,cartQuantity,String.valueOf(productid), sellPrice);
             }
         });
         holder.cartDecrement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickCartInterface.decrement(position,cartQuantity,String.valueOf(productid));
+                clickCartInterface.decrement(position,cartQuantity,String.valueOf(productid), sellPrice);
             }
         });
 

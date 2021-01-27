@@ -48,6 +48,7 @@ SelectedAddressAdapter selectedAddressAdapter;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerAddress.setLayoutManager(linearLayoutManager);
 
+//        getActivity().getActionBar().setTitle("Cart");
         Retrofit retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
 

@@ -51,12 +51,12 @@ WishListAdapter wishListAdapter;
 
         clickCartInterface = new ClickCartInterface() {
             @Override
-            public void increment(int index, int cartQuantity, String productid) {
+            public void increment(int index, int cartQuantity, String productid, int sellPrice) {
 
             }
 
             @Override
-            public void decrement(int index, int cartQuanity, String productid) {
+            public void decrement(int index, int cartQuanity, String productid, int sellPrice) {
 
             }
 

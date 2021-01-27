@@ -16,22 +16,25 @@
 
         <ImageView
             android:id="@+id/wishListItem"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
             cardView:layout_constraintEnd_toEndOf="parent"
             cardView:layout_constraintStart_toStartOf="parent"
             cardView:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/wishListItemName"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:gravity="center|center_horizontal"
             android:text="Name"
-            cardView:layout_constraintBottom_toBottomOf="@+id/wishListItem"
+            android:textColor="@color/black"
+            cardView:layout_constraintBottom_toBottomOf="parent"
             cardView:layout_constraintEnd_toEndOf="parent"
             cardView:layout_constraintHorizontal_bias="0.5"
-            cardView:layout_constraintStart_toStartOf="parent" />
+            cardView:layout_constraintStart_toStartOf="parent"
+            cardView:layout_constraintTop_toBottomOf="@+id/wishListItem" />
 
         <ImageView
             android:id="@+id/removeWishList"

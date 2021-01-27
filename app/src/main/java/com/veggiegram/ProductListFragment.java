@@ -94,7 +94,7 @@ public class ProductListFragment extends Fragment {
 
         clickCartInterface = new ClickCartInterface() {
             @Override
-            public void increment(int index, int cartQuantity, String productid) {
+            public void increment(int index, int cartQuantity, String productid, int sellPrice) {
 
                 productListAdapter.productListByCatResponse.getData().get(index).setCartquantity(cartQuantity+1);
                 productListAdapter.notifyItemChanged(index);
@@ -119,7 +119,7 @@ public class ProductListFragment extends Fragment {
             }
 
             @Override
-            public void decrement(int index, int cartQuanity, String productid) {
+            public void decrement(int index, int cartQuanity, String productid, int sellPrice) {
 
                 if(cartQuanity==1){
                     productListAdapter.productListByCatResponse.getData().get(index).setCartquantity(cartQuanity-1);

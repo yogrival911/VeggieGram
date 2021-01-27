@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.veggiegram.R;
 import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
@@ -54,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         return mCartItemCount;
     }
 
-
     public void setmCartItemCount(int mCartItemCount) {
         this.mCartItemCount = mCartItemCount;
     }
@@ -72,6 +72,14 @@ public class MainActivity extends AppCompatActivity {
         String user_id = sharedPreferences.getString("user_id","");
 
         navigationView = findViewById(R.id.navView);
+        Menu menu = navigationView.getMenu();
+        MenuItem menuItem = menu.findItem(R.id.signin);
+        if(user_id.equals("")){
+            menuItem.setTitle("Sign In");
+        }
+        else{
+            menuItem.setTitle("Sign Out");
+        }
 
         navHostFragment =(NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.nav_host);
         NavigationUI.setupWithNavController(bottomNavigationView,navHostFragment.getNavController());
@@ -82,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_toolbar);
-//        getSupportActionBar().setBackgroundDrawable(getDrawable(R.drawable.toolbar_back));
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.open, R.string.close);
         drawerLayout.setDrawerListener(toggle);
@@ -136,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.whatsapp:
                         drawerLayout.closeDrawers();
-                        Uri uri = Uri.parse("smsto:" + "919646128471");
+                        Uri uri = Uri.parse("smsto:" + "919999999999");
                         Intent sendIntent = new Intent(Intent.ACTION_SENDTO, uri);
                         sendIntent.putExtra(Intent.EXTRA_TEXT, "I want to order");
                         sendIntent.setPackage("com.whatsapp");
@@ -146,35 +153,64 @@ public class MainActivity extends AppCompatActivity {
                         }
                         startActivity(sendIntent);
                         break;
+                    case R.id.signin:
+                        drawerLayout.closeDrawers();
+                        if(user_id.equals("")){
+                            //sign in
+
+                        }
+                        else{
+                            //sign out
+
+                        }
+                        break;
                 }
                 return true;
             }
         });
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//        builder.setMessage("Are you sure you want to leave?");
+//        builder.setPositiveButton("Yes, Leave!", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which)
+//                            {
+//                                // When the user click yes button
+//                                // then app will close
+//                                finish();
+//                            }
+//                        });
+//        builder.setNegativeButton("Don't Leave!", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which)
+//                            {
+//                                dialog.cancel();
+//                            }
+//                        });
+//
+//        AlertDialog alertDialog = builder.create();
+//        alertDialog.show();
+//    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.top_menu, menu);
-
         MenuItem menuItem = menu.findItem(R.id.action_cart);
-
         View actionView = menuItem.getActionView();
         textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
-
         setupBadge();
-
         actionView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onOptionsItemSelected(menuItem);
             }
         });
-
         return true;
     }
-
     public void setupBadge() {
-
         if (textCartItemCount != null) {
             if (mCartItemCount == 0) {
                 if (textCartItemCount.getVisibility() != View.GONE) {

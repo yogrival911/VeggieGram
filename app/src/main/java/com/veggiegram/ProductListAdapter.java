@@ -92,7 +92,7 @@ int updatedCart=0;
 
         int cartQuantity = productListByCatResponse.getData().get(position).getCartquantity();
         String productId = productListByCatResponse.getData().get(position).getProductid().toString();
-
+        int sellPriceInt = Math.round(sellPrice);
         if(cartQuantity>0){
             holder.addCartButton.setVisibility(View.GONE);
             holder.quantityLayout.setVisibility(View.VISIBLE);
@@ -107,14 +107,14 @@ int updatedCart=0;
             @Override
             public void onClick(View view) {
 
-                clickCartInterface.increment(position,cartQuantity, productId);
+                clickCartInterface.increment(position,cartQuantity, productId, sellPriceInt);
             }
         });
 
         holder.decrementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickCartInterface.decrement(position, cartQuantity,productId);
+                clickCartInterface.decrement(position, cartQuantity,productId, sellPriceInt);
             }
         });
 
