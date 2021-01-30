@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.veggiegram.responses.RemoveWishListResponse;
 import com.veggiegram.responses.WishListObject;
 import com.veggiegram.responses.wishlist.GetWishListResponse;
@@ -78,7 +79,7 @@ WishListAdapter wishListAdapter;
                     @Override
                     public void onResponse(Call<RemoveWishListResponse> call, Response<RemoveWishListResponse> response) {
                         if (response.body().getSuccess()){
-                            Toast.makeText(getContext(), response.body().getMessage(),Toast.LENGTH_SHORT).show();
+                            Snackbar.make(getView(), response.body().getMessage(),Snackbar.LENGTH_SHORT).show();
                         }
                         else {
                             Toast.makeText(getContext(), response.errorBody().toString(),Toast.LENGTH_SHORT).show();

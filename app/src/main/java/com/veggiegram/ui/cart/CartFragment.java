@@ -19,6 +19,7 @@ import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.veggiegram.CartActivity;
 import com.veggiegram.ClickCartInterface;
 import com.veggiegram.ClickInterface;
@@ -84,6 +85,7 @@ int grandTotal;
                 retrofitIInterface.addToCart(new AddToCartObject(productid,String.valueOf(cartQuantity+1)),user_id).enqueue(new Callback<AddToCartResponse>() {
                     @Override
                     public void onResponse(Call<AddToCartResponse> call, Response<AddToCartResponse> response) {
+                        Snackbar.make(getView(), "Cart updated",Snackbar.LENGTH_SHORT).show();
 
                     }
 
@@ -105,7 +107,7 @@ int grandTotal;
                     retrofitIInterface.removeCartProduct(new RemoveCartObject(productid),user_id).enqueue(new Callback<RemoveCartResponse>() {
                         @Override
                         public void onResponse(Call<RemoveCartResponse> call, Response<RemoveCartResponse> response) {
-//                            Toast.makeText(getContext(), "Cart Updated", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(getView(), "Cart updated",Snackbar.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -123,6 +125,7 @@ int grandTotal;
                     retrofitIInterface.addToCart(new AddToCartObject(productid,String.valueOf(cartQuanity-1)),user_id).enqueue(new Callback<AddToCartResponse>() {
                         @Override
                         public void onResponse(Call<AddToCartResponse> call, Response<AddToCartResponse> response) {
+                            Snackbar.make(getView(), "Cart updated",Snackbar.LENGTH_SHORT).show();
 
                         }
 

@@ -9,12 +9,13 @@
         android:id="@+id/subCatName"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="15dp"
 
+        android:gravity="fill_vertical"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:text="SubCat"
-        android:textSize="12sp"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

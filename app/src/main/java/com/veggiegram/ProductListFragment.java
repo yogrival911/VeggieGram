@@ -21,6 +21,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.veggiegram.responses.AddToCartObject;
 import com.veggiegram.responses.RemoveCartObject;
@@ -118,7 +119,7 @@ public class ProductListFragment extends Fragment {
                retrofitIInterface.addToCart(new AddToCartObject(productid, String.valueOf(cartQuantity+1)),user_id).enqueue(new Callback<AddToCartResponse>() {
                    @Override
                    public void onResponse(Call<AddToCartResponse> call, Response<AddToCartResponse> response) {
-
+                       Snackbar.make(getView(), "Cart updated",Snackbar.LENGTH_SHORT).show();
                    }
 
                    @Override
@@ -140,7 +141,7 @@ public class ProductListFragment extends Fragment {
                     retrofitIInterface.removeCartProduct(new RemoveCartObject(productid),user_id).enqueue(new Callback<RemoveCartResponse>() {
                         @Override
                         public void onResponse(Call<RemoveCartResponse> call, Response<RemoveCartResponse> response) {
-                            Toast.makeText(getContext(), "Cart Updated", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(getView(), "Cart updated",Snackbar.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -158,7 +159,7 @@ public class ProductListFragment extends Fragment {
                     retrofitIInterface.addToCart(addToCartObject,user_id).enqueue(new Callback<AddToCartResponse>() {
                         @Override
                         public void onResponse(Call<AddToCartResponse> call, Response<AddToCartResponse> response) {
-                            Toast.makeText(getContext(), "Cart Updated", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(getView(), "Cart updated",Snackbar.LENGTH_SHORT).show();
 
                         }
 
@@ -184,7 +185,7 @@ public class ProductListFragment extends Fragment {
                 retrofitIInterface.addToCart(new AddToCartObject(productid,String.valueOf(cartQuantity+1)),user_id).enqueue(new Callback<AddToCartResponse>() {
                     @Override
                     public void onResponse(Call<AddToCartResponse> call, Response<AddToCartResponse> response) {
-                        Toast.makeText(getContext(), "Cart Updated", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(getView(), "Added to cart",Snackbar.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -202,7 +203,7 @@ public class ProductListFragment extends Fragment {
                     @Override
                     public void onResponse(Call<WishListResponse> call, Response<WishListResponse> response) {
                         if(response.body().getSuccess()){
-                            Toast.makeText(getContext(), response.body().getMessage(),Toast.LENGTH_SHORT).show();
+                            Snackbar.make(getView(), "Added to wishlist",Snackbar.LENGTH_SHORT).show();
                         }
                         else {
                             Toast.makeText(getContext(), response.errorBody().toString(),Toast.LENGTH_SHORT).show();
@@ -224,7 +225,7 @@ public class ProductListFragment extends Fragment {
                     @Override
                     public void onResponse(Call<RemoveWishListResponse> call, Response<RemoveWishListResponse> response) {
                         if(response.body().getSuccess()){
-                            Toast.makeText(getContext(), response.body().getMessage(),Toast.LENGTH_SHORT).show();
+                            Snackbar.make(getView(), response.body().getMessage(),Snackbar.LENGTH_SHORT).show();
                         }
                         else {
                             Toast.makeText(getContext(), response.errorBody().toString(),Toast.LENGTH_SHORT).show();
