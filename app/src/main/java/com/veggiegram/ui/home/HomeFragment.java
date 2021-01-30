@@ -1,5 +1,6 @@
 package com.veggiegram.ui.home;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,9 +29,11 @@ import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnima
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import com.veggiegram.R;
+import com.veggiegram.SearchActivity;
 import com.veggiegram.responses.banner.BannerResponse;
 import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.responses.category.CategoryResponse;
+import com.veggiegram.responses.namelist.ProductNameResponse;
 import com.veggiegram.responses.recommended.RecommededProductResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
@@ -55,6 +59,13 @@ public class HomeFragment extends Fragment {
     int mCartItemCount;
     FrameLayout frameLayout;
     LinearLayout linearLayout;
+    ProductNameResponse productListObject;
+    SearchView searchView;
+
+    public void setProductListObject(ProductNameResponse productListObject) {
+        this.productListObject = productListObject;
+    }
+
     public HomeFragment() {
     }
 
@@ -73,11 +84,13 @@ public class HomeFragment extends Fragment {
         circularProgressBar = view.findViewById(R.id.circularProgressBar);
         frameLayout = view.findViewById(R.id.frameLayout);
         linearLayout = view.findViewById(R.id.linearLayout);
+        searchView = view.findViewById(R.id.searchView);
+
+        productListObject = new ProductNameResponse();
 
         linearLayout.setVisibility(View.INVISIBLE);
         retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
-
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
         recyclerCategoryHome.setLayoutManager(gridLayoutManager);
@@ -86,8 +99,6 @@ public class HomeFragment extends Fragment {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerRecommended.setNestedScrollingEnabled(false);
         recyclerRecommended.setLayoutManager(linearLayoutManager);
-
-
 
         SliderAdapterExample sliderAdapterExamples =  new SliderAdapterExample(getContext());
         sliderView.setSliderAdapter(sliderAdapterExamples);
@@ -103,6 +114,32 @@ public class HomeFragment extends Fragment {
         sliderView.startAutoCycle();
 
         List<SliderItem> sliderItems = new ArrayList<>();
+
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        retrofitIInterface.getProductNameList().enqueue(new Callback<ProductNameResponse>() {
+            @Override
+            public void onResponse(Call<ProductNameResponse> call, Response<ProductNameResponse> response) {
+//                Log.i("yog", response.body().toString());
+                
+            }
+
+            @Override
+            public void onFailure(Call<ProductNameResponse> call, Throwable t) {
+
+            }
+        });
+
+//        Log.i("yogname", productListObject.getData().get(1).getName()+"productListObject");
+//        ProductNameResponse productNameResponse = productListObject;
+//        Log.i("yog", productListObject.getData().get(1).getName()+"");
+
         retrofitIInterface.getBannerList().enqueue(new Callback<BannerResponse>() {
             @Override
             public void onResponse(Call<BannerResponse> call, Response<BannerResponse> response) {

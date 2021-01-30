@@ -124,7 +124,7 @@ int updatedCart=0;
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(holder.itemView.getContext());
                 String user_id = sharedPreferences.getString("user_id","");
                 if(user_id.equals("")){
-                    //user mot signed in
+                    //user not signed in
                     NavController navController = Navigation.findNavController(holder.itemView);
                     navController.navigate(ProductListFragmentDirections.actionProductListFragmentToSigninFragment());
                 }

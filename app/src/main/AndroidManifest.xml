@@ -12,13 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VeggieGram">
         <activity
-            android:name=".ContactActivity">
+            android:name=".SearchActivity"
+            android:theme="@style/contact_theme">
         </activity>
         <activity
-            android:name=".AddressActivity"
-            android:theme="@style/address_theme"></activity>
+            android:name=".ContactActivity"></activity>
         <activity
-            android:name=".CartActivity" />
+            android:name=".AddressActivity" />
+        <activity android:name=".CartActivity" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/splashTheme">

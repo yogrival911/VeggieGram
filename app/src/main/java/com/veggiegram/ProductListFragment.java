@@ -50,6 +50,7 @@ public class ProductListFragment extends Fragment {
     int mCartItemCount;
     int cartCount;
     public ProductListFragment() {
+
     }
 
     @Override

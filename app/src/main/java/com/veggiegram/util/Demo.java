@@ -1,5 +1,7 @@
 package com.veggiegram.util;
 
+import androidx.annotation.NonNull;
+
 public class Demo {
     private  String name;
     private String id;

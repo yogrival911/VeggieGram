@@ -24,8 +24,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="20dp"
                 android:background="@drawable/search_background"
-
-                android:clickable="false"
+                android:focusable="false"
+           
                 android:iconifiedByDefault="false"
                 android:queryBackground="@drawable/search_background"
                 android:queryHint="Search Products"
