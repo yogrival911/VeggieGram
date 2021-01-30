@@ -57,7 +57,7 @@ SelectedAddressAdapter selectedAddressAdapter;
 
        clickInterface = new ClickInterface() {
            @Override
-           public void click(int index) {
+           public void click(int index, int id) {
 
            }
 

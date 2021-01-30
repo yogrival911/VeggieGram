@@ -13,6 +13,7 @@ import com.veggiegram.responses.SignupObject;
 import com.veggiegram.responses.WishListObject;
 import com.veggiegram.responses.addaddress.AddAddressResponse;
 import com.veggiegram.responses.address.AddressResponse;
+import com.veggiegram.responses.addtocart.AddToCartResponse;
 import com.veggiegram.responses.banner.BannerResponse;
 import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.responses.category.CategoryResponse;
@@ -82,8 +83,8 @@ public interface RetrofitIInterface {
     Call<GetCartListResponse> getusercartlistproducts(@Header("token") String token);
 
     @POST("addtocart")
-    Call<GetWishListResponse> addToCart(@Body AddToCartObject addToCartObject,
-                                        @Header("token") String token);
+    Call<AddToCartResponse> addToCart(@Body AddToCartObject addToCartObject,
+                                      @Header("token") String token);
 
     @GET("getuseraddresslist")
     Call<AddressResponse> getUserAddressList(@Header("token") String token);
@@ -96,7 +97,7 @@ public interface RetrofitIInterface {
     Call<SubCategoryResponse> getSubCatByCatID(@Path("position") String position);
 
     @GET("getproductslistbysubcatid/{position}")
-    Call<ProductListByCatResponse> getProductbySubCatID(@Path("position") String position,
+    Call<ProductListByCatResponse> getProductbySubCatID(@Path("position") int position,
                                                         @Header("token") String token);
 
     @POST("addaddress")

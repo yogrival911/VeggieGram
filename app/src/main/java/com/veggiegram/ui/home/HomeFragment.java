@@ -149,7 +149,6 @@ public class HomeFragment extends Fragment {
                     for(int i = 0; i<response.body().getData().size(); i++){
                         String imgUrl = response.body().getData().get(i).getImage();
                         String actualUrl = "https://admin.veggiegram.in/adminuploads/banner/" + imgUrl;
-//                        String v = "https://image.freepik.com/free-vector/online-shopping-banner-template-business-concept-sale-e-commerce_72460-168.jpg";
                         sliderItems.add(new SliderItem(actualUrl));
                     }
                     sliderAdapterExamples.renewItems(sliderItems);

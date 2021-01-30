@@ -46,7 +46,7 @@ public class SelectedAddressAdapter extends RecyclerView.Adapter<SelectedAddress
             @Override
             public void onClick(View view) {
                 holder.selectedAddress.setChecked(true);
-                clickInterface.click(position);
+                clickInterface.click(position, position);
             }
         });
     }

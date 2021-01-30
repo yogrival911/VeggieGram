@@ -137,7 +137,7 @@ int updatedCart=0;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickInterface.click(position);
+                clickInterface.click(position, position);
             }
         });
 

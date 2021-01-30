@@ -1,5 +1,6 @@
 package com.veggiegram;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ import com.veggiegram.responses.AddToCartObject;
 import com.veggiegram.responses.RemoveCartObject;
 import com.veggiegram.responses.RemoveWishListResponse;
 import com.veggiegram.responses.WishListObject;
+import com.veggiegram.responses.addtocart.AddToCartResponse;
 import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.responses.productlistcat.ProductListByCatResponse;
 import com.veggiegram.responses.removecart.RemoveCartResponse;
@@ -49,6 +52,7 @@ public class ProductListFragment extends Fragment {
     TextView textCartItemCount;
     int mCartItemCount;
     int cartCount;
+    SearchView searchviewList;
     public ProductListFragment() {
 
     }
@@ -62,6 +66,7 @@ public class ProductListFragment extends Fragment {
         retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
 
+        searchviewList = view.findViewById(R.id.searchviewList);
         recyclerViewProducts = view.findViewById(R.id.recyclerViewProducts);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerViewProducts.setLayoutManager(linearLayoutManager);
@@ -78,6 +83,19 @@ public class ProductListFragment extends Fragment {
         String user_id = sharedPreferences.getString("user_id", "");
         Log.i("yog", "user_id "+user_id);
 
+        searchviewList.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Intent intent = new Intent(getContext(),SearchActivity.class);
+                startActivity(intent);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
         retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
             @Override
             public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {
@@ -97,24 +115,17 @@ public class ProductListFragment extends Fragment {
 
                 productListAdapter.productListByCatResponse.getData().get(index).setCartquantity(cartQuantity+1);
                 productListAdapter.notifyItemChanged(index);
-                retrofitIInterface.addToCart(new AddToCartObject(productid,String.valueOf(cartQuantity+1)),user_id).enqueue(new Callback<GetWishListResponse>() {
-                    @Override
-                    public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
-                        GetWishListResponse wishListResponse = response.body();
-                        if (response.body().getSuccess()){
+               retrofitIInterface.addToCart(new AddToCartObject(productid, String.valueOf(cartQuantity+1)),user_id).enqueue(new Callback<AddToCartResponse>() {
+                   @Override
+                   public void onResponse(Call<AddToCartResponse> call, Response<AddToCartResponse> response) {
 
-                            Toast.makeText(getContext(), "Cart Updated", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                   }
 
-                    @Override
-                    public void onFailure(Call<GetWishListResponse> call, Throwable t) {
-                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                   @Override
+                   public void onFailure(Call<AddToCartResponse> call, Throwable t) {
+
+                   }
+               });
             }
 
             @Override
@@ -129,7 +140,7 @@ public class ProductListFragment extends Fragment {
                     retrofitIInterface.removeCartProduct(new RemoveCartObject(productid),user_id).enqueue(new Callback<RemoveCartResponse>() {
                         @Override
                         public void onResponse(Call<RemoveCartResponse> call, Response<RemoveCartResponse> response) {
-
+                            Toast.makeText(getContext(), "Cart Updated", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -144,19 +155,16 @@ public class ProductListFragment extends Fragment {
                     productListAdapter.notifyItemChanged(index);
 
                     AddToCartObject addToCartObject = new AddToCartObject(productid,String.valueOf(cartQuanity-1));
-                    retrofitIInterface.addToCart(addToCartObject,user_id).enqueue(new Callback<GetWishListResponse>() {
+                    retrofitIInterface.addToCart(addToCartObject,user_id).enqueue(new Callback<AddToCartResponse>() {
                         @Override
-                        public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
-                            if (response.body().getSuccess()){
-                                Toast.makeText(getContext(), "Cart Updated", Toast.LENGTH_SHORT).show();
-                            }
-                            else {
-                                Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
-                            }
+                        public void onResponse(Call<AddToCartResponse> call, Response<AddToCartResponse> response) {
+                            Toast.makeText(getContext(), "Cart Updated", Toast.LENGTH_SHORT).show();
+
                         }
+
                         @Override
-                        public void onFailure(Call<GetWishListResponse> call, Throwable t) {
-                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        public void onFailure(Call<AddToCartResponse> call, Throwable t) {
+
                         }
                     });
                 }
@@ -173,19 +181,15 @@ public class ProductListFragment extends Fragment {
                 productListAdapter.notifyItemChanged(index);
 
                 AddToCartObject addToCartObject = new AddToCartObject(productid,String.valueOf(cartQuantity+1));
-                retrofitIInterface.addToCart(addToCartObject,user_id).enqueue(new Callback<GetWishListResponse>() {
+                retrofitIInterface.addToCart(new AddToCartObject(productid,String.valueOf(cartQuantity+1)),user_id).enqueue(new Callback<AddToCartResponse>() {
                     @Override
-                    public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
-                        if (response.body().getSuccess()){
-                            Toast.makeText(getContext(), "Added to cart", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
-                        }
+                    public void onResponse(Call<AddToCartResponse> call, Response<AddToCartResponse> response) {
+                        Toast.makeText(getContext(), "Cart Updated", Toast.LENGTH_SHORT).show();
                     }
+
                     @Override
-                    public void onFailure(Call<GetWishListResponse> call, Throwable t) {
-                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    public void onFailure(Call<AddToCartResponse> call, Throwable t) {
+
                     }
                 });
             }
@@ -236,14 +240,8 @@ public class ProductListFragment extends Fragment {
 
         clickInterface = new ClickInterface() {
             @Override
-            public void clickSelectAddress(int index, int addressid) {
-
-            }
-
-            @Override
-            public void click(int index) {
-                Toast.makeText(getContext(), "position"+index, Toast.LENGTH_SHORT).show();
-                retrofitIInterface.getProductbySubCatID(String.valueOf(index+1),user_id).enqueue(new Callback<ProductListByCatResponse>() {
+            public void click(int index, int id) {
+                retrofitIInterface.getProductbySubCatID(id,user_id).enqueue(new Callback<ProductListByCatResponse>() {
                     @Override
                     public void onResponse(Call<ProductListByCatResponse> call, Response<ProductListByCatResponse> response) {
                         ProductListByCatResponse productListByCatResponse = response.body();
@@ -256,7 +254,6 @@ public class ProductListFragment extends Fragment {
                     public void onFailure(Call<ProductListByCatResponse> call, Throwable t) {
 
                     }
-
                 });
             }
 
@@ -270,6 +267,10 @@ public class ProductListFragment extends Fragment {
 
             }
 
+            @Override
+            public void clickSelectAddress(int index, int addressid) {
+
+            }
         };
 
         retrofitIInterface.getSubCatByCatID(String.valueOf(categoryPosition)).enqueue(new Callback<SubCategoryResponse>() {

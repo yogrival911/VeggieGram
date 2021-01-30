@@ -26,7 +26,7 @@ public class Datum {
     private String image;
     @SerializedName("description_image")
     @Expose
-    private Object descriptionImage;
+    private String descriptionImage;
     @SerializedName("unit")
     @Expose
     private String unit;
@@ -41,7 +41,7 @@ public class Datum {
     private Integer whishlisted;
     @SerializedName("cartquantity")
     @Expose
-    private Object cartquantity;
+    private Integer cartquantity;
 
     public Integer getProductid() {
         return productid;
@@ -91,11 +91,11 @@ public class Datum {
         this.image = image;
     }
 
-    public Object getDescriptionImage() {
+    public String getDescriptionImage() {
         return descriptionImage;
     }
 
-    public void setDescriptionImage(Object descriptionImage) {
+    public void setDescriptionImage(String descriptionImage) {
         this.descriptionImage = descriptionImage;
     }
 
@@ -131,11 +131,11 @@ public class Datum {
         this.whishlisted = whishlisted;
     }
 
-    public Object getCartquantity() {
+    public int getCartquantity() {
         return cartquantity;
     }
 
-    public void setCartquantity(Object cartquantity) {
+    public void setCartquantity(int cartquantity) {
         this.cartquantity = cartquantity;
     }
 

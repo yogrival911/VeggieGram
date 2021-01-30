@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.veggiegram.responses.productlistcat.ProductListByCatResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
@@ -81,7 +82,7 @@ ConstraintLayout nothingToShow;
 
                     @Override
                     public void onFailure(Call<ProductListByCatResponse> call, Throwable t) {
-
+                        Toast.makeText(SearchActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 

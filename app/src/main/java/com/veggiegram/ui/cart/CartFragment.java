@@ -25,6 +25,7 @@ import com.veggiegram.ClickInterface;
 import com.veggiegram.R;
 import com.veggiegram.responses.AddToCartObject;
 import com.veggiegram.responses.RemoveCartObject;
+import com.veggiegram.responses.addtocart.AddToCartResponse;
 import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.responses.removecart.RemoveCartResponse;
 import com.veggiegram.responses.wishlist.GetWishListResponse;
@@ -80,16 +81,15 @@ int grandTotal;
                 cartTotal.setText(grandTotal+"");
                 cartAdapter.cartListResponse.getData().get(index).setCartquantity(cartQuantity+1);
                 cartAdapter.notifyItemChanged(index);
-                retrofitIInterface.addToCart(new AddToCartObject(productid,String.valueOf(cartQuantity+1)),user_id).enqueue(new Callback<GetWishListResponse>() {
+                retrofitIInterface.addToCart(new AddToCartObject(productid,String.valueOf(cartQuantity+1)),user_id).enqueue(new Callback<AddToCartResponse>() {
                     @Override
-                    public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
-                        GetWishListResponse wishListResponse = response.body();
-                        Toast.makeText(getContext(), "Cart Updated", Toast.LENGTH_SHORT).show();
+                    public void onResponse(Call<AddToCartResponse> call, Response<AddToCartResponse> response) {
+
                     }
 
                     @Override
-                    public void onFailure(Call<GetWishListResponse> call, Throwable t) {
-//                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    public void onFailure(Call<AddToCartResponse> call, Throwable t) {
+
                     }
                 });
             }
@@ -120,14 +120,15 @@ int grandTotal;
                     cartAdapter.notifyItemChanged(index);
 
                     AddToCartObject addToCartObject = new AddToCartObject(productid,String.valueOf(cartQuanity-1));
-                    retrofitIInterface.addToCart(addToCartObject,user_id).enqueue(new Callback<GetWishListResponse>() {
+                    retrofitIInterface.addToCart(new AddToCartObject(productid,String.valueOf(cartQuanity-1)),user_id).enqueue(new Callback<AddToCartResponse>() {
                         @Override
-                        public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
-//                            Toast.makeText(getContext(), "Cart Updated", Toast.LENGTH_SHORT).show();
+                        public void onResponse(Call<AddToCartResponse> call, Response<AddToCartResponse> response) {
+
                         }
+
                         @Override
-                        public void onFailure(Call<GetWishListResponse> call, Throwable t) {
-//                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        public void onFailure(Call<AddToCartResponse> call, Throwable t) {
+
                         }
                     });
 

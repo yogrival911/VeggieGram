@@ -44,7 +44,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
             @Override
             public void onClick(View view) {
 
-                clickInterface.click(position);
+                clickInterface.click(position, subCategoryResponse.getData().get(position).getId());
             }
         });
 

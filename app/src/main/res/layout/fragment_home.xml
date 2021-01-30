@@ -25,7 +25,6 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/search_background"
                 android:focusable="false"
-           
                 android:iconifiedByDefault="false"
                 android:queryBackground="@drawable/search_background"
                 android:queryHint="Search Products"

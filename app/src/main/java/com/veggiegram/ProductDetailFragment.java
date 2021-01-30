@@ -29,6 +29,7 @@ import com.veggiegram.responses.AddToCartObject;
 import com.veggiegram.responses.RemoveCartObject;
 import com.veggiegram.responses.RemoveWishListResponse;
 import com.veggiegram.responses.WishListObject;
+import com.veggiegram.responses.addtocart.AddToCartResponse;
 import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.responses.productdetail.ProductDetailResponse;
 import com.veggiegram.responses.removecart.RemoveCartResponse;
@@ -138,14 +139,14 @@ TextView tvAddToCart, textCartItemCount;
                 }
                 else{
                     tvCount.setText(String.valueOf(cartQuantity));
-                    retrofitIInterface.addToCart(new AddToCartObject(product_id,String.valueOf(cartQuantity)),user_id).enqueue(new Callback<GetWishListResponse>() {
+                    retrofitIInterface.addToCart(new AddToCartObject(product_id,String.valueOf(cartQuantity)),user_id).enqueue(new Callback<AddToCartResponse>() {
                         @Override
-                        public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
+                        public void onResponse(Call<AddToCartResponse> call, Response<AddToCartResponse> response) {
 
                         }
 
                         @Override
-                        public void onFailure(Call<GetWishListResponse> call, Throwable t) {
+                        public void onFailure(Call<AddToCartResponse> call, Throwable t) {
 
                         }
                     });
@@ -158,14 +159,14 @@ TextView tvAddToCart, textCartItemCount;
             public void onClick(View view) {
                 cartQuantity = cartQuantity+1;
                 tvCount.setText(String.valueOf(cartQuantity));
-                retrofitIInterface.addToCart(new AddToCartObject(product_id, String.valueOf(cartQuantity)),user_id).enqueue(new Callback<GetWishListResponse>() {
+                retrofitIInterface.addToCart(new AddToCartObject(product_id,String.valueOf(cartQuantity)),user_id).enqueue(new Callback<AddToCartResponse>() {
                     @Override
-                    public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
+                    public void onResponse(Call<AddToCartResponse> call, Response<AddToCartResponse> response) {
 
                     }
 
                     @Override
-                    public void onFailure(Call<GetWishListResponse> call, Throwable t) {
+                    public void onFailure(Call<AddToCartResponse> call, Throwable t) {
 
                     }
                 });
@@ -190,14 +191,14 @@ TextView tvAddToCart, textCartItemCount;
                     increDecreLayout.setVisibility(View.VISIBLE);
                     tvCount.setText("1");
                     cartQuantity = 1;
-                    retrofitIInterface.addToCart(new AddToCartObject(product_id,String.valueOf(cartQuantity)),user_id).enqueue(new Callback<GetWishListResponse>() {
+                    retrofitIInterface.addToCart(new AddToCartObject(product_id,String.valueOf(cartQuantity)),user_id).enqueue(new Callback<AddToCartResponse>() {
                         @Override
-                        public void onResponse(Call<GetWishListResponse> call, Response<GetWishListResponse> response) {
-                            Toast.makeText(getContext(), "Added to cart", Toast.LENGTH_SHORT).show();
+                        public void onResponse(Call<AddToCartResponse> call, Response<AddToCartResponse> response) {
+
                         }
 
                         @Override
-                        public void onFailure(Call<GetWishListResponse> call, Throwable t) {
+                        public void onFailure(Call<AddToCartResponse> call, Throwable t) {
 
                         }
                     });
