@@ -56,7 +56,11 @@ SharedPreferences sharedPreferences;
 
             }
         });
+    }
 
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

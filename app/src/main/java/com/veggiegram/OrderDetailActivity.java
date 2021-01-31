@@ -18,4 +18,10 @@ Toolbar toolbarODetail;
         getSupportActionBar().setTitle("Order Detail");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }
