@@ -1,5 +1,6 @@
 package com.veggiegram;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,7 @@ import com.veggiegram.responses.address.AddressResponse;
 public class SelectedAddressAdapter extends RecyclerView.Adapter<SelectedAddressAdapter.SViewHolder> {
     AddressResponse addressResponse;
     ClickInterface clickInterface;
-    private int selectedPosition = -1;
+    private int checkedPosition = -1;
 
     public SelectedAddressAdapter(AddressResponse addressResponse, ClickInterface clickInterface) {
         this.addressResponse = addressResponse;
@@ -33,20 +34,27 @@ public class SelectedAddressAdapter extends RecyclerView.Adapter<SelectedAddress
 
     @Override
     public void onBindViewHolder(@NonNull SViewHolder holder, int position) {
-        holder.selectedAddress.setChecked(selectedPosition == position);
-        holder.selectedAddress.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                selectedPosition = holder.getAdapterPosition();
-                notifyDataSetChanged();
+        if (checkedPosition == -1) {
+            holder.constraintLayout.setBackgroundColor(Color.WHITE);
+            holder.selectedAddress.setChecked(false);
+        } else {
+            if (checkedPosition == holder.getAdapterPosition()) {
+                holder.constraintLayout.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.addressColor));
+                holder.selectedAddress.setChecked(true);
+            } else {
+                holder.constraintLayout.setBackgroundColor(Color.WHITE);
+                holder.selectedAddress.setChecked(false);
             }
-        });
-
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                holder.constraintLayout.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.addressColor));
                 holder.selectedAddress.setChecked(true);
-                clickInterface.click(position, position);
+                if (checkedPosition != holder.getAdapterPosition()) {
+                    notifyItemChanged(checkedPosition);
+                    checkedPosition = holder.getAdapterPosition();
+                }
             }
         });
     }
@@ -59,14 +67,14 @@ public class SelectedAddressAdapter extends RecyclerView.Adapter<SelectedAddress
     public class SViewHolder extends RecyclerView.ViewHolder {
         TextView tvName,tvAddress,tvLand;
         CheckBox selectedAddress;
-
+        ConstraintLayout constraintLayout;
         public SViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
             tvAddress = itemView.findViewById(R.id.tvAddress);
             tvLand = itemView.findViewById(R.id.tvLand);
             selectedAddress = itemView.findViewById(R.id.selectedAddress);
-
+            constraintLayout = itemView.findViewById(R.id.constraintLayout);
         }
     }
 }
