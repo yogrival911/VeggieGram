@@ -120,6 +120,11 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
 
+                    case R.id.order:
+                        Intent orderIntent = new Intent(getApplicationContext(), OrderActivity.class);
+                        startActivity(orderIntent);
+                        break;
+
                     case R.id.share:
                         drawerLayout.closeDrawers();
                         Intent sharingIntent = new Intent();

@@ -19,6 +19,7 @@ import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.responses.category.CategoryResponse;
 import com.veggiegram.responses.login.LoginResponse;
 import com.veggiegram.responses.namelist.ProductNameResponse;
+import com.veggiegram.responses.order.OrderResponse;
 import com.veggiegram.responses.otp.OTPResponse;
 import com.veggiegram.responses.otp.SendOTPObject;
 import com.veggiegram.responses.productdetail.ProductDetailResponse;
@@ -114,5 +115,8 @@ public interface RetrofitIInterface {
     @POST("searchproduct")
     Call<ProductListByCatResponse> getSearchResult(@Body SearchObject searchObject,
                                                    @Header("token") String token);
+
+    @GET("getuserorderlist")
+    Call<OrderResponse> getUserOrderList(@Header("token") String token);
 
 }
