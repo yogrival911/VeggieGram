@@ -11,8 +11,9 @@
         android:roundIcon="@mipmap/logo_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.VeggieGram">
-        <activity android:name=".OrderDetailActivity"></activity>
-        <activity android:name=".OrderActivity"></activity>
+        <activity android:name=".PaymentStatusActivity"></activity>
+        <activity android:name=".OrderDetailActivity" />
+        <activity android:name=".OrderActivity" />
         <activity
             android:name=".SearchActivity"
             android:theme="@style/contact_theme" />
