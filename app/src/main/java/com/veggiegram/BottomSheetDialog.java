@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +26,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
     private  Button proceed;
     private String RAZORPAY_KEY = "rzp_live_iI3vVE2JZRTuxg";
     SharedPreferences sharedPreferences;
+    EditText etEnteredAmount;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,11 +35,14 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String user_id = sharedPreferences.getString("user_id","");
 
+        etEnteredAmount = view.findViewById(R.id.etEnteredAmount);
         proceed = view.findViewById(R.id.proceed);
         proceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String enteredAmount = etEnteredAmount.getText().toString();
                 Intent intent = new Intent(getActivity(), RazorpayActivity.class);
+                intent.putExtra("entered_amount", enteredAmount);
                 getActivity().startActivity(intent);
             }
         });

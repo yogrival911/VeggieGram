@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.veggiegram.R;
 import com.veggiegram.responses.RemoveAddressObject;
@@ -32,6 +34,8 @@ RecyclerView recyclerAddress;
 Button addNewAddress, chooseDeliverySlot;
 ClickInterface clickInterface;
 SelectedAddressAdapter selectedAddressAdapter;
+TextView tvCartTotal;
+int cartTotal;
     public AddressFragment() {
         // Required empty public constructor
     }
@@ -41,10 +45,14 @@ SelectedAddressAdapter selectedAddressAdapter;
 
         View view = inflater.inflate(R.layout.fragment_address, container, false);
 
+        cartTotal = AddressFragmentArgs.fromBundle(getArguments()).getCartTotal();
+        Log.i("yogcart",cartTotal+"");
+
 
         addNewAddress = view.findViewById(R.id.addNewAddress);
         chooseDeliverySlot = view.findViewById(R.id.chooseDeliverySlot);
         recyclerAddress = view.findViewById(R.id.recyclerAddress);
+        tvCartTotal = view.findViewById(R.id.tvCartTotal);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerAddress.setLayoutManager(linearLayoutManager);
 
@@ -54,6 +62,8 @@ SelectedAddressAdapter selectedAddressAdapter;
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String user_id = sharedPreferences.getString("user_id", "");
+
+        tvCartTotal.setText("\u20B9"+cartTotal);
 
        clickInterface = new ClickInterface() {
            @Override
@@ -103,6 +113,9 @@ SelectedAddressAdapter selectedAddressAdapter;
             public void onClick(View view) {
 
                 DeliverySlotDilog deliverySlotDilog = new DeliverySlotDilog();
+                Bundle bundle = new Bundle();
+                bundle.putInt("cart_total", cartTotal);
+                deliverySlotDilog.setArguments(bundle);
                 deliverySlotDilog.show(getActivity().getSupportFragmentManager(),"ModelBottomSheet");
             }
         });

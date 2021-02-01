@@ -30,6 +30,7 @@ import com.veggiegram.responses.removecart.RemoveCartResponse;
 import com.veggiegram.responses.signup.SignupResponse;
 import com.veggiegram.responses.slot.SlotResponse;
 import com.veggiegram.responses.subcat.SubCategoryResponse;
+import com.veggiegram.responses.wallet.WalletResponse;
 import com.veggiegram.responses.wishlist.GetWishListResponse;
 import com.veggiegram.responses.wishlist.WishListResponse;
 
@@ -122,5 +123,8 @@ public interface RetrofitIInterface {
 
     @GET("getdeliveryslot")
     Call<SlotResponse> getDeliverySlot(@Header("token") String token);
+
+    @GET("getuserwallet")
+    Call<WalletResponse> getUserWallet(@Header("token") String token);
 
 }

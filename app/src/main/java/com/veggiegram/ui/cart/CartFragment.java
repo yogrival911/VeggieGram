@@ -187,7 +187,7 @@ int grandTotal;
             @Override
             public void onClick(View view) {
                 NavHostFragment navHostFragment1 = (NavHostFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.cart_navigation_host);
-                navHostFragment1.getNavController().navigate(CartFragmentDirections.actionCartFragmentToAddressFragment());
+                navHostFragment1.getNavController().navigate(CartFragmentDirections.actionCartFragmentToAddressFragment(grandTotal));
             }
         });
         return view;

@@ -22,6 +22,9 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
 
         Checkout checkout = new Checkout();
 
+        String enteredAmount = getIntent().getStringExtra("entered_amount");
+        Log.i("yogenter", enteredAmount);
+
         checkout.setKeyID("rzp_live_iI3vVE2JZRTuxg");
         /**
          * Instantiate Checkout
