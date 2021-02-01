@@ -101,6 +101,7 @@ SelectedAddressAdapter selectedAddressAdapter;
         chooseDeliverySlot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 DeliverySlotDilog deliverySlotDilog = new DeliverySlotDilog();
                 deliverySlotDilog.show(getActivity().getSupportFragmentManager(),"ModelBottomSheet");
             }

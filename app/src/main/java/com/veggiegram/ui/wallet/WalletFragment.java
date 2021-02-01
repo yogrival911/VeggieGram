@@ -36,6 +36,7 @@ SharedPreferences sharedPreferences;
             public void onClick(View view) {
                 BottomSheetDialog bottomSheetDialog = new BottomSheetDialog();
                 bottomSheetDialog.show(getActivity().getSupportFragmentManager(),"ModelBottomSheet");
+
             }
         });
 
