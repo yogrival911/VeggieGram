@@ -18,7 +18,7 @@ import com.veggiegram.responses.address.AddressResponse;
 public class SelectedAddressAdapter extends RecyclerView.Adapter<SelectedAddressAdapter.SViewHolder> {
     AddressResponse addressResponse;
     ClickInterface clickInterface;
-    private int checkedPosition = -1;
+    private int checkedPosition = 0;
 
     public SelectedAddressAdapter(AddressResponse addressResponse, ClickInterface clickInterface) {
         this.addressResponse = addressResponse;

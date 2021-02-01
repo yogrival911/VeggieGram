@@ -12,11 +12,11 @@
         android:layout_margin="10dp">
 
         <Button
-            android:id="@+id/placeOrder"
+            android:id="@+id/chooseDeliverySlot"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textCapWords"
-            android:text="Place Order"
+            android:text="Choose Delivery Slot "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -29,7 +29,7 @@
             android:layout_marginBottom="5dp"
             android:inputType="textCapWords"
             android:text="Add New Address"
-            app:layout_constraintBottom_toTopOf="@+id/placeOrder"
+            app:layout_constraintBottom_toTopOf="@+id/chooseDeliverySlot"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />

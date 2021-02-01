@@ -1,6 +1,7 @@
 package com.veggiegram;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,7 @@ import retrofit2.Retrofit;
 public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.SubViewHolder> {
     SubCategoryResponse subCategoryResponse;
     ClickInterface clickInterface;
-    Boolean selectedTab = true;
+    private int checkedPosition = 0;
 
     public SubCategoryAdapter(SubCategoryResponse subCategoryResponse, ClickInterface clickInterface) {
         this.subCategoryResponse = subCategoryResponse;
@@ -40,14 +41,29 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     @Override
     public void onBindViewHolder(@NonNull SubViewHolder holder, int position) {
         holder.subCatName.setText(subCategoryResponse.getData().get(position).getName());
+
+        if (checkedPosition == -1) {
+            holder.subCatName.setBackgroundColor(Color.WHITE);
+        } else {
+            if (checkedPosition == holder.getAdapterPosition()) {
+                holder.subCatName.setBackgroundResource(R.drawable.subcategory_background);
+            } else {
+                holder.subCatName.setBackgroundColor(Color.WHITE);
+            }
+        }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                holder.subCatName.setBackgroundResource(R.drawable.subcategory_background);
+                if (checkedPosition != holder.getAdapterPosition()) {
+                    notifyItemChanged(checkedPosition);
+                    checkedPosition = holder.getAdapterPosition();
+                }
 
                 clickInterface.click(position, subCategoryResponse.getData().get(position).getId());
             }
         });
-
 
     }
 

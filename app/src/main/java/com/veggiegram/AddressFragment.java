@@ -29,13 +29,12 @@ import retrofit2.Retrofit;
 
 public class AddressFragment extends Fragment {
 RecyclerView recyclerAddress;
-Button addNewAddress;
+Button addNewAddress, chooseDeliverySlot;
 ClickInterface clickInterface;
 SelectedAddressAdapter selectedAddressAdapter;
     public AddressFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +43,7 @@ SelectedAddressAdapter selectedAddressAdapter;
 
 
         addNewAddress = view.findViewById(R.id.addNewAddress);
+        chooseDeliverySlot = view.findViewById(R.id.chooseDeliverySlot);
         recyclerAddress = view.findViewById(R.id.recyclerAddress);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerAddress.setLayoutManager(linearLayoutManager);
@@ -95,6 +95,14 @@ SelectedAddressAdapter selectedAddressAdapter;
             public void onClick(View view) {
                 NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.cart_navigation_host);
                 navHostFragment.getNavController().navigate(AddressFragmentDirections.actionAddressFragmentToNewAddressFragment2());
+            }
+        });
+
+        chooseDeliverySlot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DeliverySlotDilog deliverySlotDilog = new DeliverySlotDilog();
+                deliverySlotDilog.show(getActivity().getSupportFragmentManager(),"ModelBottomSheet");
             }
         });
 
