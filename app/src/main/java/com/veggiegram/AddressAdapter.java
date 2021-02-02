@@ -34,9 +34,9 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
         holder.tvName.setText(addressResponse.getData().get(position).getFirstname() + addressResponse.getData().get(position).getLastname());
 
         String address = addressResponse.getData().get(position).getHouse()
-                + ", " + addressResponse.getData().get(position).getStreet()
+                + ", " + addressResponse.getData().get(position).getStreet()+"\n"
                 + ", " + addressResponse.getData().get(position).getCity()
-                + ", " + addressResponse.getData().get(position).getDistrict()
+                + ", " + addressResponse.getData().get(position).getDistrict() + "\n"
                 + ", " + addressResponse.getData().get(position).getState()
                 + ", " + addressResponse.getData().get(position).getPostCode();
 

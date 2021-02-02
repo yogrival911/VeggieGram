@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -72,26 +73,20 @@ Spinner spinnerState, spinnerLocality, spinnerCity;
 
             @Override
             public void onClick(View view) {
-                if(firstName.equals("") && lastName.equals("") && house.equals("") && street.equals("") && street.equals("") && pin.equals("") && landmark.equals("") && mob.equals("")){
-                    Snackbar.make(getView(),"Field can not be empty", Snackbar.LENGTH_SHORT).show();
-                }
-                else{
-                    //nothng is empty
+                retrofitIInterface.addNewAddress(new AddAddressObject("123456", "34", "55",user_id,house,street,city,"punjab",state,mob,pin,firstName, lastName,landmark), user_id)
+                        .enqueue(new Callback<AddAddressResponse>() {
+                            @Override
+                            public void onResponse(Call<AddAddressResponse> call, Response<AddAddressResponse> response) {
+                                Snackbar.make(getView(), "Address Saved", Snackbar.LENGTH_SHORT ).show();
+                                NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.address_host_frag);
+                                navHostFragment.getNavController().navigate(NewAddressFragmentDirections.actionNewAddressFragmentToMyAddressFragment());
+                            }
 
-                    retrofitIInterface.addNewAddress(new AddAddressObject("123456", "34", "55",user_id,house,street,city,"punjab",state,mob,pin,firstName, lastName,landmark), user_id)
-                            .enqueue(new Callback<AddAddressResponse>() {
-                                @Override
-                                public void onResponse(Call<AddAddressResponse> call, Response<AddAddressResponse> response) {
+                            @Override
+                            public void onFailure(Call<AddAddressResponse> call, Throwable t) {
 
-                                }
-
-                                @Override
-                                public void onFailure(Call<AddAddressResponse> call, Throwable t) {
-
-                                }
-                            });
-                }
-
+                            }
+                        });
             }
         });
 

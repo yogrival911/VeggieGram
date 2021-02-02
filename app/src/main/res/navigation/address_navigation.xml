@@ -18,5 +18,9 @@
         android:id="@+id/newAddressFragment"
         android:name="com.veggiegram.NewAddressFragment"
         android:label="fragment_new_address"
-        tools:layout="@layout/fragment_new_address" />
+        tools:layout="@layout/fragment_new_address" >
+        <action
+            android:id="@+id/action_newAddressFragment_to_myAddressFragment"
+            app:destination="@id/myAddressFragment" />
+    </fragment>
 </navigation>
