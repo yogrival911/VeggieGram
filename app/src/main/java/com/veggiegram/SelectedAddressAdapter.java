@@ -34,6 +34,8 @@ public class SelectedAddressAdapter extends RecyclerView.Adapter<SelectedAddress
 
     @Override
     public void onBindViewHolder(@NonNull SViewHolder holder, int position) {
+        holder.tvName.setText(addressResponse.getData().get(position).getFirstname() + addressResponse.getData().get(position).getLastname());
+        holder.tvAddress.setText(addressResponse.getData().get(position).getStreet()+", " + addressResponse.getData().get(position).getCity());
         if (checkedPosition == -1) {
             holder.constraintLayout.setBackgroundColor(Color.WHITE);
             holder.selectedAddress.setChecked(false);

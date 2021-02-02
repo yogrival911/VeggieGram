@@ -63,7 +63,7 @@ EditText etFirstName,etLastName,etHouse,etStreet,etPin,etLandmark,etMob;
 
             @Override
             public void onClick(View view) {
-                retrofitIInterface.addNewAddress(new AddAddressObject("1233455", "34", "55",user_id,"ddd","45","bathinda","punjab","punjab","7777777777","151044","dfdf", "eefdfd","dfdfdf"), user_id)
+                retrofitIInterface.addNewAddress(new AddAddressObject("123456", "34", "55",user_id,house,street,"city","punjab","punjab",mob,pin,firstName, lastName,landmark), user_id)
                         .enqueue(new Callback<AddAddressResponse>() {
                             @Override
                             public void onResponse(Call<AddAddressResponse> call, Response<AddAddressResponse> response) {

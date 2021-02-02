@@ -27,7 +27,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbarODetail" />
 
     <TextView
-        android:id="@+id/textView28"
+        android:id="@+id/paymentStatusDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -44,7 +44,7 @@
         android:layout_marginTop="40dp"
         android:background="@color/purple_500"
         android:padding="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView28"
+        app:layout_constraintTop_toBottomOf="@+id/paymentStatusDetail"
         tools:layout_editor_absoluteX="-201dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -97,9 +97,9 @@
                 android:text="Order ID" />
 
             <TextView
+                android:id="@+id/order_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black" />
         </TableRow>
@@ -115,9 +115,9 @@
                 android:text="Date" />
 
             <TextView
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black" />
         </TableRow>
@@ -133,9 +133,9 @@
                 android:text="Total Amount" />
 
             <TextView
+                android:id="@+id/totalAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black" />
         </TableRow>
@@ -151,9 +151,9 @@
                 android:text="Payment method" />
 
             <TextView
+                android:id="@+id/paymentMethod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black" />
         </TableRow>
@@ -169,9 +169,9 @@
                 android:text="Payment status" />
 
             <TextView
+                android:id="@+id/paymentStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black" />
         </TableRow>
@@ -243,7 +243,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="TextView"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black" />
         </TableRow>
@@ -262,10 +261,10 @@
 
             <TextView
 
+                android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="TextView"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black" />
         </TableRow>
@@ -288,7 +287,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="TextView"
                 android:textAlignment="textEnd"
                 android:textColor="@color/black" />
         </TableRow>

@@ -46,6 +46,9 @@ SharedPreferences sharedPreferences;
 
         String mobile_passed = OTPFragmentArgs.fromBundle(getArguments()).getMobileNo();
         String user_id = OTPFragmentArgs.fromBundle(getArguments()).getUserId();
+        String name = OTPFragmentArgs.fromBundle(getArguments()).getName();
+        String email = OTPFragmentArgs.fromBundle(getArguments()).getEmail();
+
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
@@ -71,7 +74,12 @@ SharedPreferences sharedPreferences;
                 String actualOtp = otpResponse.getData().get(0).getOtp();
                 if(enteredOtp.equals(actualOtp)){
                     //save userid
-                    sharedPreferences.edit().putString("user_id",user_id).apply();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("user_id",user_id);
+                    editor.putString("name", name);
+                    editor.putString("email", email);
+                    editor.putString("mobile", mobile_passed);
+                    editor.apply();
                     Toast.makeText(getContext(), "Correct OTP", Toast.LENGTH_SHORT).show();
                     NavHostFragment navHostFragment =(NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host);
                     navHostFragment.getNavController().navigate(OTPFragmentDirections.actionOTPFragmentToFavoriteFragment());

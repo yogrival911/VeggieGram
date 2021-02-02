@@ -24,6 +24,9 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
 
         String enteredAmount = getIntent().getStringExtra("entered_amount");
         Log.i("yogenter", enteredAmount);
+        int checkoutAmount = Integer.parseInt(enteredAmount);
+        int checkAmoutRazor = checkoutAmount*100;
+
 
         checkout.setKeyID("rzp_live_iI3vVE2JZRTuxg");
         /**
@@ -33,7 +36,6 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
         /**
          * Set your logo here
          */
-        checkout.setImage(R.drawable.add_to_cart);
 
         /**
          * Reference to current activity
@@ -52,7 +54,7 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
 //            options.put("order_id", "90909090");//from response of step 3.
             options.put("theme.color", "#73B440");
             options.put("currency", "INR");
-            options.put("amount", "100");//pass amount in currency subunits
+            options.put("amount", checkAmoutRazor+"");//pass amount in currency subunits
             options.put("prefill.email", "yogrival911@gmail.com");
             options.put("prefill.contact","7696025886");
             checkout.open(activity, options);

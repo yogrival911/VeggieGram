@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
     <TextView
-        android:id="@+id/textView35"
+        android:id="@+id/statusAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="144"
@@ -73,7 +73,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView34" />
 
     <TextView
-        android:id="@+id/textView40"
+        android:id="@+id/paymentMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="COD"
@@ -83,7 +83,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView39" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/takeMeHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

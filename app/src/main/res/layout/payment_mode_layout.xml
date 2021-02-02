@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvBalance" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/cod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/addMoneyWallet" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/payViaRazorpay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -77,9 +77,9 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:text="Pay via Razorpay"
-        app:layout_constraintEnd_toEndOf="@+id/button5"
-        app:layout_constraintStart_toStartOf="@+id/button5"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
+        app:layout_constraintEnd_toEndOf="@+id/cod"
+        app:layout_constraintStart_toStartOf="@+id/cod"
+        app:layout_constraintTop_toBottomOf="@+id/cod" />
 
     <TextView
         android:id="@+id/textView43"
@@ -90,7 +90,7 @@
         android:textAlignment="center"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/button6"
-        app:layout_constraintStart_toStartOf="@+id/button6"
-        app:layout_constraintTop_toBottomOf="@+id/button6" />
+        app:layout_constraintEnd_toEndOf="@+id/payViaRazorpay"
+        app:layout_constraintStart_toStartOf="@+id/payViaRazorpay"
+        app:layout_constraintTop_toBottomOf="@+id/payViaRazorpay" />
 </androidx.constraintlayout.widget.ConstraintLayout>

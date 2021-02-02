@@ -91,6 +91,8 @@ int cartTotal;
         Button payWallet = layout.findViewById(R.id.payWallet);
         Button addMoneyWallet = layout.findViewById(R.id.addMoneyWallet);
         TextView tvBalance = layout.findViewById(R.id.tvBalance);
+        Button cod = layout.findViewById(R.id.cod);
+        Button payViaRazorpay = layout.findViewById(R.id.payViaRazorpay);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String user_id = sharedPreferences.getString("user_id", "");
@@ -108,10 +110,13 @@ int cartTotal;
                 else{
                     if(cartTotal >= walletBalance){
                         //insufficient balance
+                        payWallet.setEnabled(false);
                         tvBalance.setText("Insufficient balance("+walletBalance+")");
                     }
                     else{
-
+                        tvBalance.setText("Balance("+ walletBalance+")");
+                        payWallet.setEnabled(true);
+                        payWallet.setBackgroundColor(getContext().getResources().getColor(R.color.purple_500));
                     }
                 }
             }
@@ -122,6 +127,22 @@ int cartTotal;
             }
         });
 
+        cod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PaymentStatusActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        payViaRazorpay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), RazorpayActivity.class);
+                intent.putExtra("entered_amount", cartTotal+"");
+                getActivity().startActivity(intent);
+            }
+        });
 
         addMoneyWallet.setOnClickListener(new View.OnClickListener() {
             @Override

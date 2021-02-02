@@ -31,11 +31,18 @@ OrderResponse orderResponse;
 //        holder.orderStatus.setText(orderResponse.getData().get(position).getDeliveryStatus()+"");
         holder.paymentMethod.setText(orderResponse.getData().get(position).getPaymentMethod()+"");
         holder.amount.setText("\u20B9"+orderResponse.getData().get(position).getTotal()+"");
+//        holder.tvDay.setText(orderResponse.getData().get(position).getDeliveredDate().toString());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(holder.itemView.getContext(), OrderDetailActivity.class);
+                intent.putExtra("order_id", orderResponse.getData().get(position).getOrderId()+"");
+                intent.putExtra("date", orderResponse.getData().get(position).getDeliveredDate()+"");
+                intent.putExtra("total_amount", orderResponse.getData().get(position).getTotal()+"");
+                intent.putExtra("payment_method", orderResponse.getData().get(position).getPaymentMethod()+"");
+                intent.putExtra("payment_status", orderResponse.getData().get(position).getPaymentStatusText()+"");
+                intent.putExtra("address", orderResponse.getData().get(position).getAddress()+"");
                 holder.itemView.getContext().startActivity(intent);
             }
         });
@@ -47,13 +54,14 @@ OrderResponse orderResponse;
     }
 
     public class OrderViewHolder extends RecyclerView.ViewHolder {
-        TextView orderID,orderStatus,paymentMethod,amount;
+        TextView orderID,orderStatus,paymentMethod,amount, tvDay;
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
             orderID = itemView.findViewById(R.id.orderID);
             orderStatus = itemView.findViewById(R.id.orderStatus);
             paymentMethod = itemView.findViewById(R.id.orderStatus);
             amount = itemView.findViewById(R.id.amount);
+            tvDay = itemView.findViewById(R.id.tvDay);
         }
     }
 }

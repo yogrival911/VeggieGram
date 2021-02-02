@@ -54,8 +54,10 @@ Button sendOTP;
                     public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                        LoginResponse f = response.body();
                        String user_id = response.body().getData().get(0).getUserid().toString();
+                       String name = response.body().getData().get(0).getName();
+                       String email = response.body().getData().get(0).getEmail();
                        if(response.body().getSuccess()){
-                           navHostFragment.getNavController().navigate(SigninFragmentDirections.actionSigninFragmentToOTPFragment(mobile, user_id));
+                           navHostFragment.getNavController().navigate(SigninFragmentDirections.actionSigninFragmentToOTPFragment(mobile, user_id, name, email));
                        }
                        else{
                            Toast.makeText(getContext(),response.body().getMsg(),Toast.LENGTH_SHORT).show();

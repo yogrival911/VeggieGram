@@ -59,7 +59,7 @@ Button signUp;
                     public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
                         SignupResponse signupResponse = response.body();
                         String user_id = response.body().getData().toString();
-                        navHostFragment.getNavController().navigate(SignUpFragmentDirections.actionSignUpFragment2ToOTPFragment(number,user_id));
+                        navHostFragment.getNavController().navigate(SignUpFragmentDirections.actionSignUpFragment2ToOTPFragment(number,user_id, name, email));
                     }
 
                     @Override
