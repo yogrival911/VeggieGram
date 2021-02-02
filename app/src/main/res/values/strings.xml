@@ -17,4 +17,9 @@
         <item>Haryana</item>
 
     </string-array>
+
+    <string-array name="city_list">
+        <item>Gurugram</item>
+
+    </string-array>
 </resources>

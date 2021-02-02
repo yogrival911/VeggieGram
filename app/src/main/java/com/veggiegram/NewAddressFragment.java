@@ -11,7 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.veggiegram.responses.AddAddressObject;
 import com.veggiegram.responses.addaddress.AddAddressResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
@@ -26,6 +29,7 @@ import retrofit2.Retrofit;
 public class NewAddressFragment extends Fragment {
 Button saveAddress;
 EditText etFirstName,etLastName,etHouse,etStreet,etPin,etLandmark,etMob;
+Spinner spinnerState, spinnerLocality, spinnerCity;
     public NewAddressFragment() {
 
     }
@@ -45,7 +49,9 @@ EditText etFirstName,etLastName,etHouse,etStreet,etPin,etLandmark,etMob;
         etPin = view.findViewById(R.id.etPin);
         etLandmark = view.findViewById(R.id.etLandmark);
         etMob = view.findViewById(R.id.etMob);
-
+        spinnerState = view.findViewById(R.id.spinnerState);
+        spinnerLocality = view.findViewById(R.id.spinnerLocality);
+        spinnerCity = view.findViewById(R.id.spinnerCity);
 
         saveAddress = view.findViewById(R.id.saveAddress);
 
@@ -60,21 +66,32 @@ EditText etFirstName,etLastName,etHouse,etStreet,etPin,etLandmark,etMob;
             String pin = etPin.getText().toString();
             String landmark = etLandmark.getText().toString();
             String mob = etMob.getText().toString();
+            String state = spinnerState.getSelectedItem().toString();
+            String locality = spinnerLocality.getSelectedItem().toString();
+            String city = spinnerCity.getSelectedItem().toString();
 
             @Override
             public void onClick(View view) {
-                retrofitIInterface.addNewAddress(new AddAddressObject("123456", "34", "55",user_id,house,street,"city","punjab","punjab",mob,pin,firstName, lastName,landmark), user_id)
-                        .enqueue(new Callback<AddAddressResponse>() {
-                            @Override
-                            public void onResponse(Call<AddAddressResponse> call, Response<AddAddressResponse> response) {
+                if(firstName.equals("") && lastName.equals("") && house.equals("") && street.equals("") && street.equals("") && pin.equals("") && landmark.equals("") && mob.equals("")){
+                    Snackbar.make(getView(),"Field can not be empty", Snackbar.LENGTH_SHORT).show();
+                }
+                else{
+                    //nothng is empty
 
-                            }
+                    retrofitIInterface.addNewAddress(new AddAddressObject("123456", "34", "55",user_id,house,street,city,"punjab",state,mob,pin,firstName, lastName,landmark), user_id)
+                            .enqueue(new Callback<AddAddressResponse>() {
+                                @Override
+                                public void onResponse(Call<AddAddressResponse> call, Response<AddAddressResponse> response) {
 
-                            @Override
-                            public void onFailure(Call<AddAddressResponse> call, Throwable t) {
+                                }
 
-                            }
-                        });
+                                @Override
+                                public void onFailure(Call<AddAddressResponse> call, Throwable t) {
+
+                                }
+                            });
+                }
+
             }
         });
 
