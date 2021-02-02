@@ -9,14 +9,16 @@
         android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="10dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/deleteAddress"
@@ -24,7 +26,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/textView7"
@@ -32,16 +35,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:text="Remove"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView12"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/imageView12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     app:layout_constraintEnd_toStartOf="@+id/textView7"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/remove" />
+                    app:srcCompat="@drawable/ic_baseline_delete_red" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -72,7 +77,7 @@
                     android:id="@+id/tvLand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name\" />
+                    android:text="Landmark" />
 
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

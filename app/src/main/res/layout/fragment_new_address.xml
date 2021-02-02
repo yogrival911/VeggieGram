@@ -15,68 +15,96 @@
         <EditText
             android:id="@+id/etFirstName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/et_background"
             android:ems="10"
             android:hint="First Name"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:padding="10dp" />
 
         <EditText
             android:id="@+id/etLastName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/et_background"
             android:ems="10"
             android:hint="Last Name"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:padding="10dp" />
 
         <EditText
             android:id="@+id/etHouse"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/et_background"
             android:ems="10"
             android:hint="House No / Apt No"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:padding="10dp" />
 
         <EditText
             android:id="@+id/etStreet"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/et_background"
             android:ems="10"
             android:hint="Street / Colony"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:padding="10dp" />
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:entries="@array/state_list"
+            android:background="@drawable/et_background"
+            android:padding="10dp" />
 
         <Spinner
             android:id="@+id/spinner2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="50dp"
+            android:background="@drawable/et_background"
+            android:entries="@array/locality_list"
+            android:padding="10dp" />
 
         <EditText
             android:id="@+id/etPin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/et_background"
             android:ems="10"
             android:hint="Pincode"
-            android:inputType="number" />
+            android:inputType="number"
+            android:padding="10dp" />
 
         <EditText
             android:id="@+id/etLandmark"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/et_background"
             android:ems="10"
             android:hint="Landmark"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:padding="10dp" />
 
         <EditText
             android:id="@+id/etMob"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/et_background"
             android:ems="10"
             android:hint="Mobile"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:padding="10dp" />
 
     </LinearLayout>
 
@@ -87,7 +115,7 @@
         android:layout_margin="10dp"
         android:elevation="3dp"
         android:inputType="textCapWords"
-        android:padding="10dp"
+        android:padding="15dp"
         android:text="Add Address"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

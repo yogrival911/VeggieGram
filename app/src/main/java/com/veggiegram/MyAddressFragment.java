@@ -3,6 +3,7 @@ package com.veggiegram;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,6 +37,7 @@ SharedPreferences sharedPreferences;
 Button addAddress;
 ClickInterface clickInterface;
 AddressAdapter addressAdapter;
+Toolbar toolbarMyAddress;
     public MyAddressFragment() {
     }
 

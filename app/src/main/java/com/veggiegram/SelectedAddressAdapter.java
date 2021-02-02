@@ -36,6 +36,9 @@ public class SelectedAddressAdapter extends RecyclerView.Adapter<SelectedAddress
     public void onBindViewHolder(@NonNull SViewHolder holder, int position) {
         holder.tvName.setText(addressResponse.getData().get(position).getFirstname() + addressResponse.getData().get(position).getLastname());
         holder.tvAddress.setText(addressResponse.getData().get(position).getStreet()+", " + addressResponse.getData().get(position).getCity());
+        holder.tvLand.setText("LANDMARK - "+ addressResponse.getData().get(position).getLandmark());
+        int address_id = addressResponse.getData().get(position).getId();
+
         if (checkedPosition == -1) {
             holder.constraintLayout.setBackgroundColor(Color.WHITE);
             holder.selectedAddress.setChecked(false);
@@ -57,6 +60,8 @@ public class SelectedAddressAdapter extends RecyclerView.Adapter<SelectedAddress
                     notifyItemChanged(checkedPosition);
                     checkedPosition = holder.getAdapterPosition();
                 }
+
+                clickInterface.click(position, address_id);
             }
         });
     }

@@ -40,7 +40,9 @@ public class DeliverySlotDilog extends BottomSheetDialogFragment {
 Button setDeliverySlotButton;
 RecyclerView recyclerViewSlot;
 SlotAdapter slotAdapter;
-int cartTotal;
+int cartTotal, address_id;
+ClickInterface clickInterface;
+int selectedSlotId;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,12 +59,38 @@ int cartTotal;
         String user_id = sharedPreferences.getString("user_id","");
 
         cartTotal = getArguments().getInt("cart_total");
+        address_id = getArguments().getInt("address_id");
         Log.i("yogadd", ""+cartTotal);
+        Log.i("yogadd", ""+address_id);
+
+        clickInterface = new ClickInterface() {
+            @Override
+            public void click(int index, int id) {
+                selectedSlotId = id;
+                Log.i("slotyo", selectedSlotId+"");
+            }
+
+            @Override
+            public void clickRemoveCart(int index, String productid) {
+
+            }
+
+            @Override
+            public void clickRemoveAddress(int index, int addressid) {
+
+            }
+
+            @Override
+            public void clickSelectAddress(int index, int addressid) {
+
+            }
+        };
 
         retrofitIInterface.getDeliverySlot(user_id).enqueue(new Callback<SlotResponse>() {
             @Override
             public void onResponse(Call<SlotResponse> call, Response<SlotResponse> response) {
-                slotAdapter = new SlotAdapter(response.body());
+                selectedSlotId = response.body().getData().get(0).getId();
+                slotAdapter = new SlotAdapter(response.body(), clickInterface);
                 recyclerViewSlot.setAdapter(slotAdapter);
             }
 
@@ -76,6 +104,7 @@ int cartTotal;
         setDeliverySlotButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.i("yogselect", selectedSlotId+"");
                 createRatingBox();
             }
         });
@@ -131,6 +160,8 @@ int cartTotal;
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), PaymentStatusActivity.class);
+                intent.putExtra("cart_total", cartTotal);
+                intent.putExtra("payment_mode", "COD");
                 getActivity().startActivity(intent);
             }
         });

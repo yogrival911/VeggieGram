@@ -5,4 +5,16 @@
 
     <string name="close">close</string>
     <string name="open">open</string>
+
+    <string-array name="locality_list">
+        <item>Sector 3</item>
+        <item>Sector 4</item>
+        <item>Sector 5</item>
+        <item>Sector 6</item>
+    </string-array>
+
+    <string-array name="state_list">
+        <item>Haryana</item>
+
+    </string-array>
 </resources>

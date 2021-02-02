@@ -3,6 +3,7 @@ package com.veggiegram;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -30,6 +31,17 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
     @Override
     public void onBindViewHolder(@NonNull AddressAdapter.AddressViewHolder holder, int position) {
 
+        holder.tvName.setText(addressResponse.getData().get(position).getFirstname() + addressResponse.getData().get(position).getLastname());
+
+        String address = addressResponse.getData().get(position).getHouse()
+                + ", " + addressResponse.getData().get(position).getStreet()
+                + ", " + addressResponse.getData().get(position).getCity()
+                + ", " + addressResponse.getData().get(position).getDistrict()
+                + ", " + addressResponse.getData().get(position).getState()
+                + ", " + addressResponse.getData().get(position).getPostCode();
+
+        holder.tvAddress.setText(address);
+        holder.tvLand.setText(addressResponse.getData().get(position).getLandmark()+"");
         holder.removeAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,9 +57,13 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressV
 
     public class AddressViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout removeAddress;
+        TextView tvName,tvAddress,tvLand;
         public AddressViewHolder(@NonNull View itemView) {
             super(itemView);
             removeAddress = itemView.findViewById(R.id.deleteAddress);
+            tvName = itemView.findViewById(R.id.tvName);
+            tvAddress = itemView.findViewById(R.id.tvAddress);
+            tvLand = itemView.findViewById(R.id.tvLand);
         }
     }
 }

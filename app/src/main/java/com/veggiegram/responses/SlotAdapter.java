@@ -12,14 +12,18 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.razorpay.Checkout;
+import com.veggiegram.ClickInterface;
 import com.veggiegram.R;
 import com.veggiegram.responses.slot.SlotResponse;
 
 public class SlotAdapter extends RecyclerView.Adapter<SlotAdapter.SlotViewHolder> {
     SlotResponse slotResponse;
     int checkedPosition = 0;
-    public SlotAdapter(SlotResponse slotResponse) {
+    ClickInterface clickInterface;
+
+    public SlotAdapter(SlotResponse slotResponse, ClickInterface clickInterface) {
         this.slotResponse = slotResponse;
+        this.clickInterface = clickInterface;
     }
 
     @NonNull
@@ -54,6 +58,7 @@ public class SlotAdapter extends RecyclerView.Adapter<SlotAdapter.SlotViewHolder
                     notifyItemChanged(checkedPosition);
                     checkedPosition = holder.getAdapterPosition();
                 }
+                clickInterface.click(position, slotResponse.getData().get(position).getId());
             }
         });
     }
@@ -72,7 +77,7 @@ public class SlotAdapter extends RecyclerView.Adapter<SlotAdapter.SlotViewHolder
 
             checkBoxTime = itemView.findViewById(R.id.checkBoxTime);
             timeSlot = itemView.findViewById(R.id.timeSlot);
-            conLayout = itemView.findViewById(R.id.conLayout);
+            conLayout = itemView.findViewById(R.id.constraintLayout);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.veggiegram;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ OrderResponse orderResponse;
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         holder.orderID.setText(orderResponse.getData().get(position).getOrderid()+"");
 //        holder.orderStatus.setText(orderResponse.getData().get(position).getDeliveryStatus()+"");
+        Log.i("yogdate", orderResponse.getData().get(position).getDeliveredDate()+"");
         holder.paymentMethod.setText(orderResponse.getData().get(position).getPaymentMethod()+"");
         holder.amount.setText("\u20B9"+orderResponse.getData().get(position).getTotal()+"");
 //        holder.tvDay.setText(orderResponse.getData().get(position).getDeliveredDate().toString());

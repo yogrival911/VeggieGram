@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.veggiegram.R;
 import com.veggiegram.responses.RemoveAddressObject;
 import com.veggiegram.responses.address.AddressResponse;
@@ -36,6 +37,7 @@ ClickInterface clickInterface;
 SelectedAddressAdapter selectedAddressAdapter;
 TextView tvCartTotal;
 int cartTotal;
+int selectedAddress_id = -1;
     public AddressFragment() {
         // Required empty public constructor
     }
@@ -68,7 +70,8 @@ int cartTotal;
        clickInterface = new ClickInterface() {
            @Override
            public void click(int index, int id) {
-
+               selectedAddress_id = id;
+               Log.i("yogselectadd", selectedAddress_id+"");
            }
 
            @Override
@@ -90,6 +93,7 @@ int cartTotal;
             @Override
             public void onResponse(Call<AddressResponse> call, Response<AddressResponse> response) {
                 AddressResponse addressResponse = response.body();
+                selectedAddress_id = response.body().getData().get(0).getId();
                 selectedAddressAdapter = new SelectedAddressAdapter(response.body(), clickInterface);
                 recyclerAddress.setAdapter(selectedAddressAdapter);
             }
@@ -111,10 +115,10 @@ int cartTotal;
         chooseDeliverySlot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 DeliverySlotDilog deliverySlotDilog = new DeliverySlotDilog();
                 Bundle bundle = new Bundle();
                 bundle.putInt("cart_total", cartTotal);
+                bundle.putInt("address_id", selectedAddress_id);
                 deliverySlotDilog.setArguments(bundle);
                 deliverySlotDilog.show(getActivity().getSupportFragmentManager(),"ModelBottomSheet");
             }

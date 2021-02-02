@@ -86,7 +86,6 @@ int grandTotal;
                     @Override
                     public void onResponse(Call<AddToCartResponse> call, Response<AddToCartResponse> response) {
                         Snackbar.make(getView(), "Cart updated",Snackbar.LENGTH_SHORT).show();
-
                     }
 
                     @Override
