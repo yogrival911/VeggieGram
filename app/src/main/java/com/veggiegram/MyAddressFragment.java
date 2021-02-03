@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.veggiegram.responses.RemoveAddressObject;
 import com.veggiegram.responses.addaddress.AddAddressResponse;
 import com.veggiegram.responses.address.AddressResponse;
@@ -76,9 +77,21 @@ Toolbar toolbarMyAddress;
 
             @Override
             public void clickRemoveAddress(int index, int addressid) {
-                Toast.makeText(getContext(), "Address Removed", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Address Removed", Toast.LENGTH_SHORT).show();
                 addressAdapter.addressResponse.getData().remove(index);
                 addressAdapter.notifyDataSetChanged();
+                retrofitIInterface.removeAddress(new RemoveAddressObject(String.valueOf(addressid)),user_id).enqueue(new Callback<RemoveAddressResponse>() {
+                    @Override
+                    public void onResponse(Call<RemoveAddressResponse> call, Response<RemoveAddressResponse> response) {
+                        Snackbar.make(getView(),"Address removed", Snackbar.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<RemoveAddressResponse> call, Throwable t) {
+                        Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         };
 

@@ -60,19 +60,19 @@ Spinner spinnerState, spinnerLocality, spinnerCity;
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
 
         saveAddress.setOnClickListener(new View.OnClickListener() {
-            String firstName = etFirstName.getText().toString();
-            String lastName = etLastName.getText().toString();
-            String house = etHouse.getText().toString();
-            String street = etStreet.getText().toString();
-            String pin = etPin.getText().toString();
-            String landmark = etLandmark.getText().toString();
-            String mob = etMob.getText().toString();
-            String state = spinnerState.getSelectedItem().toString();
-            String locality = spinnerLocality.getSelectedItem().toString();
-            String city = spinnerCity.getSelectedItem().toString();
 
             @Override
             public void onClick(View view) {
+                String firstName = etFirstName.getText().toString();
+                String lastName = etLastName.getText().toString();
+                String house = etHouse.getText().toString();
+                String street = etStreet.getText().toString();
+                String pin = etPin.getText().toString();
+                String landmark = etLandmark.getText().toString();
+                String mob = etMob.getText().toString();
+                String state = spinnerState.getSelectedItem().toString();
+                String locality = spinnerLocality.getSelectedItem().toString();
+                String city = spinnerCity.getSelectedItem().toString();
                 retrofitIInterface.addNewAddress(new AddAddressObject("123456", "34", "55",user_id,house,street,city,"punjab",state,mob,pin,firstName, lastName,landmark), user_id)
                         .enqueue(new Callback<AddAddressResponse>() {
                             @Override
