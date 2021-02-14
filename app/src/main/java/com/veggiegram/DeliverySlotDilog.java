@@ -126,17 +126,21 @@ int selectedSlotId;
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String user_id = sharedPreferences.getString("user_id", "");
 
+        Log.i("yogall","address:" + address_id + "slot:"+ selectedSlotId + "cartTotal:" + cartTotal);
+
         Retrofit retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
 
         retrofitIInterface.getUserWallet(user_id).enqueue(new Callback<WalletResponse>() {
             @Override
             public void onResponse(Call<WalletResponse> call, Response<WalletResponse> response) {
-                int walletBalance = response.body().getData().get(0).getAmount();
-                if(response.body().getData().size() == 0){
 
+                if(response.body().getData().size() == 0){
+                    payWallet.setEnabled(false);
+                    tvBalance.setText("Insufficient balance(0)");
                 }
                 else{
+                    int walletBalance = response.body().getData().get(0).getAmount();
                     if(cartTotal >= walletBalance){
                         //insufficient balance
                         payWallet.setEnabled(false);

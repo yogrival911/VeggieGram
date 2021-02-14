@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,165 +7,185 @@
     android:orientation="vertical"
     tools:context=".ProductDetailFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <Button
+        android:id="@+id/viewCart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="65dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:inputType="textCapWords"
+        android:text="View Cart"
+        android:textSize="18sp"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/viewCart"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/viewCart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/productImage"
-                android:layout_width="match_parent"
-                android:layout_height="400dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvDetailName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Name"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="@+id/productImage"
-                app:layout_constraintTop_toBottomOf="@+id/productImage" />
-
-            <TextView
-                android:id="@+id/tvDetailQuantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Quantity"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="@+id/tvDetailName"
-                app:layout_constraintTop_toBottomOf="@+id/tvDetailName" />
-
-            <TextView
-                android:id="@+id/tvDetailSellPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="30"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/tvDetailQuantity"
-                app:layout_constraintTop_toBottomOf="@+id/tvDetailQuantity" />
-
-            <TextView
-                android:id="@+id/tvDetailPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="40"
-                app:layout_constraintBottom_toBottomOf="@+id/tvDetailSellPrice"
-                app:layout_constraintStart_toEndOf="@+id/tvDetailSellPrice"
-                app:layout_constraintTop_toTopOf="@+id/tvDetailSellPrice" />
-
-            <TextView
-                android:id="@+id/tvDetailSaving"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="You Save"
-                app:layout_constraintStart_toStartOf="@+id/tvDetailSellPrice"
-                app:layout_constraintTop_toBottomOf="@+id/tvDetailSellPrice" />
-
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Description"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="@+id/tvDetailSaving"
-                app:layout_constraintTop_toBottomOf="@+id/tvDetailSaving" />
+            android:layout_height="100dp"
+            android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
-                android:layout_width="100dp"
-                android:layout_height="60dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tvDetailSaving"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvDetailSaving">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/increDecreLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:id="@+id/ivIncrement"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/increment"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:id="@+id/productImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/tvCount"
+                        android:id="@+id/tvDetailName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="34"
+                        android:layout_marginTop="10dp"
+                        android:text="Name"
                         android:textColor="@color/black"
-                        app:layout_constraintBottom_toBottomOf="@+id/ivIncrement"
-                        app:layout_constraintEnd_toStartOf="@+id/ivIncrement"
-                        app:layout_constraintTop_toTopOf="@+id/ivIncrement" />
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/productImage"
+                        app:layout_constraintTop_toBottomOf="@+id/productImage" />
 
-                    <ImageView
-                        android:id="@+id/ivDec"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_baseline_remove_circle_24"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvCount"
-                        app:layout_constraintEnd_toStartOf="@+id/tvCount"
-                        app:layout_constraintTop_toTopOf="@+id/tvCount" />
+                    <TextView
+                        android:id="@+id/tvDetailQuantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Quantity"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="@+id/tvDetailName"
+                        app:layout_constraintTop_toBottomOf="@+id/tvDetailName" />
+
+                    <TextView
+                        android:id="@+id/tvDetailSellPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="30"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/tvDetailQuantity"
+                        app:layout_constraintTop_toBottomOf="@+id/tvDetailQuantity" />
+
+                    <TextView
+                        android:id="@+id/tvDetailPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="40"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvDetailSellPrice"
+                        app:layout_constraintStart_toEndOf="@+id/tvDetailSellPrice"
+                        app:layout_constraintTop_toTopOf="@+id/tvDetailSellPrice" />
+
+                    <TextView
+                        android:id="@+id/tvDetailSaving"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="You Save"
+                        android:textColor="@color/purple_500"
+                        app:layout_constraintStart_toStartOf="@+id/tvDetailSellPrice"
+                        app:layout_constraintTop_toBottomOf="@+id/tvDetailSellPrice" />
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Description"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/tvDetailSaving"
+                        app:layout_constraintTop_toBottomOf="@+id/tvDetailSaving" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout"
+                        android:layout_width="100dp"
+                        android:layout_height="60dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvDetailSaving"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvDetailSaving">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/increDecreLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/ivIncrement"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/increment"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tvCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="34"
+                                android:textColor="@color/black"
+                                app:layout_constraintBottom_toBottomOf="@+id/ivIncrement"
+                                app:layout_constraintEnd_toStartOf="@+id/ivIncrement"
+                                app:layout_constraintTop_toTopOf="@+id/ivIncrement" />
+
+                            <ImageView
+                                android:id="@+id/ivDec"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/ic_baseline_remove_circle_24"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvCount"
+                                app:layout_constraintEnd_toStartOf="@+id/tvCount"
+                                app:layout_constraintTop_toTopOf="@+id/tvCount" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <Button
+                        android:id="@+id/addButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#FFFFFF"
+                        android:inputType="textCapWords"
+                        android:text="Add"
+                        android:textColor="@color/black"
+                        app:cornerRadius="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+                        app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+                        app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+                        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+                        app:strokeColor="#000000"
+                        app:strokeWidth="0.7dp" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
 
-            <Button
-                android:id="@+id/addButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#FFFFFF"
-                android:inputType="textCapWords"
-                android:text="Add"
-                android:textColor="@color/black"
-                app:cornerRadius="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-                app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-                app:strokeColor="#000000"
-                app:strokeWidth="0.7dp" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <Button
-            android:id="@+id/viewCart"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:inputType="textCapWords"
-            android:text="View Cart"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

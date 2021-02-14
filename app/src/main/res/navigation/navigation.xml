@@ -42,7 +42,11 @@
         android:id="@+id/walletFragment"
         android:name="com.veggiegram.ui.wallet.WalletFragment"
         android:label="fragment_wallet"
-        tools:layout="@layout/fragment_wallet" />
+        tools:layout="@layout/fragment_wallet" >
+        <action
+            android:id="@+id/action_walletFragment_to_signinFragment"
+            app:destination="@id/signinFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUpFragment2"
         android:name="com.veggiegram.ui.register.SignUpFragment"

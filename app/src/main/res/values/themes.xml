@@ -18,7 +18,11 @@
         <!--  This will change ActionBar BackgroundColor to Black -->
         <item name="colorSurface">#FFFF</item>
 
+        <item name="android:fontFamily">@font/cairo</item>
+        <item name="fontFamily">@font/cairo</item>
+
     </style>
+
 
     <style name="Theme.NavDrawer.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

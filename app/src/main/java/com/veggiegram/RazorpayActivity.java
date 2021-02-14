@@ -66,13 +66,13 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
     @Override
     public void onPaymentSuccess(String s) {
         Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-        Log.i("yogpay", s);
+        Log.i("yogpaysuccess", s);
     }
 
     @Override
     public void onPaymentError(int i, String s) {
         Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-        Log.i("yogpay", s);
+        Log.i("yogpayerror", s);
 
     }
 }

@@ -130,7 +130,8 @@ public class MainActivity extends AppCompatActivity {
                         Intent sharingIntent = new Intent();
                         sharingIntent.setAction(Intent.ACTION_SEND);
                         sharingIntent.setType("text/plain");
-                        String shareBody = "Download VeggieGram";
+                        String shareBody = "Check out \"Veggiegram - Buy Fruits & Vegetables in Gurugram\"  " +
+                                "https://play.google.com/store/apps/details?id=com.veggiegram";
                         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "VeggieGram");
                         sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                         startActivity(Intent.createChooser(sharingIntent, "Share via"));
@@ -263,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
 
                         final String appPackageName = getPackageName();
                         try {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.veggiegram")));
                         }
                         catch (android.content.ActivityNotFoundException anfe) {
                             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));

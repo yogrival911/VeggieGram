@@ -37,8 +37,9 @@
                 android:id="@+id/recyclerViewProducts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="vertical"
-                android:scrollbarThumbVertical="@drawable/scrollbar"/>
+                android:layout_marginTop="2dp"
+                android:scrollbarThumbVertical="@drawable/scrollbar"
+                android:scrollbars="vertical" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

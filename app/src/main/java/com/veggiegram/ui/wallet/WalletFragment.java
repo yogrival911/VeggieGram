@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.veggiegram.R;
 import com.veggiegram.responses.wallet.WalletResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
+import com.veggiegram.ui.favourite.FavouriteFragmentDirections;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,27 +47,34 @@ TextView tvWalletMoney;
 
         Retrofit retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
+        NavHostFragment navHostFragment =(NavHostFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host);
+        if(user_id.isEmpty()){
+            navHostFragment.getNavController().navigate(WalletFragmentDirections.actionWalletFragmentToSigninFragment());
+        }
+        else{
+            retrofitIInterface.getUserWallet(user_id).enqueue(new Callback<WalletResponse>() {
+                @Override
+                public void onResponse(Call<WalletResponse> call, Response<WalletResponse> response) {
+                    tvWalletMoney.setText(response.body().getData().get(0).getAmount()+"");
+                }
 
-        retrofitIInterface.getUserWallet(user_id).enqueue(new Callback<WalletResponse>() {
-            @Override
-            public void onResponse(Call<WalletResponse> call, Response<WalletResponse> response) {
-                tvWalletMoney.setText(response.body().getData().get(0).getAmount()+"");
-            }
+                @Override
+                public void onFailure(Call<WalletResponse> call, Throwable t) {
 
-            @Override
-            public void onFailure(Call<WalletResponse> call, Throwable t) {
+                }
+            });
 
-            }
-        });
+            addMoney.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog();
+                    bottomSheetDialog.show(getActivity().getSupportFragmentManager(),"ModelBottomSheet");
 
-        addMoney.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog();
-                bottomSheetDialog.show(getActivity().getSupportFragmentManager(),"ModelBottomSheet");
+                }
+            });
 
-            }
-        });
+        }
+
 
         return view;
     }
