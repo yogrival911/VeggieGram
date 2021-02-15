@@ -9,12 +9,15 @@ public class Datum {
     @SerializedName("orderid")
     @Expose
     private Integer orderid;
+
     @SerializedName("order_id")
     @Expose
     private String orderId;
+
     @SerializedName("created_at")
     @Expose
     private String createdAt;
+
     @SerializedName("total")
     @Expose
     private Integer total;
@@ -44,7 +47,7 @@ public class Datum {
     private Integer deliveryStatus;
     @SerializedName("delivered_date")
     @Expose
-    private Object deliveredDate;
+    private Integer deliveredDate;
     @SerializedName("cancel_request")
     @Expose
     private Integer cancelRequest;
@@ -166,11 +169,11 @@ public class Datum {
         this.deliveryStatus = deliveryStatus;
     }
 
-    public Object getDeliveredDate() {
+    public Integer getDeliveredDate() {
         return deliveredDate;
     }
 
-    public void setDeliveredDate(Object deliveredDate) {
+    public void setDeliveredDate(Integer deliveredDate) {
         this.deliveredDate = deliveredDate;
     }
 

@@ -28,8 +28,8 @@ OrderResponse orderResponse;
 
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
-        holder.orderID.setText(orderResponse.getData().get(position).getOrderid()+"");
-//        holder.orderStatus.setText(orderResponse.getData().get(position).getDeliveryStatus()+"");
+        holder.orderID.setText(orderResponse.getData().get(position).getOrderId()+"");
+        holder.orderStatus.setText(orderResponse.getData().get(position).getOrderStatus()+"");
         Log.i("yogdate", orderResponse.getData().get(position).getDeliveredDate()+"");
         holder.paymentMethod.setText(orderResponse.getData().get(position).getPaymentMethod()+"");
         holder.amount.setText("\u20B9"+orderResponse.getData().get(position).getTotal()+"");
@@ -61,7 +61,7 @@ OrderResponse orderResponse;
             super(itemView);
             orderID = itemView.findViewById(R.id.orderID);
             orderStatus = itemView.findViewById(R.id.orderStatus);
-            paymentMethod = itemView.findViewById(R.id.orderStatus);
+            paymentMethod = itemView.findViewById(R.id.paymentMethod);
             amount = itemView.findViewById(R.id.amount);
             tvDay = itemView.findViewById(R.id.tvDay);
         }
