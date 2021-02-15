@@ -70,10 +70,21 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String user_id = sharedPreferences.getString("user_id","");
+        String name = sharedPreferences.getString("name", "");
 
         navigationView = findViewById(R.id.navView);
         Menu menu = navigationView.getMenu();
         MenuItem menuItem = menu.findItem(R.id.signin);
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.headerUserName);
+
+        if(user_id.isEmpty()){
+            navUsername.setText("Welcome user");
+        }
+        else{
+            navUsername.setText(name);
+        }
         if(user_id.isEmpty()){
             navigationView.getMenu().findItem(R.id.signin).setTitle("Sign In");
             Toast.makeText(this, "Sign in", Toast.LENGTH_SHORT).show();
