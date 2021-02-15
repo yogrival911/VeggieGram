@@ -42,6 +42,7 @@ TextView paymentStatusDetail, tvorder_id, tvdate, tvtotalAmount, tvpaymentMethod
         tvaddress.setText(address);
         tvpaymentMethod.setText(payment_method);
         tvtotalAmount.setText(total_amount);
+        paymentStatusDetail.setText(payment_status);
     }
 
     @Override

@@ -3,7 +3,9 @@ package com.veggiegram;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,9 +25,17 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
         Checkout checkout = new Checkout();
 
         String enteredAmount = getIntent().getStringExtra("entered_amount");
+        String description = getIntent().getStringExtra("description");
+        Log.i("yogdes", description);
+
         Log.i("yogenter", enteredAmount);
         int checkoutAmount = Integer.parseInt(enteredAmount);
         int checkAmoutRazor = checkoutAmount*100;
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String name = sharedPreferences.getString("name", "");
+        String mobile = sharedPreferences.getString("mobile","");
+        String email = sharedPreferences.getString("email","");
 
 
         checkout.setKeyID("rzp_live_iI3vVE2JZRTuxg");
@@ -49,14 +59,14 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
             JSONObject options = new JSONObject();
 
             options.put("name", "Veggiegram");
-            options.put("description", "Adding Money to Wallet");
+            options.put("description", description);
 //            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
 //            options.put("order_id", "90909090");//from response of step 3.
             options.put("theme.color", "#73B440");
             options.put("currency", "INR");
             options.put("amount", checkAmoutRazor+"");//pass amount in currency subunits
-            options.put("prefill.email", "yogrival911@gmail.com");
-            options.put("prefill.contact","7696025886");
+            options.put("prefill.email", email);
+            options.put("prefill.contact",mobile);
             checkout.open(activity, options);
         } catch(Exception e) {
             Log.e(TAG, "Error in starting Razorpay Checkout", e);

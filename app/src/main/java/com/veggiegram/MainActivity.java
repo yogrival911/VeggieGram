@@ -74,11 +74,13 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navView);
         Menu menu = navigationView.getMenu();
         MenuItem menuItem = menu.findItem(R.id.signin);
-        if(user_id.equals("")){
-            menuItem.setTitle("Sign In");
+        if(user_id.isEmpty()){
+            navigationView.getMenu().findItem(R.id.signin).setTitle("Sign In");
+            Toast.makeText(this, "Sign in", Toast.LENGTH_SHORT).show();
         }
         else{
-            menuItem.setTitle("Sign Out");
+            navigationView.getMenu().findItem(R.id.signin).setTitle("Sign Out");
+            Toast.makeText(this, "Sign out", Toast.LENGTH_SHORT).show();
         }
 
         navHostFragment =(NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.nav_host);
@@ -161,13 +163,13 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.signin:
                         drawerLayout.closeDrawers();
-                        if(user_id.equals("")){
-                            //sign in
-
+                        if(navigationView.getMenu().findItem(R.id.signin).getTitle() == "Sign In"){
+                            Toast.makeText(MainActivity.this, "Sign in", Toast.LENGTH_SHORT).show();
+//                            Intent intentSignIn = new Intent(getApplicationContext(), SigninActivity.class);
+//                            startActivity(intentSignIn);
                         }
                         else{
-                            //sign out
-
+                            Toast.makeText(MainActivity.this, "Sign Out", Toast.LENGTH_SHORT).show();
                         }
                         break;
                 }

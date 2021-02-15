@@ -175,6 +175,7 @@ int selectedSlotId;
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), RazorpayActivity.class);
                 intent.putExtra("entered_amount", cartTotal+"");
+                intent.putExtra("description", "Paying");
                 getActivity().startActivity(intent);
             }
         });
