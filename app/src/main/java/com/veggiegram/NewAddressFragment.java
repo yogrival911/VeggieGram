@@ -115,7 +115,7 @@ String latitude, longitude;
 
                 isAllFieldsChecked = CheckAllFields();
                 if (isAllFieldsChecked) {
-                    retrofitIInterface.addNewAddress(new AddAddressObject("123456", "34", "55",user_id,house,street,city,"punjab",state,mob,pin,firstName, lastName,landmark), user_id)
+                    retrofitIInterface.addNewAddress(new AddAddressObject("", "", "",user_id,house,street,city,"punjab",state,mob,pin,firstName, lastName,landmark), user_id)
                             .enqueue(new Callback<AddAddressResponse>() {
                                 @Override
                                 public void onResponse(Call<AddAddressResponse> call, Response<AddAddressResponse> response) {
@@ -136,45 +136,45 @@ String latitude, longitude;
     }
 
     private boolean CheckAllFields() {
-//        if (etFirstName.length() < 4) {
-//            etFirstName.setError("Atleast 4 characters required");
-//            return false;
-//        }
-//
-//        if (etLastName.length() < 4) {
-//            etLastName.setError("Atleast 4 characters required");
-//            return false;
-//        }
-//
-//        if (etHouse.length() == 0) {
-//            etHouse.setError("House no. is required");
-//            return false;
-//        }
-//
-//        if (etStreet.length() == 0) {
-//            etStreet.setError("Street is required");
-//            return false;
-//        }
-//
-//        if (etStreet.length() == 0) {
-//                etStreet.setError("Street is required");
-//                return false;
-//        }
-//
-//        if (etPin.length() < 6) {
-//            etPin.setError("Enter 6 digit pin code");
-//            return false;
-//        }
-//
-//        if (etLandmark.length() == 0) {
-//            etLandmark.setError("Landmark is required");
-//            return false;
-//        }
-//
-//        if (etMob.length() < 10) {
-//            etMob.setError("Enter 10 digit mobile number");
-//            return false;
-//        }
+        if (etFirstName.length() < 4) {
+            etFirstName.setError("Atleast 4 characters required");
+            return false;
+        }
+
+        if (etLastName.length() < 4) {
+            etLastName.setError("Atleast 4 characters required");
+            return false;
+        }
+
+        if (etHouse.length() == 0) {
+            etHouse.setError("House no. is required");
+            return false;
+        }
+
+        if (etStreet.length() == 0) {
+            etStreet.setError("Street is required");
+            return false;
+        }
+
+        if (etStreet.length() == 0) {
+                etStreet.setError("Street is required");
+                return false;
+        }
+
+        if (etPin.length() < 6) {
+            etPin.setError("Enter 6 digit pin code");
+            return false;
+        }
+
+        if (etLandmark.length() == 0) {
+            etLandmark.setError("Landmark is required");
+            return false;
+        }
+
+        if (etMob.length() < 10) {
+            etMob.setError("Enter 10 digit mobile number");
+            return false;
+        }
 
         return true;
     }

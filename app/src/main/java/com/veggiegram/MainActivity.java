@@ -181,6 +181,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                         else{
                             Toast.makeText(MainActivity.this, "Sign Out", Toast.LENGTH_SHORT).show();
+                            sharedPreferences.edit().putString("user_id", "").apply();
+                            navigationView.getMenu().findItem(R.id.signin).setTitle("Sign in");
                         }
                         break;
                 }
