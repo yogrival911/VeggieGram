@@ -2,6 +2,7 @@ package com.veggiegram.retrofit;
 
 import androidx.annotation.CallSuper;
 
+import com.google.gson.JsonObject;
 import com.veggiegram.SearchObject;
 import com.veggiegram.responses.AddAddressObject;
 import com.veggiegram.responses.AddToCartObject;
@@ -130,7 +131,7 @@ public interface RetrofitIInterface {
     Call<WalletResponse> getUserWallet(@Header("token") String token);
 
     @POST("addorder")
-    Call<AddOrderResponse> addOrder(@Body AddOrderObject addOrderObject,
+    Call<AddOrderResponse> addOrder(@Body JsonObject jsonObject,
                                     @Header("token") String token);
 
 }
