@@ -113,7 +113,7 @@ GetCartListResponse cartListResponse;
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("payment_order_id", "");
                 jsonObject.addProperty( "transaction_id", "");
-                jsonObject.addProperty("total", "223");
+                jsonObject.addProperty("total", String.valueOf(cartTotal));
                 jsonObject.addProperty("final_total", String.valueOf(cartTotal));
                 jsonObject.addProperty("shipping_cost", "0");
                 jsonObject.addProperty("discount", "");

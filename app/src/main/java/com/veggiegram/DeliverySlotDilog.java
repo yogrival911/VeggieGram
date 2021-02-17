@@ -178,6 +178,12 @@ int selectedSlotId;
                 Intent intent = new Intent(getActivity(), RazorpayActivity.class);
                 intent.putExtra("entered_amount", cartTotal+"");
                 intent.putExtra("description", "Paying");
+                intent.putExtra("cart_total", cartTotal);
+                intent.putExtra("payment_mode", "COD");
+                intent.putExtra("address_id", address_id);
+                intent.putExtra("slot_id", selectedSlotId);
+                Boolean fromWallet = false;
+                intent.putExtra("fromWallet", false);
                 getActivity().startActivity(intent);
             }
         });
