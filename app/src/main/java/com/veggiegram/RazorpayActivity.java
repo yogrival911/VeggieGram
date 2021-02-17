@@ -132,7 +132,6 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
                         mapFor.put("qty", response.body().getData().get(i).getCartquantity());
                         mapFor.put("price", response.body().getData().get(i).getPrice());
 
-
                         hashMapListFor.add(mapFor);
                     }
                     Gson gson = new Gson();
@@ -162,7 +161,6 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
 
                         }
                     });
-
                 }
 
                 @Override

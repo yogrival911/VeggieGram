@@ -25,11 +25,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.veggiegram.responses.SlotAdapter;
+import com.veggiegram.responses.addorder.AddOrderResponse;
+import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.responses.slot.SlotResponse;
 import com.veggiegram.responses.wallet.WalletResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -160,6 +168,78 @@ int selectedSlotId;
             }
         });
 
+        payWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                retrofitIInterface.getUserWallet(user_id).enqueue(new Callback<WalletResponse>() {
+                    @Override
+                    public void onResponse(Call<WalletResponse> call, Response<WalletResponse> response) {
+                        int walletAmount = response.body().getData().get(0).getAmount();
+
+                        retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
+                            @Override
+                            public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {
+
+                                Log.i("yogintent", cartTotal+"");
+                                Log.i("yogintent", address_id+"");
+                                Log.i("yogintent", selectedSlotId+"");
+
+                                List<HashMap> hashMapListFor = new ArrayList<>();
+                                for(int i=0; i < response.body().getData().size(); i++){
+                                    HashMap<String, Integer> mapFor = new HashMap<>();
+                                    mapFor.put("id", response.body().getData().get(i).getProductid());
+                                    mapFor.put("qty", response.body().getData().get(i).getCartquantity());
+                                    mapFor.put("price", response.body().getData().get(i).getPrice());
+
+                                    hashMapListFor.add(mapFor);
+                                }
+                                Gson gson = new Gson();
+                                String jsonStringFor = gson.toJson(hashMapListFor);
+                                Log.i("yogjsonarray", jsonStringFor);
+
+                                JsonObject jsonObject = new JsonObject();
+                                jsonObject.addProperty("payment_order_id", "");
+                                jsonObject.addProperty( "transaction_id", "");
+                                jsonObject.addProperty("total", String.valueOf(cartTotal));
+                                jsonObject.addProperty("final_total", String.valueOf(cartTotal));
+                                jsonObject.addProperty("shipping_cost", "0");
+                                jsonObject.addProperty("discount", "");
+                                jsonObject.addProperty("deliver_address_Id", String.valueOf(address_id));
+                                jsonObject.addProperty("slot", String.valueOf(selectedSlotId));
+                                jsonObject.addProperty("wallet", String.valueOf(walletAmount-cartTotal));
+                                jsonObject.addProperty("orderData", jsonStringFor);
+
+                                retrofitIInterface.addOrder(jsonObject, user_id).enqueue(new Callback<AddOrderResponse>() {
+                                    @Override
+                                    public void onResponse(Call<AddOrderResponse> call, Response<AddOrderResponse> response) {
+                                        Log.i("yogjsonobject", response.body().getMessage());
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<AddOrderResponse> call, Throwable t) {
+
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onFailure(Call<GetCartListResponse> call, Throwable t) {
+
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<WalletResponse> call, Throwable t) {
+
+                    }
+                });
+
+            }
+        });
+
         cod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,6 +248,7 @@ int selectedSlotId;
                 intent.putExtra("payment_mode", "COD");
                 intent.putExtra("address_id", address_id);
                 intent.putExtra("slot_id", selectedSlotId);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 getActivity().startActivity(intent);
             }
         });
