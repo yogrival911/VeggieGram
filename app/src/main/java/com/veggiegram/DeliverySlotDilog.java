@@ -166,6 +166,8 @@ int selectedSlotId;
                 Intent intent = new Intent(getActivity(), PaymentStatusActivity.class);
                 intent.putExtra("cart_total", cartTotal);
                 intent.putExtra("payment_mode", "COD");
+                intent.putExtra("address_id", address_id);
+                intent.putExtra("slot_id", selectedSlotId);
                 getActivity().startActivity(intent);
             }
         });

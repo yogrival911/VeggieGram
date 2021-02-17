@@ -21,6 +21,7 @@ import com.google.gson.JsonObject;
 import com.veggiegram.responses.addorder.AddOrderObject;
 import com.veggiegram.responses.addorder.AddOrderResponse;
 import com.veggiegram.responses.addorder.OrderDatum;
+import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
 
@@ -55,6 +56,26 @@ Toolbar toolbarPaymentStatus;
         Retrofit retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
 
+        retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
+            @Override
+            public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<GetCartListResponse> call, Throwable t) {
+
+            }
+        });
+
+
+        int cartTotal = getIntent().getIntExtra("cart_total",0);
+        int addressID = getIntent().getIntExtra("address_id", 0);
+        int slotID = getIntent().getIntExtra("slot_id", 0);
+        Log.i("yogintent", cartTotal+"");
+        Log.i("yogintent", addressID+"");
+        Log.i("yogintent", slotID+"");
+
         List<OrderDatum> orderData = new ArrayList<>();
         orderData.add(new OrderDatum(2, 4, 4));
         Gson gson = new Gson();
@@ -83,11 +104,11 @@ Toolbar toolbarPaymentStatus;
         jsonObject.addProperty("payment_order_id", "");
         jsonObject.addProperty( "transaction_id", "");
         jsonObject.addProperty("total", "223");
-        jsonObject.addProperty("final_total", "2332");
+        jsonObject.addProperty("final_total", String.valueOf(cartTotal));
         jsonObject.addProperty("shipping_cost", "0");
-        jsonObject.addProperty("discount", "2");
-        jsonObject.addProperty("deliver_address_Id", "1");
-        jsonObject.addProperty("slot", "8 AM to 10 AM");
+        jsonObject.addProperty("discount", "");
+        jsonObject.addProperty("deliver_address_Id", String.valueOf(addressID));
+        jsonObject.addProperty("slot", String.valueOf(slotID));
         jsonObject.addProperty("wallet", "0.00");
         jsonObject.addProperty("orderData", jsonString);
 
