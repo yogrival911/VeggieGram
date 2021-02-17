@@ -12,6 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.veggiegram.responses.order.OrderResponse;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
 OrderResponse orderResponse;
 
@@ -33,7 +38,14 @@ OrderResponse orderResponse;
         Log.i("yogdate", orderResponse.getData().get(position).getDeliveredDate()+"");
         holder.paymentMethod.setText(orderResponse.getData().get(position).getPaymentMethod()+"");
         holder.amount.setText("\u20B9"+orderResponse.getData().get(position).getTotal()+"");
-//        holder.tvDay.setText(orderResponse.getData().get(position).getDeliveredDate().toString());
+
+        Log.i("yogdate", orderResponse.getData().get(position).getCreatedAt());
+//
+//       if(orderResponse.getData().get(position).getCreatedAt() != null){
+//           String date = orderResponse.getData().get(position).getCreatedAt();
+//           SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a");
+//           String dateTime = simpleDateFormat.format(date);
+//       }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

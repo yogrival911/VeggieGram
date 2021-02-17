@@ -47,7 +47,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/cartTotalText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cart Total"
@@ -72,10 +72,32 @@
             android:layout_height="0dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView11"
+            app:layout_constraintBottom_toTopOf="@+id/cartTotalText"
             app:layout_constraintTop_toBottomOf="@+id/textView10"
             tools:layout_editor_absoluteX="0dp"
             android:scrollbars="vertical"/>
+
+        <ImageView
+            android:id="@+id/emptyCart"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_empty_cart"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/noItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Your cart has not item"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="@+id/emptyCart"
+            app:layout_constraintStart_toStartOf="@+id/emptyCart"
+            app:layout_constraintTop_toBottomOf="@+id/emptyCart" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

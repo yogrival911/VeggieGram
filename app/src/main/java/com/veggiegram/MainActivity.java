@@ -191,31 +191,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-//        builder.setMessage("Are you sure you want to leave?");
-//        builder.setPositiveButton("Yes, Leave!", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which)
-//                            {
-//                                // When the user click yes button
-//                                // then app will close
-//                                finish();
-//                            }
-//                        });
-//        builder.setNegativeButton("Don't Leave!", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which)
-//                            {
-//                                dialog.cancel();
-//                            }
-//                        });
-//
-//        AlertDialog alertDialog = builder.create();
-//        alertDialog.show();
-//    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.top_menu, menu);
@@ -250,8 +225,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_cart:
-                Intent intent = new Intent(this, CartActivity.class);
-                startActivity(intent);
+
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+                String user_id = sharedPreferences.getString("user_id", "");
+                if(user_id.isEmpty()){
+                    //login
+                }
+                else{
+                    Intent intent = new Intent(this, CartActivity.class);
+                    startActivity(intent);
+                }
+
                 break;
         }
         return true;

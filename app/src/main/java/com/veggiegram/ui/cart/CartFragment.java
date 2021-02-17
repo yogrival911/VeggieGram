@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,10 +46,11 @@ import static java.lang.Integer.parseInt;
 public class CartFragment extends Fragment {
 RecyclerView recyclerViewCart;
 SharedPreferences sharedPreferences;
-TextView cartTotal;
+TextView cartTotal,cartTotalText, noItem;
 Button checkOut;
 ClickCartInterface clickCartInterface;
 CartAdapter cartAdapter;
+ImageView emptyCart;
 int grandTotal;
     public CartFragment() {
         // Required empty public constructor
@@ -61,6 +63,9 @@ int grandTotal;
         checkOut = view.findViewById(R.id.checkOut);
 
         cartTotal = view.findViewById(R.id.cartTotal);
+        emptyCart = view.findViewById(R.id.emptyCart);
+        cartTotalText = view.findViewById(R.id.cartTotalText);
+        noItem = view.findViewById(R.id.noItem);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String user_id = sharedPreferences.getString("user_id","");
@@ -157,23 +162,34 @@ int grandTotal;
         retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
             @Override
             public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {
-                Log.i("yog", response.body().toString());
-                if(response.body().getSuccess()){
-                    int totalPrice=0;
-                    int totalQuantity = 0;
+              if(response.body().getData().size() == 0){
+                  //empty
+                  emptyCart.setVisibility(View.VISIBLE);
+                  checkOut.setVisibility(View.GONE);
+                  cartTotalText.setVisibility(View.GONE);
+                  noItem.setVisibility(View.VISIBLE);
+              }
+              else{
+                  emptyCart.setVisibility(View.GONE);
+                  noItem.setVisibility(View.GONE);
+                  Log.i("yog", response.body().toString());
+                  if(response.body().getSuccess()){
+                      int totalPrice=0;
+                      int totalQuantity = 0;
 
-                    for(int i=0; i<response.body().getData().size();i++){
-                        String quant = response.body().getData().get(i).getCartquantity().toString();
-                        String price = response.body().getData().get(i).getSellprice().toString();
-                        int quantity = parseInt(quant);
-                        int sellPrice = Integer.parseInt(price);
+                      for(int i=0; i<response.body().getData().size();i++){
+                          String quant = response.body().getData().get(i).getCartquantity().toString();
+                          String price = response.body().getData().get(i).getSellprice().toString();
+                          int quantity = parseInt(quant);
+                          int sellPrice = Integer.parseInt(price);
 
-                        grandTotal = grandTotal + quantity * sellPrice;
-                    }
-                    cartTotal.setText("\u20B9 "+ grandTotal);
-                    cartAdapter = new CartAdapter(response.body(), clickCartInterface);
-                    recyclerViewCart.setAdapter(cartAdapter);
-                }
+                          grandTotal = grandTotal + quantity * sellPrice;
+                      }
+                      cartTotal.setText("\u20B9 "+ grandTotal);
+                      cartAdapter = new CartAdapter(response.body(), clickCartInterface);
+                      recyclerViewCart.setAdapter(cartAdapter);
+                  }
+              }
             }
 
             @Override
