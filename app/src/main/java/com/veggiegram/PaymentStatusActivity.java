@@ -39,6 +39,7 @@ public class PaymentStatusActivity extends AppCompatActivity {
 TextView statusAmount,paymentMode;
 Button takeMeHome;
 Toolbar toolbarPaymentStatus;
+GetCartListResponse cartListResponse;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +60,79 @@ Toolbar toolbarPaymentStatus;
         retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
             @Override
             public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {
+                cartListResponse = response.body();
+
+                Log.i("yogcartname", cartListResponse.getData().get(0).getName());
+
+                int id = cartListResponse.getData().get(0).getProductid();
+
+                int cartTotal = getIntent().getIntExtra("cart_total",0);
+                int addressID = getIntent().getIntExtra("address_id", 0);
+                int slotID = getIntent().getIntExtra("slot_id", 0);
+
+                Log.i("yogintent", cartTotal+"");
+                Log.i("yogintent", addressID+"");
+                Log.i("yogintent", slotID+"");
+
+//                List<OrderDatum> orderData = new ArrayList<>();
+//                orderData.add(new OrderDatum(2, 4, 4));
+//                Gson gson = new Gson();
+//
+//                HashMap<String, Integer> map = new HashMap<>();
+//                HashMap<String, Integer> map2 = new HashMap<>();
+//                // Add elements to the map
+//                map.put("id", 10);
+//                map.put("qty", 30);
+//                map.put("price", 20);
+//
+//                map2.put("id", 102);
+//                map2.put("qty", 302);
+//                map2.put("price", 202);
+//
+//                List<HashMap> hashMapList = new ArrayList<>();
+//                hashMapList.add(map);
+//                hashMapList.add(map2);
+//
+//                String jsonString = gson.toJson(hashMapList);
+//                Log.i("yogjsonarray", jsonString);
+
+                List<HashMap> hashMapListFor = new ArrayList<>();
+                for(int i=0; i < response.body().getData().size(); i++){
+                    HashMap<String, Integer> mapFor = new HashMap<>();
+                    mapFor.put("id", response.body().getData().get(i).getProductid());
+                    mapFor.put("qty", response.body().getData().get(i).getCartquantity());
+                    mapFor.put("price", response.body().getData().get(i).getPrice());
+
+
+                    hashMapListFor.add(mapFor);
+                }
+                Gson gson = new Gson();
+                String jsonStringFor = gson.toJson(hashMapListFor);
+                Log.i("yogjsonarray", jsonStringFor);
+
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("payment_order_id", "");
+                jsonObject.addProperty( "transaction_id", "");
+                jsonObject.addProperty("total", "223");
+                jsonObject.addProperty("final_total", String.valueOf(cartTotal));
+                jsonObject.addProperty("shipping_cost", "0");
+                jsonObject.addProperty("discount", "");
+                jsonObject.addProperty("deliver_address_Id", String.valueOf(addressID));
+                jsonObject.addProperty("slot", String.valueOf(slotID));
+                jsonObject.addProperty("wallet", "0.00");
+                jsonObject.addProperty("orderData", jsonStringFor);
+
+                retrofitIInterface.addOrder(jsonObject, user_id).enqueue(new Callback<AddOrderResponse>() {
+                    @Override
+                    public void onResponse(Call<AddOrderResponse> call, Response<AddOrderResponse> response) {
+                        Log.i("yogjsonobject", response.body().getMessage());
+                    }
+
+                    @Override
+                    public void onFailure(Call<AddOrderResponse> call, Throwable t) {
+
+                    }
+                });
 
             }
 
@@ -69,60 +143,8 @@ Toolbar toolbarPaymentStatus;
         });
 
 
-        int cartTotal = getIntent().getIntExtra("cart_total",0);
-        int addressID = getIntent().getIntExtra("address_id", 0);
-        int slotID = getIntent().getIntExtra("slot_id", 0);
-        Log.i("yogintent", cartTotal+"");
-        Log.i("yogintent", addressID+"");
-        Log.i("yogintent", slotID+"");
-
-        List<OrderDatum> orderData = new ArrayList<>();
-        orderData.add(new OrderDatum(2, 4, 4));
-        Gson gson = new Gson();
 
 
-        HashMap<String, Integer> map = new HashMap<>();
-        HashMap<String, Integer> map2 = new HashMap<>();
-        // Add elements to the map
-        map.put("id", 10);
-        map.put("qty", 30);
-        map.put("price", 20);
-
-        map2.put("id", 102);
-        map2.put("qty", 302);
-        map2.put("price", 202);
-
-        List<HashMap> hashMapList = new ArrayList<>();
-        hashMapList.add(map);
-        hashMapList.add(map2);
-
-        String jsonString = gson.toJson(hashMapList);
-        Log.i("yogjsonarray", jsonString);
-
-
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("payment_order_id", "");
-        jsonObject.addProperty( "transaction_id", "");
-        jsonObject.addProperty("total", "223");
-        jsonObject.addProperty("final_total", String.valueOf(cartTotal));
-        jsonObject.addProperty("shipping_cost", "0");
-        jsonObject.addProperty("discount", "");
-        jsonObject.addProperty("deliver_address_Id", String.valueOf(addressID));
-        jsonObject.addProperty("slot", String.valueOf(slotID));
-        jsonObject.addProperty("wallet", "0.00");
-        jsonObject.addProperty("orderData", jsonString);
-
-        retrofitIInterface.addOrder(jsonObject, user_id).enqueue(new Callback<AddOrderResponse>() {
-            @Override
-            public void onResponse(Call<AddOrderResponse> call, Response<AddOrderResponse> response) {
-                Log.i("yogjsonobject", response.body().getMessage());
-            }
-
-            @Override
-            public void onFailure(Call<AddOrderResponse> call, Throwable t) {
-
-            }
-        });
         takeMeHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
