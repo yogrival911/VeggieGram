@@ -47,6 +47,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
                     Intent intent = new Intent(getActivity(), RazorpayActivity.class);
                     intent.putExtra("entered_amount", enteredAmount);
                     intent.putExtra("description", "Adding money to wallet");
+                    intent.putExtra("fromWallet", true);
                     getActivity().startActivity(intent);
                 }
                 else{

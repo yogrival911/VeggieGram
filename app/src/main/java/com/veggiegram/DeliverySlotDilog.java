@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.veggiegram.responses.SlotAdapter;
@@ -70,6 +71,7 @@ int selectedSlotId;
         address_id = getArguments().getInt("address_id");
         Log.i("yogadd", ""+cartTotal);
         Log.i("yogadd", ""+address_id);
+        cartTotal = 1;
 
         clickInterface = new ClickInterface() {
             @Override
@@ -177,6 +179,7 @@ int selectedSlotId;
                     public void onResponse(Call<WalletResponse> call, Response<WalletResponse> response) {
                         int walletAmount = response.body().getData().get(0).getAmount();
 
+
                         retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
                             @Override
                             public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {
@@ -214,6 +217,8 @@ int selectedSlotId;
                                     @Override
                                     public void onResponse(Call<AddOrderResponse> call, Response<AddOrderResponse> response) {
                                         Log.i("yogjsonobject", response.body().getMessage());
+                                        Intent intent = new Intent(getContext(), PaymentStatusActivity.class);
+                                        startActivity(intent);
                                     }
 
                                     @Override
@@ -248,6 +253,7 @@ int selectedSlotId;
                 intent.putExtra("payment_mode", "COD");
                 intent.putExtra("address_id", address_id);
                 intent.putExtra("slot_id", selectedSlotId);
+                intent.putExtra("mode","cod");
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 getActivity().startActivity(intent);
             }
@@ -263,8 +269,8 @@ int selectedSlotId;
                 intent.putExtra("payment_mode", "COD");
                 intent.putExtra("address_id", address_id);
                 intent.putExtra("slot_id", selectedSlotId);
-                Boolean fromWallet = false;
                 intent.putExtra("fromWallet", false);
+                intent.putExtra("mode", "razorpay");
                 getActivity().startActivity(intent);
             }
         });

@@ -36,7 +36,7 @@ import retrofit2.Retrofit;
 public class RazorpayActivity extends AppCompatActivity implements PaymentResultListener {
     private static final String TAG = MainActivity.class.getSimpleName();
     Boolean fromWallet;
-    String enteredAmount;
+    String enteredAmount,mode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +49,7 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
         int cartTotal = getIntent().getIntExtra("cart_total",0);
         int addressID = getIntent().getIntExtra("address_id", 0);
         int slotID = getIntent().getIntExtra("slot_id", 0);
+        mode = getIntent().getStringExtra("mode");
         Log.i("yogdes", String.valueOf(addressID));
 
         fromWallet = getIntent().getBooleanExtra("fromWallet",false);
@@ -132,7 +133,6 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
         else{
             //from pay with razorpay create order
 
-
             retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
                 @Override
                 public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {
@@ -174,6 +174,14 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
                         @Override
                         public void onResponse(Call<AddOrderResponse> call, Response<AddOrderResponse> response) {
                             Log.i("yogjsonobject", response.body().getMessage());
+                            Intent intent = new Intent(getApplicationContext(), PaymentStatusActivity.class);
+                            intent.putExtra("cart_total", cartTotal);
+                            intent.putExtra("payment_mode", "Razorpay");
+                            intent.putExtra("address_id", addressID);
+                            intent.putExtra("slot_id", slotID);
+                            intent.putExtra("mode", mode);
+                            intent.putExtra("transactionID", s);
+                            startActivity(intent);
                         }
 
                         @Override
@@ -188,12 +196,7 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
 
                 }
             });
-
-
         }
-
-
-
     }
 
     @Override
