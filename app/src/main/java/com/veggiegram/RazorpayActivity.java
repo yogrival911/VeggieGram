@@ -3,17 +3,21 @@ package com.veggiegram;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 import com.veggiegram.responses.addorder.AddOrderResponse;
+import com.veggiegram.responses.addwallet.AddWalletObject;
+import com.veggiegram.responses.addwallet.AddWalletResponse;
 import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
@@ -32,6 +36,7 @@ import retrofit2.Retrofit;
 public class RazorpayActivity extends AppCompatActivity implements PaymentResultListener {
     private static final String TAG = MainActivity.class.getSimpleName();
     Boolean fromWallet;
+    String enteredAmount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +44,7 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
 
         Checkout checkout = new Checkout();
 
-        String enteredAmount = getIntent().getStringExtra("entered_amount");
+        enteredAmount = getIntent().getStringExtra("entered_amount");
         String description = getIntent().getStringExtra("description");
         int cartTotal = getIntent().getIntExtra("cart_total",0);
         int addressID = getIntent().getIntExtra("address_id", 0);
@@ -101,18 +106,33 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
     public void onPaymentSuccess(String s) {
         Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
         Log.i("yogpaysuccess", s);
+        Retrofit retrofit = RetrofitClientInstance.getInstance();
+        RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String user_id = sharedPreferences.getString("user_id","");
         if(fromWallet){
             //from wallet no order creation
+
+            retrofitIInterface.addWallet(new AddWalletObject(enteredAmount, s), user_id).enqueue(new Callback<AddWalletResponse>() {
+                @Override
+                public void onResponse(Call<AddWalletResponse> call, Response<AddWalletResponse> response) {
+                    if (response.body().getSuccess()){
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<AddWalletResponse> call, Throwable t) {
+
+                }
+            });
         }
         else{
             //from pay with razorpay create order
 
-            Retrofit retrofit = RetrofitClientInstance.getInstance();
-            RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
 
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            String user_id = sharedPreferences.getString("user_id","");
             retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
                 @Override
                 public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {

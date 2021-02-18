@@ -17,6 +17,8 @@ import com.veggiegram.responses.addorder.AddOrderObject;
 import com.veggiegram.responses.addorder.AddOrderResponse;
 import com.veggiegram.responses.address.AddressResponse;
 import com.veggiegram.responses.addtocart.AddToCartResponse;
+import com.veggiegram.responses.addwallet.AddWalletObject;
+import com.veggiegram.responses.addwallet.AddWalletResponse;
 import com.veggiegram.responses.banner.BannerResponse;
 import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.responses.category.CategoryResponse;
@@ -132,6 +134,10 @@ public interface RetrofitIInterface {
 
     @POST("addorder")
     Call<AddOrderResponse> addOrder(@Body JsonObject jsonObject,
+                                    @Header("token") String token);
+
+    @POST("addwallet")
+    Call<AddWalletResponse> addWallet(@Body AddWalletObject addWalletObject,
                                     @Header("token") String token);
 
 }

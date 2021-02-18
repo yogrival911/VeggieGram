@@ -39,7 +39,6 @@ TextView tvCartTotal;
 int cartTotal;
 int selectedAddress_id = -1;
     public AddressFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -50,7 +49,6 @@ int selectedAddress_id = -1;
         cartTotal = AddressFragmentArgs.fromBundle(getArguments()).getCartTotal();
         Log.i("yogcart",cartTotal+"");
 
-
         addNewAddress = view.findViewById(R.id.addNewAddress);
         chooseDeliverySlot = view.findViewById(R.id.chooseDeliverySlot);
         recyclerAddress = view.findViewById(R.id.recyclerAddress);
@@ -58,7 +56,6 @@ int selectedAddress_id = -1;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerAddress.setLayoutManager(linearLayoutManager);
 
-//        getActivity().getActionBar().setTitle("Cart");
         Retrofit retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
 

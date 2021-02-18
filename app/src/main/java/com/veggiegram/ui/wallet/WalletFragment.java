@@ -3,6 +3,7 @@ package com.veggiegram.ui.wallet;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -31,6 +33,8 @@ public class WalletFragment extends Fragment {
 Button addMoney;
 SharedPreferences sharedPreferences;
 TextView tvWalletMoney;
+ConstraintLayout minimize,more;
+ImageView drop;
     public WalletFragment() {
 
     }
@@ -42,6 +46,36 @@ TextView tvWalletMoney;
 
         addMoney = view.findViewById(R.id.addMoney);
         tvWalletMoney = view.findViewById(R.id.tvWalletMoney);
+        minimize = view.findViewById(R.id.minimize);
+        more = view.findViewById(R.id.more);
+        drop = view.findViewById(R.id.drop);
+
+        Boolean isMore = false;
+
+        if(isMore){
+            more.setVisibility(View.VISIBLE);
+        }
+        else{
+            more.setVisibility(View.GONE);
+        }
+
+        minimize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(more.getVisibility()==View.GONE){
+//                    TransitionManager.beginDelayedTransition(linearLayout,new AutoTransition());
+//                    recyclerView.animate().translationY(recyclerView.getHeight());
+                    more.setVisibility(View.VISIBLE);
+                    drop.setImageResource(R.drawable.ic_baseline_arrow_drop_up_24);
+                }
+                else {
+//                    TransitionManager.beginDelayedTransition(linearLayout,new AutoTransition());
+                    more.setVisibility(View.GONE);
+                    drop.setImageResource(R.drawable.ic_baseline_arrow_drop_down_24);
+                }
+            }
+        });
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String user_id = sharedPreferences.getString("user_id", "");
 

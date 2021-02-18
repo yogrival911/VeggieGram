@@ -11,11 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.snackbar.Snackbar;
 import com.razorpay.Checkout;
 
 import org.json.JSONObject;
@@ -40,13 +42,15 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         proceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String enteredAmount = etEnteredAmount.getText().toString();
-                Intent intent = new Intent(getActivity(), RazorpayActivity.class);
-                intent.putExtra("entered_amount", enteredAmount);
-                intent.putExtra("description", "Adding money to wallet");
-                Boolean fromWallet = true;
-                intent.putExtra("fromWallet", fromWallet);
-                getActivity().startActivity(intent);
+                if (etEnteredAmount.length() != 0) {
+                    String enteredAmount = etEnteredAmount.getText().toString();
+                    Intent intent = new Intent(getActivity(), RazorpayActivity.class);
+                    intent.putExtra("entered_amount", enteredAmount);
+                    intent.putExtra("description", "Adding money to wallet");
+                    getActivity().startActivity(intent);
+                }
+                else{
+                    Toast.makeText(getContext(), "Please enter amount.", Toast.LENGTH_SHORT).show();              }
             }
         });
         return view;
