@@ -44,6 +44,7 @@ OrderResponse orderResponse;
         SimpleDateFormat outputFormatDay = new SimpleDateFormat("dd");
         SimpleDateFormat outputFormatMonth = new SimpleDateFormat("MMM");
         SimpleDateFormat outputFormatTime = new SimpleDateFormat("hh.mm aa");
+        SimpleDateFormat outputFormatDate = new SimpleDateFormat("MMMM dd,yyyy");
 
 //        "MMM dd,yyyy"
         Date date = null;
@@ -55,6 +56,7 @@ OrderResponse orderResponse;
         String formattedDay = outputFormatDay.format(date);
         String formattedMonth = outputFormatMonth.format(date);
         String formattedTime = outputFormatTime.format(date);
+        String formattedDate = outputFormatDate.format(date);
 
         Log.i("yogdate", formattedDay);
         Log.i("yogdate", formattedMonth);
@@ -76,6 +78,8 @@ OrderResponse orderResponse;
                 intent.putExtra("payment_method", orderResponse.getData().get(position).getPaymentMethod()+"");
                 intent.putExtra("payment_status", orderResponse.getData().get(position).getPaymentStatusText()+"");
                 intent.putExtra("address", orderResponse.getData().get(position).getAddress()+"");
+                intent.putExtra("formattedDate", formattedDate);
+                intent.putExtra("formattedTime", formattedTime);
                 holder.itemView.getContext().startActivity(intent);
             }
         });

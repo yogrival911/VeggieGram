@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class OrderDetailActivity extends AppCompatActivity {
 Toolbar toolbarODetail;
-TextView paymentStatusDetail, tvorder_id, tvdate, tvtotalAmount, tvpaymentMethod, tvpaymentStatus, tvaddress;
+TextView paymentStatusDetail, tvorder_id, tvdate,timeDetail, tvtotalAmount, tvpaymentMethod, tvpaymentStatus, tvaddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +19,7 @@ TextView paymentStatusDetail, tvorder_id, tvdate, tvtotalAmount, tvpaymentMethod
         paymentStatusDetail = findViewById(R.id.paymentStatusDetail);
         tvorder_id = findViewById(R.id.order_id);
         tvdate = findViewById(R.id.date);
+        timeDetail = findViewById(R.id.timeDetail);
         tvtotalAmount = findViewById(R.id.totalAmount);
         tvpaymentMethod = findViewById(R.id.paymentMethod);
         tvpaymentStatus = findViewById(R.id.paymentStatus);
@@ -35,10 +36,13 @@ TextView paymentStatusDetail, tvorder_id, tvdate, tvtotalAmount, tvpaymentMethod
         String payment_method = getIntent().getStringExtra("payment_method");
         String payment_status = getIntent().getStringExtra("payment_status");
         String address = getIntent().getStringExtra("address");
+        String formattedDate = getIntent().getStringExtra("formattedDate");
+        String formattedTime = getIntent().getStringExtra("formattedTime");
         Log.i("yogorder", order_id+date+total_amount+payment_method+payment_status+address);
 
         tvorder_id.setText(order_id);
-        tvdate.setText(date);
+        tvdate.setText(formattedDate);
+        timeDetail.setText(formattedTime);
         tvaddress.setText(address);
         tvpaymentMethod.setText(payment_method);
         tvtotalAmount.setText(total_amount);
