@@ -39,6 +39,8 @@ SharedPreferences sharedPreferences;
 
         recyclerOrder = findViewById(R.id.recyclerOrder);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
+        linearLayoutManager.setReverseLayout(true);
 
         recyclerOrder.setLayoutManager(linearLayoutManager);
 

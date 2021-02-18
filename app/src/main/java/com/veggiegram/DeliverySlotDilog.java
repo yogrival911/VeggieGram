@@ -71,7 +71,10 @@ int selectedSlotId;
         address_id = getArguments().getInt("address_id");
         Log.i("yogadd", ""+cartTotal);
         Log.i("yogadd", ""+address_id);
+
+        //////////////////////////////////////////
         cartTotal = 1;
+        //////////////////////////////////////////
 
         clickInterface = new ClickInterface() {
             @Override
@@ -179,7 +182,6 @@ int selectedSlotId;
                     public void onResponse(Call<WalletResponse> call, Response<WalletResponse> response) {
                         int walletAmount = response.body().getData().get(0).getAmount();
 
-
                         retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
                             @Override
                             public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {
@@ -194,7 +196,6 @@ int selectedSlotId;
                                     mapFor.put("id", response.body().getData().get(i).getProductid());
                                     mapFor.put("qty", response.body().getData().get(i).getCartquantity());
                                     mapFor.put("price", response.body().getData().get(i).getPrice());
-
                                     hashMapListFor.add(mapFor);
                                 }
                                 Gson gson = new Gson();
@@ -202,7 +203,7 @@ int selectedSlotId;
                                 Log.i("yogjsonarray", jsonStringFor);
 
                                 JsonObject jsonObject = new JsonObject();
-                                jsonObject.addProperty("payment_order_id", "");
+                                jsonObject.addProperty("payment_order_id", "Wallet");
                                 jsonObject.addProperty( "transaction_id", "");
                                 jsonObject.addProperty("total", String.valueOf(cartTotal));
                                 jsonObject.addProperty("final_total", String.valueOf(cartTotal));
@@ -218,6 +219,12 @@ int selectedSlotId;
                                     public void onResponse(Call<AddOrderResponse> call, Response<AddOrderResponse> response) {
                                         Log.i("yogjsonobject", response.body().getMessage());
                                         Intent intent = new Intent(getContext(), PaymentStatusActivity.class);
+                                        intent.putExtra("cart_total", cartTotal);
+                                        intent.putExtra("payment_mode", "Wallet");
+                                        intent.putExtra("address_id", address_id);
+                                        intent.putExtra("slot_id", selectedSlotId);
+                                        intent.putExtra("mode", "Wallet");
+                                        intent.putExtra("transactionID", "");
                                         startActivity(intent);
                                     }
 
