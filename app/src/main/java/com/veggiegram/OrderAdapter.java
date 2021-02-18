@@ -43,6 +43,8 @@ OrderResponse orderResponse;
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         SimpleDateFormat outputFormatDay = new SimpleDateFormat("dd");
         SimpleDateFormat outputFormatMonth = new SimpleDateFormat("MMM");
+        SimpleDateFormat outputFormatTime = new SimpleDateFormat("hh.mm aa");
+
 //        "MMM dd,yyyy"
         Date date = null;
         try {
@@ -52,13 +54,16 @@ OrderResponse orderResponse;
         }
         String formattedDay = outputFormatDay.format(date);
         String formattedMonth = outputFormatMonth.format(date);
+        String formattedTime = outputFormatTime.format(date);
 
         Log.i("yogdate", formattedDay);
         Log.i("yogdate", formattedMonth);
+        Log.i("yogdate", formattedTime);
 
         if(orderResponse.getData().get(position).getCreatedAt() != null){
             holder.tvDay.setText(formattedDay);
             holder.tvMonth.setText(formattedMonth);
+            holder.time.setText(formattedTime);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +87,7 @@ OrderResponse orderResponse;
     }
 
     public class OrderViewHolder extends RecyclerView.ViewHolder {
-        TextView orderID,orderStatus,paymentMethod,amount, tvDay,tvMonth;
+        TextView orderID,orderStatus,paymentMethod,amount, tvDay,tvMonth,time;
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
             orderID = itemView.findViewById(R.id.orderID);
@@ -91,6 +96,7 @@ OrderResponse orderResponse;
             amount = itemView.findViewById(R.id.amount);
             tvDay = itemView.findViewById(R.id.tvDay);
             tvMonth = itemView.findViewById(R.id.tvMonth);
+            time = itemView.findViewById(R.id.time);
         }
     }
 }
