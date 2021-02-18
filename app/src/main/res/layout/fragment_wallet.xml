@@ -15,9 +15,8 @@
             android:id="@+id/tvWalletMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView22"
             app:layout_constraintEnd_toEndOf="@+id/textView22"
@@ -53,7 +52,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView22">
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/walletDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date"
@@ -67,8 +66,8 @@
                 android:layout_height="wrap_content"
                 android:text="credited"
                 android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="@+id/textView5"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                app:layout_constraintStart_toStartOf="@+id/walletDate"
+                app:layout_constraintTop_toBottomOf="@+id/walletDate" />
 
             <ImageView
                 android:id="@+id/drop"
@@ -85,6 +84,7 @@
             android:id="@+id/more"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/minimize"
             tools:layout_editor_absoluteX="132dp">
 
@@ -94,6 +94,7 @@
                 android:layout_height="wrap_content"
                 android:text="Transaction ID"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -103,6 +104,7 @@
                 android:layout_height="wrap_content"
                 android:text="Amount"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
@@ -112,11 +114,12 @@
                 android:layout_height="wrap_content"
                 android:text="Description"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
             <TextView
-                android:id="@+id/textView28"
+                android:id="@+id/transactionID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="slskjskdjs"
@@ -126,7 +129,7 @@
                 app:layout_constraintTop_toTopOf="@+id/textView12" />
 
             <TextView
-                android:id="@+id/textView35"
+                android:id="@+id/amountWallet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="34"
@@ -136,7 +139,7 @@
                 app:layout_constraintTop_toTopOf="@+id/textView19" />
 
             <TextView
-                android:id="@+id/textView40"
+                android:id="@+id/walletDes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="add"

@@ -36,6 +36,7 @@ import com.veggiegram.responses.signup.SignupResponse;
 import com.veggiegram.responses.slot.SlotResponse;
 import com.veggiegram.responses.subcat.SubCategoryResponse;
 import com.veggiegram.responses.wallet.WalletResponse;
+import com.veggiegram.responses.wallethistory.WalletHistoryResponse;
 import com.veggiegram.responses.wishlist.GetWishListResponse;
 import com.veggiegram.responses.wishlist.WishListResponse;
 
@@ -139,5 +140,8 @@ public interface RetrofitIInterface {
     @POST("addwallet")
     Call<AddWalletResponse> addWallet(@Body AddWalletObject addWalletObject,
                                     @Header("token") String token);
+
+    @GET("getuserwallethistory")
+    Call<WalletHistoryResponse> walletHistory(@Header("token") String token);
 
 }

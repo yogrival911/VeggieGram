@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.veggiegram.BottomSheetDialog;
 import com.veggiegram.R;
 import com.veggiegram.responses.wallet.WalletResponse;
+import com.veggiegram.responses.wallethistory.WalletHistoryResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
 import com.veggiegram.ui.favourite.FavouriteFragmentDirections;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,7 +38,7 @@ import retrofit2.Retrofit;
 public class WalletFragment extends Fragment {
 Button addMoney;
 SharedPreferences sharedPreferences;
-TextView tvWalletMoney;
+TextView tvWalletMoney,transactionID,amountWallet,walletDes,walletDate;
 ConstraintLayout minimize,more;
 ImageView drop;
     public WalletFragment() {
@@ -49,6 +55,10 @@ ImageView drop;
         minimize = view.findViewById(R.id.minimize);
         more = view.findViewById(R.id.more);
         drop = view.findViewById(R.id.drop);
+        transactionID = view.findViewById(R.id.transactionID);
+        amountWallet = view.findViewById(R.id.amountWallet);
+        walletDes = view.findViewById(R.id.walletDes);
+        walletDate = view.findViewById(R.id.walletDate);
 
         Boolean isMore = false;
 
@@ -90,6 +100,35 @@ ImageView drop;
                 @Override
                 public void onResponse(Call<WalletResponse> call, Response<WalletResponse> response) {
                     tvWalletMoney.setText(response.body().getData().get(0).getAmount()+"");
+
+                    retrofitIInterface.walletHistory(user_id).enqueue(new Callback<WalletHistoryResponse>() {
+                        @Override
+                        public void onResponse(Call<WalletHistoryResponse> call, Response<WalletHistoryResponse> response) {
+                            Log.i("yogwallet", response.body().getData().get(0).getDescription());
+                            transactionID.setText(response.body().getData().get(0).getTransectionId()+"");
+                            amountWallet.setText("\u20B9"+ response.body().getData().get(0).getAmount()+"");
+                            walletDes.setText(response.body().getData().get(0).getDescription());
+
+                            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                            SimpleDateFormat outputFormat = new SimpleDateFormat("MMMM dd,yyyy");
+                            Date date = null;
+                            try {
+                                date = inputFormat.parse(response.body().getData().get(0).getDatetime());
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            String formattedDate = outputFormat.format(date);
+                            System.out.println(formattedDate);
+                            Log.i("yogdate", formattedDate);
+                            walletDate.setText(formattedDate+"");
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<WalletHistoryResponse> call, Throwable t) {
+
+                        }
+                    });
                 }
 
                 @Override
