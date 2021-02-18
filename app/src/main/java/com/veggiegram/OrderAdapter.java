@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.veggiegram.responses.order.OrderResponse;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -39,13 +40,26 @@ OrderResponse orderResponse;
         holder.paymentMethod.setText(orderResponse.getData().get(position).getPaymentMethod()+"");
         holder.amount.setText("\u20B9"+orderResponse.getData().get(position).getTotal()+"");
 
-        Log.i("yogdate", orderResponse.getData().get(position).getCreatedAt());
-//
-//       if(orderResponse.getData().get(position).getCreatedAt() != null){
-//           String date = orderResponse.getData().get(position).getCreatedAt();
-//           SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a");
-//           String dateTime = simpleDateFormat.format(date);
-//       }
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        SimpleDateFormat outputFormatDay = new SimpleDateFormat("dd");
+        SimpleDateFormat outputFormatMonth = new SimpleDateFormat("MMM");
+//        "MMM dd,yyyy"
+        Date date = null;
+        try {
+            date = inputFormat.parse(orderResponse.getData().get(position).getCreatedAt());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String formattedDay = outputFormatDay.format(date);
+        String formattedMonth = outputFormatMonth.format(date);
+
+        Log.i("yogdate", formattedDay);
+        Log.i("yogdate", formattedMonth);
+
+        if(orderResponse.getData().get(position).getCreatedAt() != null){
+            holder.tvDay.setText(formattedDay);
+            holder.tvMonth.setText(formattedMonth);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +82,7 @@ OrderResponse orderResponse;
     }
 
     public class OrderViewHolder extends RecyclerView.ViewHolder {
-        TextView orderID,orderStatus,paymentMethod,amount, tvDay;
+        TextView orderID,orderStatus,paymentMethod,amount, tvDay,tvMonth;
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
             orderID = itemView.findViewById(R.id.orderID);
@@ -76,6 +90,7 @@ OrderResponse orderResponse;
             paymentMethod = itemView.findViewById(R.id.paymentMethod);
             amount = itemView.findViewById(R.id.amount);
             tvDay = itemView.findViewById(R.id.tvDay);
+            tvMonth = itemView.findViewById(R.id.tvMonth);
         }
     }
 }

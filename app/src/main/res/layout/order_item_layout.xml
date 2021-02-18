@@ -65,19 +65,18 @@
                     android:id="@+id/tvDay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:text="13"
                     android:textSize="14sp"
                     android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/tvMonth"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView26"
+                    android:id="@+id/tvMonth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:text="Jan"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/tvDay"
