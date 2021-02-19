@@ -141,54 +141,15 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
                     int addressID = getIntent().getIntExtra("address_id", 0);
                     int slotID = getIntent().getIntExtra("slot_id", 0);
 
-                    Log.i("yogintent", cartTotal+"");
-                    Log.i("yogintent", addressID+"");
-                    Log.i("yogintent", slotID+"");
-
-                    List<HashMap> hashMapListFor = new ArrayList<>();
-                    for(int i=0; i < response.body().getData().size(); i++){
-                        HashMap<String, Integer> mapFor = new HashMap<>();
-                        mapFor.put("id", response.body().getData().get(i).getProductid());
-                        mapFor.put("qty", response.body().getData().get(i).getCartquantity());
-                        mapFor.put("price", response.body().getData().get(i).getPrice());
-
-                        hashMapListFor.add(mapFor);
-                    }
-                    Gson gson = new Gson();
-                    String jsonStringFor = gson.toJson(hashMapListFor);
-                    Log.i("yogjsonarray", jsonStringFor);
-
-                    JsonObject jsonObject = new JsonObject();
-                    jsonObject.addProperty("payment_order_id", "");
-                    jsonObject.addProperty( "transaction_id", s);
-                    jsonObject.addProperty("total", String.valueOf(cartTotal));
-                    jsonObject.addProperty("final_total", String.valueOf(cartTotal));
-                    jsonObject.addProperty("shipping_cost", "0");
-                    jsonObject.addProperty("discount", "");
-                    jsonObject.addProperty("deliver_address_Id", String.valueOf(addressID));
-                    jsonObject.addProperty("slot", String.valueOf(slotID));
-                    jsonObject.addProperty("wallet", "0.00");
-                    jsonObject.addProperty("orderData", jsonStringFor);
-
-                    retrofitIInterface.addOrder(jsonObject, user_id).enqueue(new Callback<AddOrderResponse>() {
-                        @Override
-                        public void onResponse(Call<AddOrderResponse> call, Response<AddOrderResponse> response) {
-                            Log.i("yogjsonobject", response.body().getMessage());
-                            Intent intent = new Intent(getApplicationContext(), PaymentStatusActivity.class);
-                            intent.putExtra("cart_total", cartTotal);
-                            intent.putExtra("payment_mode", "Razorpay");
-                            intent.putExtra("address_id", addressID);
-                            intent.putExtra("slot_id", slotID);
-                            intent.putExtra("mode", mode);
-                            intent.putExtra("transactionID", s);
-                            startActivity(intent);
-                        }
-
-                        @Override
-                        public void onFailure(Call<AddOrderResponse> call, Throwable t) {
-
-                        }
-                    });
+                    Log.i("yogjsonobject", response.body().getMessage());
+                    Intent intent = new Intent(getApplicationContext(), PaymentStatusActivity.class);
+                    intent.putExtra("cart_total", cartTotal);
+                    intent.putExtra("payment_mode", "Razorpay");
+                    intent.putExtra("address_id", addressID);
+                    intent.putExtra("slot_id", slotID);
+                    intent.putExtra("mode", mode);
+                    intent.putExtra("transactionID", s);
+                    startActivity(intent);
                 }
 
                 @Override

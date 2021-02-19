@@ -30,6 +30,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.veggiegram.responses.SlotAdapter;
 import com.veggiegram.responses.addorder.AddOrderResponse;
+import com.veggiegram.responses.addwallet.AddWalletObject;
 import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.responses.slot.SlotResponse;
 import com.veggiegram.responses.wallet.WalletResponse;
@@ -209,6 +210,7 @@ int selectedSlotId;
                                 jsonObject.addProperty("final_total", String.valueOf(cartTotal));
                                 jsonObject.addProperty("shipping_cost", "0");
                                 jsonObject.addProperty("discount", "");
+                                jsonObject.addProperty("payment_method", "2");
                                 jsonObject.addProperty("deliver_address_Id", String.valueOf(address_id));
                                 jsonObject.addProperty("slot", String.valueOf(selectedSlotId));
                                 jsonObject.addProperty("wallet", String.valueOf(walletAmount-cartTotal));
@@ -218,6 +220,7 @@ int selectedSlotId;
                                     @Override
                                     public void onResponse(Call<AddOrderResponse> call, Response<AddOrderResponse> response) {
                                         Log.i("yogjsonobject", response.body().getMessage());
+
                                         Intent intent = new Intent(getContext(), PaymentStatusActivity.class);
                                         intent.putExtra("cart_total", cartTotal);
                                         intent.putExtra("payment_mode", "Wallet");
