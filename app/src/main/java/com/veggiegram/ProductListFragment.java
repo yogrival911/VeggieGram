@@ -84,19 +84,14 @@ public class ProductListFragment extends Fragment {
         String user_id = sharedPreferences.getString("user_id", "");
         Log.i("yog", "user_id "+user_id);
 
-        searchviewList.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchviewList.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
-                Intent intent = new Intent(getContext(),SearchActivity.class);
+            public void onFocusChange(View view, boolean b) {
+                Intent intent = new Intent(getContext(), SearchActivity.class);
                 startActivity(intent);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
             }
         });
+
         retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
             @Override
             public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {
