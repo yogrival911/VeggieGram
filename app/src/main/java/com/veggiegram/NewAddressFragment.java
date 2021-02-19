@@ -125,16 +125,15 @@ Boolean fromCart;
                                     Snackbar.make(getView(), "Address Saved", Snackbar.LENGTH_SHORT ).show();
 //                                    NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.address_host_frag);
 //                                    navHostFragment.getNavController().navigate(NewAddressFragmentDirections.actionNewAddressFragmentToMyAddressFragment());
+                                    Intent intent;
                                     if(fromCart){
-                                        Intent intent = new Intent(getContext(), CartActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        getActivity().startActivity(intent);
+                                        intent = new Intent(getContext(), CartActivity.class);
                                     }
                                     else {
-                                        Intent intent = new Intent(getContext(), MyAddressActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        getActivity().startActivity(intent);
+                                        intent = new Intent(getContext(), MyAddressActivity.class);
                                     }
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    getActivity().startActivity(intent);
                                 }
 
                                 @Override

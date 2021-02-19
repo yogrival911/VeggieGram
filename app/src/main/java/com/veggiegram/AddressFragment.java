@@ -113,7 +113,7 @@ int selectedAddress_id = -1;
             public void onClick(View view) {
 //                NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.cart_navigation_host);
 //                navHostFragment.getNavController().navigate(AddressFragmentDirections.actionAddressFragmentToNewAddressFragment2());
-                Intent intent = new Intent(getContext(), MyAddressActivity.class);
+                Intent intent = new Intent(getActivity(), NewAddressActivity.class);
                 intent.putExtra("fromCart", true);
                 startActivity(intent);
             }

@@ -56,7 +56,6 @@ Toolbar toolbarMyAddress;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerAddress.setLayoutManager(linearLayoutManager);
 
-
         Retrofit retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
 
