@@ -61,6 +61,9 @@ GetCartListResponse cartListResponse;
         String transactionID = getIntent().getStringExtra("transactionID");
 
         if(mode.equals("razorpay")){
+            int cartTotal = getIntent().getIntExtra("cart_total",0);
+            statusAmount.setText(cartTotal+"");
+            paymentMode.setText("Online");
             retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
                 @Override
                 public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {
@@ -72,6 +75,8 @@ GetCartListResponse cartListResponse;
                     int cartTotal = getIntent().getIntExtra("cart_total",0);
                     int addressID = getIntent().getIntExtra("address_id", 0);
                     int slotID = getIntent().getIntExtra("slot_id", 0);
+
+
 
                     Log.i("yogintent", cartTotal+"");
                     Log.i("yogintent", addressID+"");
@@ -135,6 +140,9 @@ GetCartListResponse cartListResponse;
                     int cartTotal = getIntent().getIntExtra("cart_total",0);
                     int addressID = getIntent().getIntExtra("address_id", 0);
                     int slotID = getIntent().getIntExtra("slot_id", 0);
+
+                    statusAmount.setText(cartTotal+"");
+                    paymentMode.setText("COD");
 
                     Log.i("yogintent", cartTotal+"");
                     Log.i("yogintent", addressID+"");
