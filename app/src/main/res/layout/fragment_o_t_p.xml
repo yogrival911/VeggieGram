@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".register.OTPFragment">
+    tools:context=".OTPFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:ems="10"
+            android:drawableLeft="@drawable/ic_baseline_check_circle_24"
             android:hint="Enter OTP"
             android:inputType="number"
             app:layout_constraintEnd_toEndOf="parent"
@@ -35,6 +36,30 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etOTP" />
+
+        <TextView
+            android:id="@+id/resendCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resend in "
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/verify" />
+
+        <TextView
+            android:id="@+id/enterWrong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+
+            android:text="Entered wrong number?"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resendCounter" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
