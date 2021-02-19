@@ -90,9 +90,14 @@ int selectedAddress_id = -1;
             @Override
             public void onResponse(Call<AddressResponse> call, Response<AddressResponse> response) {
                 AddressResponse addressResponse = response.body();
-                selectedAddress_id = response.body().getData().get(0).getId();
-                selectedAddressAdapter = new SelectedAddressAdapter(response.body(), clickInterface);
-                recyclerAddress.setAdapter(selectedAddressAdapter);
+                if(response.body().getData().size() != 0){
+                    selectedAddress_id = response.body().getData().get(0).getId();
+                    selectedAddressAdapter = new SelectedAddressAdapter(response.body(), clickInterface);
+                    recyclerAddress.setAdapter(selectedAddressAdapter);
+                }
+                else {
+                    Snackbar.make(getView(), "Please add new address!", Snackbar.LENGTH_SHORT).show();
+                }
             }
 
             @Override

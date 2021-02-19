@@ -156,6 +156,7 @@ GetCartListResponse cartListResponse;
                         mapFor.put("price", response.body().getData().get(i).getPrice());
                         hashMapListFor.add(mapFor);
                     }
+
                     Gson gson = new Gson();
                     String jsonStringFor = gson.toJson(hashMapListFor);
                     Log.i("yogjsonarray", jsonStringFor);

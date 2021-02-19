@@ -99,29 +99,34 @@ ImageView drop;
             retrofitIInterface.getUserWallet(user_id).enqueue(new Callback<WalletResponse>() {
                 @Override
                 public void onResponse(Call<WalletResponse> call, Response<WalletResponse> response) {
-                    tvWalletMoney.setText(response.body().getData().get(0).getAmount()+"");
-
+                   if(response.body().getData().size() != 0){
+                       tvWalletMoney.setText(response.body().getData().get(0).getAmount()+"");
+                   }
+                   else{
+                       tvWalletMoney.setText("0");
+                   }
                     retrofitIInterface.walletHistory(user_id).enqueue(new Callback<WalletHistoryResponse>() {
                         @Override
                         public void onResponse(Call<WalletHistoryResponse> call, Response<WalletHistoryResponse> response) {
-                            Log.i("yogwallet", response.body().getData().get(0).getDescription());
-                            transactionID.setText(response.body().getData().get(0).getTransectionId()+"");
-                            amountWallet.setText("\u20B9"+ response.body().getData().get(0).getAmount()+"");
-                            walletDes.setText(response.body().getData().get(0).getDescription());
+                           if(response.body().getData().size() != 0){
+                               Log.i("yogwallet", response.body().getData().get(0).getDescription());
+                               transactionID.setText(response.body().getData().get(0).getTransectionId()+"");
+                               amountWallet.setText("\u20B9"+ response.body().getData().get(0).getAmount()+"");
+                               walletDes.setText(response.body().getData().get(0).getDescription());
 
-                            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-                            SimpleDateFormat outputFormat = new SimpleDateFormat("MMMM dd,yyyy");
-                            Date date = null;
-                            try {
-                                date = inputFormat.parse(response.body().getData().get(0).getDatetime());
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            String formattedDate = outputFormat.format(date);
-                            System.out.println(formattedDate);
-                            Log.i("yogdate", formattedDate);
-                            walletDate.setText(formattedDate+"");
-
+                               SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                               SimpleDateFormat outputFormat = new SimpleDateFormat("MMMM dd,yyyy");
+                               Date date = null;
+                               try {
+                                   date = inputFormat.parse(response.body().getData().get(0).getDatetime());
+                               } catch (ParseException e) {
+                                   e.printStackTrace();
+                               }
+                               String formattedDate = outputFormat.format(date);
+                               System.out.println(formattedDate);
+                               Log.i("yogdate", formattedDate);
+                               walletDate.setText(formattedDate+"");
+                           }
                         }
 
                         @Override
