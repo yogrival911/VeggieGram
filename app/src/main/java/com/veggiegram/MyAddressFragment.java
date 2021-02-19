@@ -1,5 +1,6 @@
 package com.veggiegram;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -112,8 +113,11 @@ Toolbar toolbarMyAddress;
         addAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.address_host_frag);
-                navHostFragment.getNavController().navigate(MyAddressFragmentDirections.actionMyAddressFragmentToNewAddressFragment());
+//                NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.address_host_frag);
+//                navHostFragment.getNavController().navigate(MyAddressFragmentDirections.actionMyAddressFragmentToNewAddressFragment());
+
+                Intent intent = new Intent(getContext(), NewAddressActivity.class);
+                startActivity(intent);
             }
         });
 

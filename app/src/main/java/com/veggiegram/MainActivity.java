@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.address:
                         drawerLayout.closeDrawers();
-                        Intent intent = new Intent(getApplicationContext(), AddressActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), MyAddressActivity.class);
                         startActivity(intent);
                         break;
 

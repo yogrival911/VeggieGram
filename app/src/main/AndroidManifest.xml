@@ -12,14 +12,15 @@
         android:roundIcon="@mipmap/logo_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.VeggieGram">
-        <activity android:name=".SigninActivity"></activity>
+        <activity android:name=".NewAddressActivity"></activity>
+        <activity android:name=".MyAddressActivity" />
+        <activity android:name=".SigninActivity" />
         <activity android:name=".WalletActivity" />
         <activity android:name=".RazorpayActivity" />
         <activity android:name=".PaymentStatusActivity" />
         <activity android:name=".OrderDetailActivity" />
         <activity android:name=".OrderActivity" />
-        <activity
-            android:name=".SearchActivity" />
+        <activity android:name=".SearchActivity" />
         <activity android:name=".ContactActivity" />
         <activity android:name=".AddressActivity" />
         <activity android:name=".CartActivity" />

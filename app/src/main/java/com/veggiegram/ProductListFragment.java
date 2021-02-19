@@ -136,7 +136,7 @@ public class ProductListFragment extends Fragment {
                     retrofitIInterface.removeCartProduct(new RemoveCartObject(productid),user_id).enqueue(new Callback<RemoveCartResponse>() {
                         @Override
                         public void onResponse(Call<RemoveCartResponse> call, Response<RemoveCartResponse> response) {
-                            Snackbar.make(getView(), "Cart updated",Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(getView(), "Item removed!",Snackbar.LENGTH_SHORT).show();
                         }
 
                         @Override

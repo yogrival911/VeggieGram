@@ -56,6 +56,7 @@ boolean isAllFieldsChecked = false;
 FusedLocationProviderClient mFusedLocationClient;
 int PERMISSION_ID = 44;
 String latitude, longitude;
+Boolean fromCart;
 
     public void setLatitude(String latitude) {
         this.latitude = latitude;
@@ -91,8 +92,10 @@ String latitude, longitude;
         spinnerState = view.findViewById(R.id.spinnerState);
         spinnerLocality = view.findViewById(R.id.spinnerLocality);
         spinnerCity = view.findViewById(R.id.spinnerCity);
-
         saveAddress = view.findViewById(R.id.saveAddress);
+
+        fromCart = getActivity().getIntent().getBooleanExtra("fromCart", false);
+        Log.i("yogfromcart", fromCart.toString());
 
         Retrofit retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
@@ -120,8 +123,18 @@ String latitude, longitude;
                                 @Override
                                 public void onResponse(Call<AddAddressResponse> call, Response<AddAddressResponse> response) {
                                     Snackbar.make(getView(), "Address Saved", Snackbar.LENGTH_SHORT ).show();
-                                    NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.address_host_frag);
-                                    navHostFragment.getNavController().navigate(NewAddressFragmentDirections.actionNewAddressFragmentToMyAddressFragment());
+//                                    NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.address_host_frag);
+//                                    navHostFragment.getNavController().navigate(NewAddressFragmentDirections.actionNewAddressFragmentToMyAddressFragment());
+                                    if(fromCart){
+                                        Intent intent = new Intent(getContext(), CartActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        getActivity().startActivity(intent);
+                                    }
+                                    else {
+                                        Intent intent = new Intent(getContext(), MyAddressActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        getActivity().startActivity(intent);
+                                    }
                                 }
 
                                 @Override

@@ -1,5 +1,6 @@
 package com.veggiegram;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -96,6 +97,7 @@ int selectedAddress_id = -1;
                     recyclerAddress.setAdapter(selectedAddressAdapter);
                 }
                 else {
+                    chooseDeliverySlot.setEnabled(false);
                     Snackbar.make(getView(), "Please add new address!", Snackbar.LENGTH_SHORT).show();
                 }
             }
@@ -109,8 +111,11 @@ int selectedAddress_id = -1;
         addNewAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.cart_navigation_host);
-                navHostFragment.getNavController().navigate(AddressFragmentDirections.actionAddressFragmentToNewAddressFragment2());
+//                NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.cart_navigation_host);
+//                navHostFragment.getNavController().navigate(AddressFragmentDirections.actionAddressFragmentToNewAddressFragment2());
+                Intent intent = new Intent(getContext(), MyAddressActivity.class);
+                intent.putExtra("fromCart", true);
+                startActivity(intent);
             }
         });
 
