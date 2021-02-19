@@ -69,8 +69,6 @@ TextView resendCounter,enterWrong;
 
             public void onTick(long millisUntilFinished) {
 
-                // Used for formatting digit to be in 2 digits only
-
                 NumberFormat f = new DecimalFormat("00");
 
                 long min = (millisUntilFinished / 60000) % 60;
