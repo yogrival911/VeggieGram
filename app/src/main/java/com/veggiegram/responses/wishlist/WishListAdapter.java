@@ -48,11 +48,8 @@ public class WishListAdapter extends RecyclerView.Adapter<WishListAdapter.WLView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                NavHostFragment navHostFragment1 = (NavHostFragment)holder.itemView.getSupportFragmentManager().findFragmentById(R.id.cart_navigation_host);
-//                navHostFragment1.getNavController().navigate(CartFragmentDirections.actionCartFragmentToAddressFragment(grandTotal));
-                NavController navController = Navigation.findNavController(holder.itemView);
-                navController.navigate(WishListFragmentDirections.actionWishListFragmentToProductDetailFragment(getWishListResponse.getData().get(position).getProductid().toString()));
-
+               NavController navController = Navigation.findNavController(holder.itemView);
+               navController.navigate(WishListFragmentDirections.actionWishListFragmentToProductDetailFragment(getWishListResponse.getData().get(position).getProductid().toString()));
             }
         });
 

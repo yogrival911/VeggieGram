@@ -90,11 +90,9 @@ public class MainActivity extends AppCompatActivity {
         }
         if(user_id.isEmpty()){
             navigationView.getMenu().findItem(R.id.signin).setTitle("Sign In");
-            Toast.makeText(this, "Sign in", Toast.LENGTH_SHORT).show();
         }
         else{
             navigationView.getMenu().findItem(R.id.signin).setTitle("Sign Out");
-            Toast.makeText(this, "Sign out", Toast.LENGTH_SHORT).show();
         }
 
         navHostFragment =(NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.nav_host);
