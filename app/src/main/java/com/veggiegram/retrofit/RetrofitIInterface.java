@@ -1,6 +1,7 @@
 package com.veggiegram.retrofit;
 
 import androidx.annotation.CallSuper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.JsonObject;
 import com.veggiegram.SearchObject;
@@ -143,5 +144,6 @@ public interface RetrofitIInterface {
 
     @GET("getuserwallethistory")
     Call<WalletHistoryResponse> walletHistory(@Header("token") String token);
+
 
 }

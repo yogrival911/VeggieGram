@@ -3,6 +3,7 @@ package com.veggiegram.ui.wallet;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -10,6 +11,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,6 +23,7 @@ import android.widget.TextView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.veggiegram.BottomSheetDialog;
 import com.veggiegram.R;
+import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.responses.wallet.WalletResponse;
 import com.veggiegram.responses.wallethistory.WalletHistoryResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
@@ -41,6 +46,8 @@ SharedPreferences sharedPreferences;
 TextView tvWalletMoney,transactionID,amountWallet,walletDes,walletDate;
 ConstraintLayout minimize,more;
 ImageView drop;
+    TextView textCartItemCount;
+    int mCartItemCount;
     public WalletFragment() {
 
     }
@@ -61,6 +68,7 @@ ImageView drop;
         walletDate = view.findViewById(R.id.walletDate);
 
         Boolean isMore = false;
+        setHasOptionsMenu(true);
 
         if(isMore){
             more.setVisibility(View.VISIBLE);
@@ -142,6 +150,19 @@ ImageView drop;
                 }
             });
 
+            retrofitIInterface.getusercartlistproducts(user_id).enqueue(new Callback<GetCartListResponse>() {
+                @Override
+                public void onResponse(Call<GetCartListResponse> call, Response<GetCartListResponse> response) {
+                    mCartItemCount = response.body().getData().size();
+                    setupBadge();
+                }
+
+                @Override
+                public void onFailure(Call<GetCartListResponse> call, Throwable t) {
+
+                }
+            });
+
             addMoney.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -152,8 +173,32 @@ ImageView drop;
             });
 
         }
-
-
         return view;
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        MenuItem menuItem = menu.getItem(0);
+        View actionView = menuItem.getActionView();
+        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+        textCartItemCount.setText(String.valueOf(mCartItemCount));
+    }
+
+    public void setupBadge() {
+
+        if (textCartItemCount != null) {
+            if (mCartItemCount == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            } else {
+                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)));
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 }

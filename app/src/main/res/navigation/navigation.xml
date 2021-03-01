@@ -75,7 +75,11 @@
         android:id="@+id/wishListFragment"
         android:name="com.veggiegram.WishListFragment"
         android:label="fragment_wish_list"
-        tools:layout="@layout/fragment_wish_list" />
+        tools:layout="@layout/fragment_wish_list" >
+        <action
+            android:id="@+id/action_wishListFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/OTPFragment"
         android:name="com.veggiegram.OTPFragment"

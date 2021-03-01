@@ -185,7 +185,7 @@ int grandTotal;
 
                           grandTotal = grandTotal + quantity * sellPrice;
                       }
-                      cartTotal.setText("\u20B9 "+ grandTotal);
+                      cartTotal.setText(""+ grandTotal);
                       cartAdapter = new CartAdapter(response.body(), clickCartInterface);
                       recyclerViewCart.setAdapter(cartAdapter);
                   }

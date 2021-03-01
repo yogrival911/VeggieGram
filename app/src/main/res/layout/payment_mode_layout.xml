@@ -52,7 +52,7 @@
         android:inputType="textCapWords"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
-        android:text="Add Money in Veggiegram Wallet"
+        android:text="Add Money in Wallet"
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="@+id/tvBalance"
         app:layout_constraintStart_toStartOf="@+id/tvBalance"

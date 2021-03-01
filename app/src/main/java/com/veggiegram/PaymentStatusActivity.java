@@ -76,8 +76,6 @@ GetCartListResponse cartListResponse;
                     int addressID = getIntent().getIntExtra("address_id", 0);
                     int slotID = getIntent().getIntExtra("slot_id", 0);
 
-
-
                     Log.i("yogintent", cartTotal+"");
                     Log.i("yogintent", addressID+"");
                     Log.i("yogintent", slotID+"");
@@ -185,7 +183,6 @@ GetCartListResponse cartListResponse;
 
                         }
                     });
-
                 }
 
                 @Override

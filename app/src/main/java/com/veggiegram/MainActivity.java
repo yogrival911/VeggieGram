@@ -7,9 +7,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,6 +40,7 @@ import com.veggiegram.responses.cartlist.GetCartListResponse;
 import com.veggiegram.retrofit.RetrofitClientInstance;
 import com.veggiegram.retrofit.RetrofitIInterface;
 import com.veggiegram.ui.home.HomeFragmentDirections;
+import com.veggiegram.ui.register.SigninFragment;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -178,11 +181,15 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Sign in", Toast.LENGTH_SHORT).show();
 //                            Intent intentSignIn = new Intent(getApplicationContext(), SigninActivity.class);
 //                            startActivity(intentSignIn);
+                            View view = bottomNavigationView.findViewById(R.id.favoriteFragment);
+                            view.performClick();
+
                         }
                         else{
                             Toast.makeText(MainActivity.this, "Sign Out", Toast.LENGTH_SHORT).show();
                             sharedPreferences.edit().putString("user_id", "").apply();
                             navigationView.getMenu().findItem(R.id.signin).setTitle("Sign in");
+
                         }
                         break;
                 }

@@ -67,7 +67,6 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
         Retrofit retrofit = RetrofitClientInstance.getInstance();
         RetrofitIInterface retrofitIInterface = retrofit.create(RetrofitIInterface.class);
 
-
         checkout.setKeyID("rzp_live_iI3vVE2JZRTuxg");
         /**
          * Instantiate Checkout
@@ -164,6 +163,5 @@ public class RazorpayActivity extends AppCompatActivity implements PaymentResult
     public void onPaymentError(int i, String s) {
         Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
         Log.i("yogpayerror", s +" "+ i);
-
     }
 }

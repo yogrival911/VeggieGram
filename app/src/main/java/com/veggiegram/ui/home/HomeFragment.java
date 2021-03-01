@@ -113,6 +113,7 @@ public class HomeFragment extends Fragment {
         sliderView.setScrollTimeInSec(5); //set scroll delay in seconds :
         sliderView.startAutoCycle();
 
+
         List<SliderItem> sliderItems = new ArrayList<>();
 
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {

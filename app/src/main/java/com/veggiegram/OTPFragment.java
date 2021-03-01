@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
 import com.veggiegram.R;
 import com.veggiegram.responses.otp.OTPResponse;
 import com.veggiegram.responses.otp.SendOTPObject;
@@ -52,6 +53,9 @@ TextView resendCounter,enterWrong;
         etOTP = view.findViewById(R.id.etOTP);
         resendCounter = view.findViewById(R.id.resendCounter);
         enterWrong = view.findViewById(R.id.enterWrong);
+
+        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.navView);
+
 
         String mobile_passed = OTPFragmentArgs.fromBundle(getArguments()).getMobileNo();
         String user_id = OTPFragmentArgs.fromBundle(getArguments()).getUserId();
@@ -117,6 +121,7 @@ TextView resendCounter,enterWrong;
                     Toast.makeText(getContext(), "Correct OTP", Toast.LENGTH_SHORT).show();
                     NavHostFragment navHostFragment =(NavHostFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host);
                     navHostFragment.getNavController().navigate(OTPFragmentDirections.actionOTPFragmentToFavoriteFragment());
+                    navigationView.getMenu().findItem(R.id.signin).setTitle("Sign Out");
                 }
                 else{
                     Toast.makeText(getContext(), "Wrong OTP", Toast.LENGTH_SHORT).show();
